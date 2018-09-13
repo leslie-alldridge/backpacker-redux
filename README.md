@@ -1,2 +1,0 @@
-# backpacker-redux
-backpacker-redux

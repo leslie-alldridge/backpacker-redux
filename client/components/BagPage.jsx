@@ -1,5 +1,5 @@
 import React from 'react'
-class MainForm extends React.Component{
+class BagPage extends React.Component{
     constructor(props){
         super(props)
         this.state = {
@@ -13,13 +13,18 @@ class MainForm extends React.Component{
     render(){
 
     return (
+
+
+
         <div id="container">
         <p>bag page</p>
        {this.props.bags.map(bag => {
         return   <p>{bag.description} and {bag.destination}</p>
        })}
+
+       
         </div>
     )
     }
 }
-export default MainForm
+export default BagPage

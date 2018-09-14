@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MainForm from './MainForm'
 import BagPage from './BagPage'
+import BagList from './BagList'
 import { connect } from 'react-redux'
 import {addBagAction} from '../actions/addBag'
 
@@ -34,6 +35,7 @@ class App extends Component {
                 </div>
                 {this.state.formPage && <MainForm handleClick={this.handleClick}/>}
                 {this.state.bagPage && <BagPage bags={this.props.bags} />}
+                <BagList />
             </div>
         );
     }

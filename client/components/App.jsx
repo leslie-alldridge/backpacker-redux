@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import MainForm from './MainForm'
+import BagPage from './BagPage'
 import { connect } from 'react-redux'
 import {addBagAction} from '../actions/addBag'
 
@@ -6,13 +8,21 @@ class App extends Component {
     constructor(props){
     super(props)
     this.state = {
-        bags: this.props.bags || []
-        }
+        bags: this.props.bags || [],
+        bagPage: false,
+        formPage: true
+    }
     this.handleClick = this.handleClick.bind(this)
     }
 
-    handleClick(){
-        this.props.addBag()
+    handleClick(e, description, destination){
+        this.setState({
+            bagPage: true,
+            formPage: false
+        })
+        e.preventDefault()
+        console.log('submitted');
+        this.props.addBag(description, destination)
     }
     
     render() { 
@@ -22,7 +32,8 @@ class App extends Component {
                     <h1>Back Packer</h1>
                     <h4>Keep track of your packed belongings today</h4>
                 </div>
-                <div><button onClick={()=> {this.handleClick()}}>Add Bag</button></div>
+                {this.state.formPage && <MainForm handleClick={this.handleClick}/>}
+                {this.state.bagPage && <BagPage bags={this.props.bags} />}
             </div>
         );
     }
@@ -36,8 +47,10 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
     return {
-        addBag: () => {
-            dispatch(addBagAction())
+        addBag: (description, destination) => {
+            console.log(description, destination);
+            
+            dispatch(addBagAction(description, destination))
         }
     }
 }

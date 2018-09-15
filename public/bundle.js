@@ -98,9 +98,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addBagAction", function() { return addBagAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteBagAction", function() { return deleteBagAction; });
 var addBagAction = function addBagAction(id, description, destination) {
-  console.log(id, description, destination);
   return {
-    type: 'ADD_TO_BAGS',
+    type: "ADD_TO_BAGS",
     id: id,
     description: description,
     destination: destination,
@@ -110,7 +109,7 @@ var addBagAction = function addBagAction(id, description, destination) {
 };
 var deleteBagAction = function deleteBagAction(id) {
   return {
-    type: 'DELETE_BAGS',
+    type: "DELETE_BAGS",
     id: id
   };
 };
@@ -129,18 +128,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveItemAction", function() { return saveItemAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkItAction", function() { return checkItAction; });
 var saveItemAction = function saveItemAction(id, item) {
-  console.log(id, item);
   return {
-    type: 'ADD_ITEM',
+    type: "ADD_ITEM",
     id: id,
     inventory: item,
     quantity: 1
   };
 };
 var checkItAction = function checkItAction(id, item) {
-  console.log(id, item);
   return {
-    type: 'CHECK_ITEM',
+    type: "CHECK_ITEM",
     id: id,
     inventory: item
   };
@@ -159,11 +156,10 @@ var checkItAction = function checkItAction(id, item) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _MainForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MainForm */ "./client/components/MainForm.jsx");
-/* harmony import */ var _BagPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BagPage */ "./client/components/BagPage.jsx");
-/* harmony import */ var _BagList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./BagList */ "./client/components/BagList.jsx");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_addBag__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../actions/addBag */ "./client/actions/addBag.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _MainForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MainForm */ "./client/components/MainForm.jsx");
+/* harmony import */ var _BagPage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./BagPage */ "./client/components/BagPage.jsx");
+/* harmony import */ var _actions_addBag__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../actions/addBag */ "./client/actions/addBag.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -188,7 +184,6 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
-
 var App =
 /*#__PURE__*/
 function (_Component) {
@@ -202,9 +197,7 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
     _this.state = {
       bags: _this.props.bags || [],
-      bagPage: false,
-      formPage: true,
-      bagCount: 1
+      formPage: true
     };
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
@@ -216,9 +209,6 @@ function (_Component) {
       var len = Object.keys(this.props.bags);
       e.preventDefault();
       this.props.addBag(len.length, description, destination);
-      this.setState({
-        bagCount: this.state.bags.length
-      });
     }
   }, {
     key: "render",
@@ -227,9 +217,9 @@ function (_Component) {
         className: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "jumbotron"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Back Packer"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Keep track of your packed belongings")), this.state.formPage && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MainForm__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Back Packer"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Keep track of your packed belongings")), this.state.formPage && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MainForm__WEBPACK_IMPORTED_MODULE_2__["default"], {
         handleClick: this.handleClick
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagPage__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagPage__WEBPACK_IMPORTED_MODULE_3__["default"], {
         bagsData: this.props.bags
       }));
     }
@@ -247,12 +237,12 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     addBag: function addBag(id, description, destination) {
-      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_5__["addBagAction"])(id, description, destination));
+      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_4__["addBagAction"])(id, description, destination));
     }
   };
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["connect"])(mapStateToProps, mapDispatchToProps)(App));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(App));
 
 /***/ }),
 
@@ -303,7 +293,7 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(BagList).call(this, props));
     _this.state = {
-      formInput: ''
+      formInput: ""
     };
     _this.formChange = _this.formChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.saveItem = _this.saveItem.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -321,12 +311,14 @@ function (_React$Component) {
   }, {
     key: "checkItem",
     value: function checkItem(id, item) {
-      this.props.checkIt(id, item);
+      var checkIt = this.props.checkIt;
+      checkIt(id, item);
     }
   }, {
     key: "saveItem",
     value: function saveItem(id, input) {
-      this.props.saveIt(id, input);
+      var saveIt = this.props.saveIt;
+      saveIt(id, input);
     }
   }, {
     key: "render",
@@ -357,7 +349,7 @@ function (_React$Component) {
           if (_this2.props.id == item.id) {
             return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
               key: newItem
-            }, newItem, " -  ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            }, newItem, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
               onClick: function onClick() {
                 _this2.checkItem(_this2.props.id, newItem);
               },
@@ -374,7 +366,7 @@ function (_React$Component) {
         className: "list-unstyled"
       }, this.props.bags.map(function (item) {
         return item.checked.map(function (newItem) {
-          if (_this2.props.id == item.id) {
+          if (_this2.props.id === item.id) {
             return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
               key: newItem
             }, newItem, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -423,8 +415,8 @@ function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _actions_addBag__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/addBag */ "./client/actions/addBag.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_addBag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/addBag */ "./client/actions/addBag.js");
 /* harmony import */ var _BagList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./BagList */ "./client/components/BagList.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -502,19 +494,17 @@ function (_React$Component) {
           className: "card-title"
         }, bag.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "card-text"
-        }, bag.destination), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: "#",
+        }, bag.destination), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           onClick: function onClick() {
             _this2.addInventory(bag.id);
           },
           className: "btn btn-primary"
-        }, "Add Inventory"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: "#",
+        }, "Add Inventory"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           onClick: function onClick() {
             return _this2.deleteItem(bag.id);
           },
           className: "btn btn-danger"
-        }, "Delete"), _this2.state.viewListID == bag.id && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagList__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        }, "Delete"), _this2.state.viewListID === bag.id && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagList__WEBPACK_IMPORTED_MODULE_3__["default"], {
           key: bag.id,
           id: bag.id,
           description: bag.description,
@@ -536,12 +526,12 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     deleteBag: function deleteBag(description, destination) {
-      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_1__["deleteBagAction"])(description, destination));
+      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_2__["deleteBagAction"])(description, destination));
     }
   };
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps, mapDispatchToProps)(BagPage));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(BagPage));
 
 /***/ }),
 
@@ -588,8 +578,8 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MainForm).call(this, props));
     _this.state = {
-      description: '',
-      destination: ''
+      description: "",
+      destination: ""
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.handleDescChange = _this.handleDescChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -597,14 +587,6 @@ function (_React$Component) {
   }
 
   _createClass(MainForm, [{
-    key: "handleDescChange",
-    value: function handleDescChange(e) {
-      this.setState({
-        description: e.target.value,
-        destination: this.state.destination
-      });
-    }
-  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       $("#btnSubmit").click(function (event) {
@@ -615,7 +597,15 @@ function (_React$Component) {
           event.stopPropagation();
         }
 
-        form.addClass('was-validated');
+        form.addClass("was-validated");
+      });
+    }
+  }, {
+    key: "handleDescChange",
+    value: function handleDescChange(e) {
+      this.setState({
+        description: e.target.value,
+        destination: this.state.destination
       });
     }
   }, {
@@ -634,7 +624,7 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "mainForm"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        novalidate: "",
+        noValidate: "",
         id: "myForm"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
@@ -652,9 +642,9 @@ function (_React$Component) {
         id: "emailHelp",
         className: "form-text text-muted"
       }, "You can save multiple bags."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        class: "valid-feedback"
+        className: "valid-feedback"
       }, "Nice! You got this one!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        class: "invalid-feedback"
+        className: "invalid-feedback"
       }, "Sorry, you missed this one.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Destination"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -665,9 +655,9 @@ function (_React$Component) {
         id: "exampleInputPassword1",
         placeholder: "Bag Destination"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        class: "valid-feedback"
+        className: "valid-feedback"
       }, "Nice! You got this one!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        class: "invalid-feedback"
+        className: "invalid-feedback"
       }, "Sorry, you missed this one.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit",
         id: "btnSubmit",
@@ -710,10 +700,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var store = Object(redux__WEBPACK_IMPORTED_MODULE_3__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_4__["default"], window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
   Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__["Provider"], {
     store: store
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_App__WEBPACK_IMPORTED_MODULE_5__["default"], null)), document.getElementById('app'));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_App__WEBPACK_IMPORTED_MODULE_5__["default"], null)), document.getElementById("app"));
 });
 
 /***/ }),
@@ -739,6 +729,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
+  /*eslint-disable */
   switch (action.type) {
     case "ADD_TO_BAGS":
       var index1 = state.findIndex(function (item) {
@@ -791,9 +782,9 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         });
       }
 
+    default:
+      return state;
   }
-
-  return state;
 });
 
 /***/ }),

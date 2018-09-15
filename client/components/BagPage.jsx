@@ -1,8 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
-import { deleteBagAction } from "../actions/addBag";
-import BagList from "./BagList";
-import UpdateBag from "./UpdateBag";
+import React from 'react';
+import { connect } from 'react-redux';
+import { deleteBagAction } from '../actions/addBag';
+import BagList from './BagList';
+import UpdateBag from './UpdateBag';
 
 class BagPage extends React.Component {
   constructor(props) {
@@ -18,20 +18,22 @@ class BagPage extends React.Component {
     this.addInventory = this.addInventory.bind(this);
   }
 
+  addInventory(viewListID) {
+    this.setState(prevState => ({
+      viewListID: prevState.viewListID == viewListID ? null : viewListID,
+      viewBagUpdate: null
+    }));
+  }
+
   updateBagToggle(id) {
     this.setState(prevState => ({
-      viewBagUpdate: prevState.viewBagUpdate == id ? null : id
+      viewBagUpdate: prevState.viewBagUpdate == id ? null : id,
+      viewListID: null
     }));
   }
 
   deleteItem(id) {
     this.props.deleteBag(id);
-  }
-
-  addInventory(viewListID) {
-    this.setState(prevState => ({
-      viewListID: prevState.viewListID == viewListID ? null : viewListID
-    }));
   }
 
   render() {
@@ -51,16 +53,10 @@ class BagPage extends React.Component {
               >
                 Add Inventory
               </button>
-              <button
-                onClick={() => this.updateBagToggle(bag.id)}
-                className="btn btn-secondary"
-              >
+              <button onClick={() => this.updateBagToggle(bag.id)} className="btn btn-secondary">
                 Update
               </button>
-              <button
-                onClick={() => this.deleteItem(bag.id)}
-                className="btn btn-danger"
-              >
+              <button onClick={() => this.deleteItem(bag.id)} className="btn btn-danger">
                 Delete
               </button>
               {this.state.viewListID === bag.id && (

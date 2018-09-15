@@ -23,9 +23,9 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <div className="jumbotron">
-          <h1>Back Packer</h1>
-          <h4>Keep track of your packed belongings</h4>
+        <div id="header" className="jumbotron">
+          <h1 id="titleText">Bag Tracker</h1>
+          <h4 id="subtitleText">Keep track of packed bags</h4>
         </div>
         {this.state.formPage && <MainForm handleClick={this.handleClick} />}
         <BagPage bagsData={this.props.bags} />

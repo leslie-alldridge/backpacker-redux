@@ -233,8 +233,13 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "header",
         className: "jumbotron"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Back Packer"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Keep track of your packed belongings")), this.state.formPage && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MainForm__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        id: "titleText"
+      }, "Bag Tracker"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+        id: "subtitleText"
+      }, "Keep track of packed bags")), this.state.formPage && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MainForm__WEBPACK_IMPORTED_MODULE_2__["default"], {
         handleClick: this.handleClick
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagPage__WEBPACK_IMPORTED_MODULE_3__["default"], {
         bagsData: this.props.bags
@@ -499,11 +504,22 @@ function (_React$Component) {
   }
 
   _createClass(BagPage, [{
+    key: "addInventory",
+    value: function addInventory(viewListID) {
+      this.setState(function (prevState) {
+        return {
+          viewListID: prevState.viewListID == viewListID ? null : viewListID,
+          viewBagUpdate: null
+        };
+      });
+    }
+  }, {
     key: "updateBagToggle",
     value: function updateBagToggle(id) {
       this.setState(function (prevState) {
         return {
-          viewBagUpdate: prevState.viewBagUpdate == id ? null : id
+          viewBagUpdate: prevState.viewBagUpdate == id ? null : id,
+          viewListID: null
         };
       });
     }
@@ -511,15 +527,6 @@ function (_React$Component) {
     key: "deleteItem",
     value: function deleteItem(id) {
       this.props.deleteBag(id);
-    }
-  }, {
-    key: "addInventory",
-    value: function addInventory(viewListID) {
-      this.setState(function (prevState) {
-        return {
-          viewListID: prevState.viewListID == viewListID ? null : viewListID
-        };
-      });
     }
   }, {
     key: "render",
@@ -633,8 +640,8 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MainForm).call(this, props));
     _this.state = {
-      description: "",
-      destination: ""
+      description: '',
+      destination: ''
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.handleDescChange = _this.handleDescChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -644,15 +651,15 @@ function (_React$Component) {
   _createClass(MainForm, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      $("#btnSubmit").click(function (event) {
-        var form = $("#myForm");
+      $('#btnSubmit').click(function (event) {
+        var form = $('#myForm');
 
         if (form[0].checkValidity() === false) {
           event.preventDefault();
           event.stopPropagation();
         }
 
-        form.addClass("was-validated");
+        form.addClass('was-validated');
       });
     }
   }, {

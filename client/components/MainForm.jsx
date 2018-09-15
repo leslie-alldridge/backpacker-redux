@@ -1,24 +1,24 @@
-import React from "react";
+import React from 'react';
 
 class MainForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      description: "",
-      destination: ""
+      description: '',
+      destination: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleDescChange = this.handleDescChange.bind(this);
   }
 
   componentDidMount() {
-    $("#btnSubmit").click(event => {
-      const form = $("#myForm");
+    $('#btnSubmit').click(event => {
+      const form = $('#myForm');
       if (form[0].checkValidity() === false) {
         event.preventDefault();
         event.stopPropagation();
       }
-      form.addClass("was-validated");
+      form.addClass('was-validated');
     });
   }
 
@@ -56,9 +56,7 @@ class MainForm extends React.Component {
                 You can save multiple bags.
               </small>
               <div className="valid-feedback">Nice! You got this one!</div>
-              <div className="invalid-feedback">
-                Sorry, you missed this one.
-              </div>
+              <div className="invalid-feedback">Sorry, you missed this one.</div>
             </div>
             <div className="form-group">
               <label>Destination</label>
@@ -71,19 +69,13 @@ class MainForm extends React.Component {
                 placeholder="Bag Destination"
               />
               <div className="valid-feedback">Nice! You got this one!</div>
-              <div className="invalid-feedback">
-                Sorry, you missed this one.
-              </div>
+              <div className="invalid-feedback">Sorry, you missed this one.</div>
             </div>
             <button
               type="submit"
               id="btnSubmit"
               onClick={e =>
-                this.props.handleClick(
-                  e,
-                  this.state.description,
-                  this.state.destination
-                )
+                this.props.handleClick(e, this.state.description, this.state.destination)
               }
               className="btn btn-primary"
             >

@@ -18,12 +18,9 @@ export default function(state = [], action) {
                 if (index2 > -1) {
                         return state.map(item => {
                                 if (item.id === action.id) {
-                                        console.log(item.items);
-                                        console.log(action.inventory);
+                                        item.checked.push(action.inventory)
                                         item.items = item.items.filter(x => x !== action.inventory)
-                                         return item
-                                        
-                        
+                                        return item
                                 }
                                 return item;
                         })
@@ -31,5 +28,3 @@ export default function(state = [], action) {
         }   
         return state  
         }
-
-        // x != action.inventory

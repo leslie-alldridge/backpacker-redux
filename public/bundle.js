@@ -104,7 +104,8 @@ var addBagAction = function addBagAction(id, description, destination) {
     id: id,
     description: description,
     destination: destination,
-    items: []
+    items: [],
+    checked: []
   };
 };
 var deleteBagAction = function deleteBagAction(id) {
@@ -219,7 +220,6 @@ function (_Component) {
       this.setState({
         bagCount: this.state.bags.length
       });
-      console.log(len.length);
     }
   }, {
     key: "render",
@@ -322,14 +322,11 @@ function (_React$Component) {
   }, {
     key: "checkItem",
     value: function checkItem(id, item) {
-      console.log('hit check item');
-      console.log(id, item);
       this.props.checkIt(id, item);
     }
   }, {
     key: "saveItem",
     value: function saveItem(id, input) {
-      console.log('hit save item');
       this.props.saveIt(id, input);
     }
   }, {
@@ -357,11 +354,7 @@ function (_React$Component) {
         id: "checkAll",
         className: "btn btn-success"
       }, "Add Item"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.bags.map(function (item) {
-        console.log(item.id);
-        console.log(_this2.props.id);
         return item.items.map(function (newItem) {
-          console.log(newItem);
-
           if (_this2.props.id == item.id) {
             return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
               key: newItem
@@ -380,11 +373,19 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Items Checked"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         id: "done-items",
         className: "list-unstyled"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Some item ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "remove-item btn btn-default btn-xs pull-right"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "glyphicon glyphicon-remove"
-      }))))))));
+      }, this.props.bags.map(function (item) {
+        return item.checked.map(function (newItem) {
+          if (_this2.props.id == item.id) {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+              key: newItem
+            }, newItem, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+              className: "remove-item btn btn-default btn-xs pull-right"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+              className: "glyphicon glyphicon-remove"
+            })));
+          }
+        });
+      }))))));
     }
   }]);
 
@@ -478,7 +479,6 @@ function (_React$Component) {
   }, {
     key: "addInventory",
     value: function addInventory(viewListID) {
-      console.log('hit');
       this.setState(function (prevState) {
         return {
           viewListID: prevState.viewListID == viewListID ? null : viewListID
@@ -493,7 +493,6 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "All of your bags are below"), this.props.bagsData.map(function (bag) {
-        console.log(bag);
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: bag.id,
           id: "card",
@@ -538,7 +537,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     deleteBag: function deleteBag(description, destination) {
-      console.log(description, destination);
       dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_1__["deleteBagAction"])(description, destination));
     }
   };
@@ -743,8 +741,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       if (index2 > -1) {
         return state.map(function (item) {
           if (item.id === action.id) {
-            console.log(item.items);
-            console.log(action.inventory);
+            item.checked.push(action.inventory);
             item.items = item.items.filter(function (x) {
               return x !== action.inventory;
             });
@@ -758,7 +755,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   }
 
   return state;
-}); // x != action.inventory
+});
 
 /***/ }),
 

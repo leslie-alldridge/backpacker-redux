@@ -6,7 +6,8 @@ export const addBagAction = (id, description, destination) => {
       id: id,
       description: description,
       destination: destination,
-      items: []
+      items: [],
+      checked: []
     }
   }
 

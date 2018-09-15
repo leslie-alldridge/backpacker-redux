@@ -20,14 +20,10 @@ class BagList extends React.Component{
     }
 
     checkItem(id, item){
-        console.log('hit check item');
-        console.log(id, item);
-        
         this.props.checkIt(id, item)
     }
 
     saveItem(id, input){
-        console.log('hit save item');
         this.props.saveIt(id, input);
     }
 
@@ -44,12 +40,7 @@ class BagList extends React.Component{
                     <hr/>
                     <ul>
                         {this.props.bags.map(item => {
-                            console.log(item.id);
-                            console.log(this.props.id);
-                            
-                            
                             return item.items.map(newItem => {
-                                console.log(newItem);
                                 if (this.props.id == item.id){
                                 return <li key={newItem}>{newItem} -  <i onClick={() => {this.checkItem(this.props.id, newItem)}} 
                                 className="fas fa-check"></i></li>
@@ -63,13 +54,18 @@ class BagList extends React.Component{
             <div className="todolist">
              <h4>Items Checked</h4>
                 <ul id="done-items" className="list-unstyled">
-                    <li>Some item <button className="remove-item btn btn-default btn-xs pull-right"><span className="glyphicon glyphicon-remove"></span></button></li>
+                {this.props.bags.map(item => {
+                    return item.checked.map(newItem => {
+                        if (this.props.id == item.id){
+                            return <li key={newItem}>{newItem}<button className="remove-item btn btn-default btn-xs pull-right"><span className="glyphicon glyphicon-remove"></span></button></li>
+                        }
+                    })
+                })}
                 </ul>
             </div>
         </div>
     </div>
-       
-        </div>
+    </div>
     )
     }
 }

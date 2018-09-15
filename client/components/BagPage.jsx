@@ -19,7 +19,6 @@ class BagPage extends React.Component{
     }
 
     addInventory (viewListID) {
-        console.log('hit');
         this.setState(prevState => ({
             viewListID: prevState.viewListID == viewListID ? null : viewListID
           }));
@@ -32,7 +31,6 @@ class BagPage extends React.Component{
         <div id="container">
             <h3>All of your bags are below</h3>
             {this.props.bagsData.map(bag => {
-                console.log(bag);
                 
             return <div key={bag.id} id="card" className="card" >
                 {/* <img className="card-img-top" src=".../100px180/" alt="Card image cap"/> */}
@@ -42,12 +40,11 @@ class BagPage extends React.Component{
                 <a href="#" onClick={() => {this.addInventory(bag.id)}} className="btn btn-primary">Add Inventory</a>
                 <a href="#" onClick={() => this.deleteItem(bag.id)} className="btn btn-danger">Delete</a>
                 {this.state.viewListID == bag.id && <BagList key={bag.id} id = {bag.id} description={bag.description} destination={bag.destination}/>}
-
             </div>
         </div>
         
        })}
-        </div>
+    </div>
     )
     }
 }
@@ -61,8 +58,6 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
     return {
         deleteBag: (description, destination) => {
-            console.log(description, destination);
-            
             dispatch(deleteBagAction(description, destination))
         }
     }

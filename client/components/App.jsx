@@ -23,10 +23,7 @@ class App extends Component {
         this.props.addBag(len.length, description, destination)
         this.setState({
             bagCount: this.state.bags.length
-        })
-        
-        console.log(len.length);
-        
+        })        
     }
 
     render() { 
@@ -38,8 +35,6 @@ class App extends Component {
                 </div>
                 {this.state.formPage && <MainForm handleClick={this.handleClick}/>}
                 <BagPage bagsData={this.props.bags} />
-           
-                
             </div>
         )
     }

@@ -31,7 +31,7 @@ class App extends Component {
             <div className="container">
                 <div className="jumbotron">
                     <h1>Back Packer</h1>
-                    <h4>Keep track of your packed belongings today</h4>
+                    <h4>Keep track of your packed belongings</h4>
                 </div>
                 {this.state.formPage && <MainForm handleClick={this.handleClick}/>}
                 {this.state.bagPage && <BagPage bags={this.props.bags} />}

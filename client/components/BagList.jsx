@@ -1,4 +1,7 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import {saveItemAction} from '../actions/addItem'
+
 class BagList extends React.Component{
     constructor(props){
         super(props)
@@ -6,12 +9,18 @@ class BagList extends React.Component{
            formInput: ''
         }
         this.formChange = this.formChange.bind(this)
+        this.saveItem = this.saveItem.bind(this)
     }
 
     formChange(e) {
         this.setState({
             formInput: e.target.value
         })
+    }
+
+    saveItem(id, input){
+        console.log('hit save item');
+        this.props.saveIt(id, input);
     }
 
     render(){
@@ -23,9 +32,14 @@ class BagList extends React.Component{
             <div class="todolist not-done">
              <h4>Bag List</h4>
                 <input onChange={this.formChange} type="text" class="form-control add-todo" placeholder="Item Description"/>
-                    <button id="checkAll" class="btn btn-success">Add Item</button>
-                    
+                    <button onClick={() => {this.saveItem(this.props.id, this.state.formInput)}} id="checkAll" class="btn btn-success">Add Item</button>
                     <hr/>
+                    {console.log(this.props)}
+                    <ul>
+                        {this.props.bags[this.props.id - 1].items.map(item => {
+                            return <li>{item}</li>
+                        })}
+                    </ul>
             </div>
         </div>
         <div class="col-md-6">
@@ -42,4 +56,19 @@ class BagList extends React.Component{
     )
     }
 }
-export default BagList
+
+function mapStateToProps(state){
+    return {
+        bags: state.bags
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return {
+        saveIt: (id, description, destination) => {            
+            dispatch(saveItemAction(id, description, destination))
+        }
+    }
+}
+
+export default connect (mapStateToProps, mapDispatchToProps)(BagList)

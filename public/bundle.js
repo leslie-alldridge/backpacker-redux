@@ -103,7 +103,8 @@ var addBagAction = function addBagAction(id, description, destination) {
     type: 'ADD_TO_BAGS',
     id: id,
     description: description,
-    destination: destination
+    destination: destination,
+    items: []
   };
 };
 var deleteBagAction = function deleteBagAction(id) {
@@ -111,6 +112,27 @@ var deleteBagAction = function deleteBagAction(id) {
   return {
     type: 'DELETE_BAGS',
     id: id
+  };
+};
+
+/***/ }),
+
+/***/ "./client/actions/addItem.js":
+/*!***********************************!*\
+  !*** ./client/actions/addItem.js ***!
+  \***********************************/
+/*! exports provided: saveItemAction */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveItemAction", function() { return saveItemAction; });
+var saveItemAction = function saveItemAction(id, item) {
+  console.log(id, item);
+  return {
+    type: 'ADD_ITEM',
+    id: id,
+    inventory: item
   };
 };
 
@@ -237,6 +259,8 @@ function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_addItem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/addItem */ "./client/actions/addItem.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -257,6 +281,8 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
+
+
 var BagList =
 /*#__PURE__*/
 function (_React$Component) {
@@ -272,6 +298,7 @@ function (_React$Component) {
       formInput: ''
     };
     _this.formChange = _this.formChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.saveItem = _this.saveItem.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -283,8 +310,16 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "saveItem",
+    value: function saveItem(id, input) {
+      console.log('hit save item');
+      this.props.saveIt(id, input);
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -299,9 +334,14 @@ function (_React$Component) {
         class: "form-control add-todo",
         placeholder: "Item Description"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          _this2.saveItem(_this2.props.id, _this2.state.formInput);
+        },
         id: "checkAll",
         class: "btn btn-success"
-      }, "Add Item"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Add Item"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), console.log(this.props), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.bags[this.props.id - 1].items.map(function (item) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, item);
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         class: "col-md-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         class: "todolist"
@@ -319,7 +359,21 @@ function (_React$Component) {
   return BagList;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (BagList);
+function mapStateToProps(state) {
+  return {
+    bags: state.bags
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    saveIt: function saveIt(id, description, destination) {
+      dispatch(Object(_actions_addItem__WEBPACK_IMPORTED_MODULE_2__["saveItemAction"])(id, description, destination));
+    }
+  };
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(BagList));
 
 /***/ }),
 
@@ -635,6 +689,19 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       return state.filter(function (item) {
         return item.id !== action.id;
       });
+
+    case "ADD_ITEM":
+      var index = state.findIndex(function (item) {
+        return item.id === action.id;
+      });
+
+      if (index > -1) {
+        return state.map(function (item) {
+          if (item.id === action.id) item.items.push(action.inventory);
+          return item;
+        });
+      }
+
   }
 
   return state;

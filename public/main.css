@@ -51,3 +51,19 @@ li.ui-state-default:last-child {
   margin-left: 2%;
   margin-top: 2%;
 }
+
+#tick {
+  color: #28a745;
+  float: right;
+}
+#tick:hover {
+  cursor: pointer;
+}
+
+#trash {
+  color: red;
+  float: right;
+}
+#trash:hover {
+  cursor: pointer;
+}

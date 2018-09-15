@@ -129,16 +129,17 @@ var updateBagAction = function updateBagAction(id, destination, description) {
 /*!***********************************!*\
   !*** ./client/actions/addItem.js ***!
   \***********************************/
-/*! exports provided: saveItemAction, checkItAction */
+/*! exports provided: saveItemAction, checkItAction, deleteItAction */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveItemAction", function() { return saveItemAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkItAction", function() { return checkItAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteItAction", function() { return deleteItAction; });
 var saveItemAction = function saveItemAction(id, item) {
   return {
-    type: "ADD_ITEM",
+    type: 'ADD_ITEM',
     id: id,
     inventory: item,
     quantity: 1
@@ -146,7 +147,14 @@ var saveItemAction = function saveItemAction(id, item) {
 };
 var checkItAction = function checkItAction(id, item) {
   return {
-    type: "CHECK_ITEM",
+    type: 'CHECK_ITEM',
+    id: id,
+    inventory: item
+  };
+};
+var deleteItAction = function deleteItAction(id, item) {
+  return {
+    type: 'DEL_ITEM',
     id: id,
     inventory: item
   };
@@ -302,15 +310,24 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(BagList).call(this, props));
     _this.state = {
-      formInput: ""
+      formInput: ''
     };
     _this.formChange = _this.formChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.saveItem = _this.saveItem.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.checkItem = _this.checkItem.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.delete = _this.delete.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(BagList, [{
+    key: "delete",
+    value: function _delete(id, input) {
+      console.log(id);
+      console.log(input);
+      var deleteIt = this.props.deleteIt;
+      deleteIt(id, input);
+    }
+  }, {
     key: "formChange",
     value: function formChange(e) {
       this.setState({
@@ -362,7 +379,8 @@ function (_React$Component) {
               onClick: function onClick() {
                 _this2.checkItem(_this2.props.id, newItem);
               },
-              className: "fas fa-check"
+              className: "fas fa-check",
+              id: "tick"
             }));
           }
         });
@@ -378,11 +396,13 @@ function (_React$Component) {
           if (_this2.props.id === item.id) {
             return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
               key: newItem
-            }, newItem, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-              className: "remove-item btn btn-default btn-xs pull-right"
-            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-              className: "glyphicon glyphicon-remove"
-            })));
+            }, newItem, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              onClick: function onClick() {
+                _this2.delete(_this2.props.id, newItem);
+              },
+              id: "trash",
+              className: "fas fa-trash-alt"
+            }));
           }
         });
       }))))));
@@ -405,6 +425,9 @@ function mapDispatchToProps(dispatch) {
     },
     checkIt: function checkIt(id, item) {
       dispatch(Object(_actions_addItem__WEBPACK_IMPORTED_MODULE_2__["checkItAction"])(id, item));
+    },
+    deleteIt: function deleteIt(id, item) {
+      dispatch(Object(_actions_addItem__WEBPACK_IMPORTED_MODULE_2__["deleteItAction"])(id, item));
     }
   };
 }
@@ -768,11 +791,9 @@ function (_React$Component) {
   _createClass(UpdateBag, [{
     key: "destinationChange",
     value: function destinationChange(e) {
-      console.log(e.target.value);
       this.setState({
         updateInput: e.target.value
       });
-      console.log(this.state);
     }
   }, {
     key: "desChange",
@@ -780,11 +801,7 @@ function (_React$Component) {
       this.setState({
         desInput: e.target.value
       });
-    } //   checkItem(id, item) {
-    //     const { checkIt } = this.props;
-    //     checkIt(id, item);
-    //   }
-
+    }
   }, {
     key: "updateBag",
     value: function updateBag(id, destination, description) {
@@ -897,6 +914,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
+    // BAGS
     case 'ADD_TO_BAGS':
       var index1 = state.findIndex(function (item) {
         return item.description === action.description && item.destination === action.destination;
@@ -916,6 +934,25 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       return state.filter(function (item) {
         return item.id !== action.id;
       });
+
+    case 'UPDATE_BAG':
+      var index3 = state.findIndex(function (item) {
+        return item.id === action.id;
+      });
+
+      if (index3 > -1) {
+        return state.map(function (item) {
+          if (item.id === action.id) {
+            item.description = action.description;
+            item.destination = action.destination;
+            return item;
+          }
+
+          return item;
+        });
+      }
+
+    //ITEMS
 
     case 'ADD_ITEM':
       var index = state.findIndex(function (item) {
@@ -948,16 +985,17 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         });
       }
 
-    case 'UPDATE_BAG':
-      var index3 = state.findIndex(function (item) {
+    case 'DEL_ITEM':
+      var index4 = state.findIndex(function (item) {
         return item.id === action.id;
       });
 
-      if (index3 > -1) {
+      if (index4 > -1) {
         return state.map(function (item) {
           if (item.id === action.id) {
-            item.description = action.description;
-            item.destination = action.destination;
+            item.checked = item.checked.filter(function (x) {
+              return x !== action.inventory;
+            });
             return item;
           }
 

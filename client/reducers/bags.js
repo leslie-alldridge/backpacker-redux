@@ -1,5 +1,6 @@
 export default function(state = [], action) {
   switch (action.type) {
+    // BAGS
     case 'ADD_TO_BAGS':
       const index1 = state.findIndex(
         item => item.description === action.description && item.destination === action.destination
@@ -15,6 +16,19 @@ export default function(state = [], action) {
       }
     case 'DELETE_BAGS':
       return state.filter(item => item.id !== action.id);
+    case 'UPDATE_BAG':
+      const index3 = state.findIndex(item => item.id === action.id);
+      if (index3 > -1) {
+        return state.map(item => {
+          if (item.id === action.id) {
+            item.description = action.description;
+            item.destination = action.destination;
+            return item;
+          }
+          return item;
+        });
+      }
+    //ITEMS
     case 'ADD_ITEM':
       const index = state.findIndex(item => item.id === action.id);
       if (index > -1) {
@@ -35,13 +49,12 @@ export default function(state = [], action) {
           return item;
         });
       }
-    case 'UPDATE_BAG':
-      const index3 = state.findIndex(item => item.id === action.id);
-      if (index3 > -1) {
+    case 'DEL_ITEM':
+      const index4 = state.findIndex(item => item.id === action.id);
+      if (index4 > -1) {
         return state.map(item => {
           if (item.id === action.id) {
-            item.description = action.description;
-            item.destination = action.destination;
+            item.checked = item.checked.filter(x => x !== action.inventory);
             return item;
           }
           return item;

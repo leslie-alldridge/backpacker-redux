@@ -14,12 +14,9 @@ class UpdateBag extends React.Component {
   }
 
   destinationChange(e) {
-    console.log(e.target.value);
-
     this.setState({
       updateInput: e.target.value
     });
-    console.log(this.state);
   }
 
   desChange(e) {
@@ -27,11 +24,6 @@ class UpdateBag extends React.Component {
       desInput: e.target.value
     });
   }
-
-  //   checkItem(id, item) {
-  //     const { checkIt } = this.props;
-  //     checkIt(id, item);
-  //   }
 
   updateBag(id, destination, description) {
     const { updateIt } = this.props;

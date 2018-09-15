@@ -1,17 +1,26 @@
-import React from "react";
+import React from 'react';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import { saveItemAction, checkItAction } from "../actions/addItem";
+import { saveItemAction, checkItAction, deleteItAction } from '../actions/addItem';
 class BagList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      formInput: ""
+      formInput: ''
     };
     this.formChange = this.formChange.bind(this);
     this.saveItem = this.saveItem.bind(this);
     this.checkItem = this.checkItem.bind(this);
+    this.delete = this.delete.bind(this);
+  }
+
+  delete(id, input) {
+    console.log(id);
+    console.log(input);
+
+    const { deleteIt } = this.props;
+    deleteIt(id, input);
   }
 
   formChange(e) {
@@ -65,6 +74,7 @@ class BagList extends React.Component {
                               this.checkItem(this.props.id, newItem);
                             }}
                             className="fas fa-check"
+                            id="tick"
                           />
                         </li>
                       );
@@ -84,9 +94,13 @@ class BagList extends React.Component {
                       return (
                         <li key={newItem}>
                           {newItem}
-                          <button className="remove-item btn btn-default btn-xs pull-right">
-                            <span className="glyphicon glyphicon-remove" />
-                          </button>
+                          <i
+                            onClick={() => {
+                              this.delete(this.props.id, newItem);
+                            }}
+                            id="trash"
+                            className="fas fa-trash-alt"
+                          />
                         </li>
                       );
                     }
@@ -114,6 +128,9 @@ function mapDispatchToProps(dispatch) {
     },
     checkIt: (id, item) => {
       dispatch(checkItAction(id, item));
+    },
+    deleteIt: (id, item) => {
+      dispatch(deleteItAction(id, item));
     }
   };
 }

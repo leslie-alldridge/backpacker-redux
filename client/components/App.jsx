@@ -35,7 +35,7 @@ class App extends Component {
                 </div>
                 {this.state.formPage && <MainForm handleClick={this.handleClick}/>}
                 {this.state.bagPage && <BagPage bags={this.props.bags} />}
-                <BagList />
+                {/* <BagList /> */}
             </div>
         );
     }

@@ -43,3 +43,11 @@ li.ui-state-default:last-child{
 #checkAll{
     margin-top:10px;
 }
+
+#card{
+    display: flex;
+    display: inline-flex;
+    width: 18rem;
+    margin-left: 2%;
+    margin-top: 2%;
+}

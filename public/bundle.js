@@ -352,7 +352,19 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "bag page"), this.props.bags.map(function (bag) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, bag.description, " and ", bag.destination);
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "card",
+          class: "card"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          class: "card-body"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+          class: "card-title"
+        }, bag.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          class: "card-text"
+        }, bag.destination), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: "#",
+          class: "btn btn-primary"
+        }, "Add Inventory")));
       }));
     }
   }]);

@@ -13,6 +13,23 @@ export default function(state = [], action) {
                                 return item;
                         })
                 }
-                }    
+        case "CHECK_ITEM":
+                const index2 = state.findIndex(item => item.id === action.id)
+                if (index2 > -1) {
+                        return state.map(item => {
+                                if (item.id === action.id) {
+                                        console.log(item.items);
+                                        console.log(action.inventory);
+                                        item.items = item.items.filter(x => x !== action.inventory)
+                                         return item
+                                        
+                        
+                                }
+                                return item;
+                        })
+                }
+        }   
         return state  
         }
+
+        // x != action.inventory

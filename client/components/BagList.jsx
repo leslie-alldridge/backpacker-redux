@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {saveItemAction} from '../actions/addItem'
+import {saveItemAction, checkItAction} from '../actions/addItem'
 
 class BagList extends React.Component{
     constructor(props){
@@ -10,12 +10,20 @@ class BagList extends React.Component{
         }
         this.formChange = this.formChange.bind(this)
         this.saveItem = this.saveItem.bind(this)
+        this.checkItem = this.checkItem.bind(this)
     }
 
     formChange(e) {
         this.setState({
             formInput: e.target.value
         })
+    }
+
+    checkItem(id, item){
+        console.log('hit check item');
+        console.log(id, item);
+        
+        this.props.checkIt(id, item)
     }
 
     saveItem(id, input){
@@ -27,26 +35,27 @@ class BagList extends React.Component{
 
     return (
         <div id="container">
-        <div class="row">
-        <div class="col-md-6">
-            <div class="todolist not-done">
+        <div className="row">
+        <div className="col-md-6">
+            <div className="todolist not-done">
              <h4>Bag List</h4>
-                <input onChange={this.formChange} type="text" class="form-control add-todo" placeholder="Item Description"/>
-                    <button onClick={() => {this.saveItem(this.props.id, this.state.formInput)}} id="checkAll" class="btn btn-success">Add Item</button>
+                <input onChange={this.formChange} type="text" className="form-control add-todo" placeholder="Item Description"/>
+                    <button onClick={() => {this.saveItem(this.props.id, this.state.formInput)}} id="checkAll" className="btn btn-success">Add Item</button>
                     <hr/>
                     {console.log(this.props)}
                     <ul>
                         {this.props.bags[this.props.id - 1].items.map(item => {
-                            return <li>{item}</li>
+                           return <li key={item}>{item} -  <i onClick={() => {this.checkItem(this.props.id, item)}} 
+                            className="fas fa-check"></i></li>
                         })}
                     </ul>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="todolist">
+        <div className="col-md-6">
+            <div className="todolist">
              <h4>Items Checked</h4>
-                <ul id="done-items" class="list-unstyled">
-                    <li>Some item <button class="remove-item btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-remove"></span></button></li>
+                <ul id="done-items" className="list-unstyled">
+                    <li>Some item <button className="remove-item btn btn-default btn-xs pull-right"><span className="glyphicon glyphicon-remove"></span></button></li>
                 </ul>
             </div>
         </div>
@@ -67,6 +76,9 @@ function mapDispatchToProps(dispatch){
     return {
         saveIt: (id, description, destination) => {            
             dispatch(saveItemAction(id, description, destination))
+        },
+        checkIt: (id, item) => {
+            dispatch(checkItAction(id, item))
         }
     }
 }

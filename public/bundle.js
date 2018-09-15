@@ -121,16 +121,26 @@ var deleteBagAction = function deleteBagAction(id) {
 /*!***********************************!*\
   !*** ./client/actions/addItem.js ***!
   \***********************************/
-/*! exports provided: saveItemAction */
+/*! exports provided: saveItemAction, checkItAction */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveItemAction", function() { return saveItemAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkItAction", function() { return checkItAction; });
 var saveItemAction = function saveItemAction(id, item) {
   console.log(id, item);
   return {
     type: 'ADD_ITEM',
+    id: id,
+    inventory: item,
+    quantity: 1
+  };
+};
+var checkItAction = function checkItAction(id, item) {
+  console.log(id, item);
+  return {
+    type: 'CHECK_ITEM',
     id: id,
     inventory: item
   };
@@ -299,6 +309,7 @@ function (_React$Component) {
     };
     _this.formChange = _this.formChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.saveItem = _this.saveItem.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.checkItem = _this.checkItem.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -308,6 +319,13 @@ function (_React$Component) {
       this.setState({
         formInput: e.target.value
       });
+    }
+  }, {
+    key: "checkItem",
+    value: function checkItem(id, item) {
+      console.log('hit check item');
+      console.log(id, item);
+      this.props.checkIt(id, item);
     }
   }, {
     key: "saveItem",
@@ -323,35 +341,42 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        class: "row"
+        className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        class: "col-md-6"
+        className: "col-md-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        class: "todolist not-done"
+        className: "todolist not-done"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Bag List"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onChange: this.formChange,
         type: "text",
-        class: "form-control add-todo",
+        className: "form-control add-todo",
         placeholder: "Item Description"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
           _this2.saveItem(_this2.props.id, _this2.state.formInput);
         },
         id: "checkAll",
-        class: "btn btn-success"
+        className: "btn btn-success"
       }, "Add Item"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), console.log(this.props), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.bags[this.props.id - 1].items.map(function (item) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, item);
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          key: item
+        }, item, " -  ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          onClick: function onClick() {
+            _this2.checkItem(_this2.props.id, item);
+          },
+          className: "fas fa-check"
+        }));
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        class: "col-md-6"
+        className: "col-md-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        class: "todolist"
+        className: "todolist"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Items Checked"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         id: "done-items",
-        class: "list-unstyled"
+        className: "list-unstyled"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Some item ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        class: "remove-item btn btn-default btn-xs pull-right"
+        className: "remove-item btn btn-default btn-xs pull-right"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        class: "glyphicon glyphicon-remove"
+        className: "glyphicon glyphicon-remove"
       }))))))));
     }
   }]);
@@ -369,6 +394,9 @@ function mapDispatchToProps(dispatch) {
   return {
     saveIt: function saveIt(id, description, destination) {
       dispatch(Object(_actions_addItem__WEBPACK_IMPORTED_MODULE_2__["saveItemAction"])(id, description, destination));
+    },
+    checkIt: function checkIt(id, item) {
+      dispatch(Object(_actions_addItem__WEBPACK_IMPORTED_MODULE_2__["checkItAction"])(id, item));
     }
   };
 }
@@ -459,26 +487,27 @@ function (_React$Component) {
         id: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "All of your bags are below"), this.props.bagsData.map(function (bag) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          key: bag.id,
           id: "card",
-          class: "card"
+          className: "card"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          class: "card-body"
+          className: "card-body"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
-          class: "card-title"
+          className: "card-title"
         }, bag.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-          class: "card-text"
+          className: "card-text"
         }, bag.destination), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "#",
           onClick: function onClick() {
             _this2.addInventory(bag.id);
           },
-          class: "btn btn-primary"
+          className: "btn btn-primary"
         }, "Add Inventory"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "#",
           onClick: function onClick() {
             return _this2.deleteItem(bag.id);
           },
-          class: "btn btn-danger"
+          className: "btn btn-danger"
         }, "Delete"), _this2.state.viewListID == bag.id && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagList__WEBPACK_IMPORTED_MODULE_3__["default"], {
           key: bag.id,
           id: bag.id,
@@ -586,29 +615,25 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "mainForm"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        class: "container"
+        className: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        class: "form-group"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        for: "exampleInputEmail1"
-      }, "Enter Bag Description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Enter Bag Description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onChange: this.handleDescChange,
         type: "text",
-        class: "form-control",
+        className: "form-control",
         id: "exampleInputEmail1",
         "aria-describedby": "emailHelp",
         placeholder: "Large, small, hand luggage.."
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", {
         id: "emailHelp",
-        class: "form-text text-muted"
+        className: "form-text text-muted"
       }, "You can save multiple bags.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        class: "form-group"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        for: "exampleInputPassword1"
-      }, "Destination"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Destination"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onChange: this.handleChange,
         type: "text",
-        class: "form-control",
+        className: "form-control",
         id: "exampleInputPassword1",
         placeholder: "Bag Destination"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -616,7 +641,7 @@ function (_React$Component) {
         onClick: function onClick(e) {
           return _this2.props.handleClick(e, _this2.state.description, _this2.state.destination);
         },
-        class: "btn btn-primary"
+        className: "btn btn-primary"
       }, "Save Bag"))));
     }
   }]);
@@ -702,10 +727,30 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         });
       }
 
+    case "CHECK_ITEM":
+      var index2 = state.findIndex(function (item) {
+        return item.id === action.id;
+      });
+
+      if (index2 > -1) {
+        return state.map(function (item) {
+          if (item.id === action.id) {
+            console.log(item.items);
+            console.log(action.inventory);
+            item.items = item.items.filter(function (x) {
+              return x !== action.inventory;
+            });
+            return item;
+          }
+
+          return item;
+        });
+      }
+
   }
 
   return state;
-});
+}); // x != action.inventory
 
 /***/ }),
 

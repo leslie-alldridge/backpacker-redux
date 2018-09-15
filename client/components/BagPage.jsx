@@ -32,13 +32,13 @@ class BagPage extends React.Component{
         <div id="container">
             <h3>All of your bags are below</h3>
             {this.props.bagsData.map(bag => {
-            return <div id="card" class="card" >
-                {/* <img class="card-img-top" src=".../100px180/" alt="Card image cap"/> */}
-                <div class="card-body">
-                <h5 class="card-title">{bag.description}</h5>
-                <p class="card-text">{bag.destination}</p>
-                <a href="#" onClick={() => {this.addInventory(bag.id)}} class="btn btn-primary">Add Inventory</a>
-                <a href="#" onClick={() => this.deleteItem(bag.id)} class="btn btn-danger">Delete</a>
+            return <div key={bag.id} id="card" className="card" >
+                {/* <img className="card-img-top" src=".../100px180/" alt="Card image cap"/> */}
+                <div className="card-body">
+                <h5 className="card-title">{bag.description}</h5>
+                <p className="card-text">{bag.destination}</p>
+                <a href="#" onClick={() => {this.addInventory(bag.id)}} className="btn btn-primary">Add Inventory</a>
+                <a href="#" onClick={() => this.deleteItem(bag.id)} className="btn btn-danger">Delete</a>
                 {this.state.viewListID == bag.id && <BagList key={bag.id} id = {bag.id} description={bag.description} destination={bag.destination}/>}
 
             </div>

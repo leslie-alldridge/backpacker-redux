@@ -11,7 +11,8 @@ class App extends Component {
     this.state = {
         bags: this.props.bags || [],
         bagPage: false,
-        formPage: true
+        formPage: true,
+        bagCount: 1
     }
     this.handleClick = this.handleClick.bind(this)
     }
@@ -19,9 +20,14 @@ class App extends Component {
     handleClick(e, description, destination){
         e.preventDefault()
         console.log('submitted');
-        this.props.addBag(description, destination)
+        this.props.addBag(this.state.bagCount, description, destination)
+        this.setState({
+            bagCount: this.state.bagCount + 1
+        })
+        console.log(this.state);
+        
     }
-    
+
     render() { 
         return ( 
             <div className="container">
@@ -30,10 +36,11 @@ class App extends Component {
                     <h4>Keep track of your packed belongings</h4>
                 </div>
                 {this.state.formPage && <MainForm handleClick={this.handleClick}/>}
-                {this.state.bagPage && <BagPage bags={this.props.bags} />}
-                <BagPage bags={this.props.bags} />
+                <BagPage bagsData={this.props.bags} />
+           
+                
             </div>
-        );
+        )
     }
 }
  
@@ -45,10 +52,10 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
     return {
-        addBag: (description, destination) => {
-            console.log(description, destination);
+        addBag: (id, description, destination) => {
+            console.log(id, description, destination);
             
-            dispatch(addBagAction(description, destination))
+            dispatch(addBagAction(id, description, destination))
         }
     }
 }

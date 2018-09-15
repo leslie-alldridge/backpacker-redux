@@ -47,7 +47,7 @@ li.ui-state-default:last-child{
 #card{
     display: flex;
     display: inline-flex;
-    width: 18rem;
+    width: 32rem;
     margin-left: 2%;
     margin-top: 2%;
 }

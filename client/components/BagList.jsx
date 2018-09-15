@@ -3,12 +3,16 @@ class BagList extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-           
+           formInput: ''
         }
-       
+        this.formChange = this.formChange.bind(this)
     }
 
-   
+    formChange(e) {
+        this.setState({
+            formInput: e.target.value
+        })
+    }
 
     render(){
 
@@ -17,8 +21,8 @@ class BagList extends React.Component{
         <div class="row">
         <div class="col-md-6">
             <div class="todolist not-done">
-             <h1>Bag List</h1>
-                <input type="text" class="form-control add-todo" placeholder="Add todo"/>
+             <h4>Bag List</h4>
+                <input onChange={this.formChange} type="text" class="form-control add-todo" placeholder="Item Description"/>
                     <button id="checkAll" class="btn btn-success">Add Item</button>
                     
                     <hr/>
@@ -26,7 +30,7 @@ class BagList extends React.Component{
         </div>
         <div class="col-md-6">
             <div class="todolist">
-             <h1>Items Checked</h1>
+             <h4>Items Checked</h4>
                 <ul id="done-items" class="list-unstyled">
                     <li>Some item <button class="remove-item btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-remove"></span></button></li>
                 </ul>

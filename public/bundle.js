@@ -90,18 +90,27 @@
 /*!**********************************!*\
   !*** ./client/actions/addBag.js ***!
   \**********************************/
-/*! exports provided: addBagAction */
+/*! exports provided: addBagAction, deleteBagAction */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addBagAction", function() { return addBagAction; });
-var addBagAction = function addBagAction(description, destination) {
-  console.log(description, destination);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteBagAction", function() { return deleteBagAction; });
+var addBagAction = function addBagAction(id, description, destination) {
+  console.log(id, description, destination);
   return {
     type: 'ADD_TO_BAGS',
+    id: id,
     description: description,
     destination: destination
+  };
+};
+var deleteBagAction = function deleteBagAction(id) {
+  console.log(id);
+  return {
+    type: 'DELETE_BAGS',
+    id: id
   };
 };
 
@@ -162,7 +171,8 @@ function (_Component) {
     _this.state = {
       bags: _this.props.bags || [],
       bagPage: false,
-      formPage: true
+      formPage: true,
+      bagCount: 1
     };
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
@@ -173,7 +183,11 @@ function (_Component) {
     value: function handleClick(e, description, destination) {
       e.preventDefault();
       console.log('submitted');
-      this.props.addBag(description, destination);
+      this.props.addBag(this.state.bagCount, description, destination);
+      this.setState({
+        bagCount: this.state.bagCount + 1
+      });
+      console.log(this.state);
     }
   }, {
     key: "render",
@@ -184,10 +198,8 @@ function (_Component) {
         className: "jumbotron"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Back Packer"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Keep track of your packed belongings")), this.state.formPage && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MainForm__WEBPACK_IMPORTED_MODULE_1__["default"], {
         handleClick: this.handleClick
-      }), this.state.bagPage && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagPage__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        bags: this.props.bags
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagPage__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        bags: this.props.bags
+        bagsData: this.props.bags
       }));
     }
   }]);
@@ -203,9 +215,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addBag: function addBag(description, destination) {
-      console.log(description, destination);
-      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_5__["addBagAction"])(description, destination));
+    addBag: function addBag(id, description, destination) {
+      console.log(id, description, destination);
+      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_5__["addBagAction"])(id, description, destination));
     }
   };
 }
@@ -235,13 +247,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 
 
@@ -256,11 +268,21 @@ function (_React$Component) {
     _classCallCheck(this, BagList);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(BagList).call(this, props));
-    _this.state = {};
+    _this.state = {
+      formInput: ''
+    };
+    _this.formChange = _this.formChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(BagList, [{
+    key: "formChange",
+    value: function formChange(e) {
+      this.setState({
+        formInput: e.target.value
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -271,10 +293,11 @@ function (_React$Component) {
         class: "col-md-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         class: "todolist not-done"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Bag List"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Bag List"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        onChange: this.formChange,
         type: "text",
         class: "form-control add-todo",
-        placeholder: "Add todo"
+        placeholder: "Item Description"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         id: "checkAll",
         class: "btn btn-success"
@@ -282,7 +305,7 @@ function (_React$Component) {
         class: "col-md-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         class: "todolist"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Items Checked"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Items Checked"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         id: "done-items",
         class: "list-unstyled"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Some item ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -311,6 +334,9 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_addBag__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/addBag */ "./client/actions/addBag.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _BagList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./BagList */ "./client/components/BagList.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -321,13 +347,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+
+
 
 
 
@@ -342,16 +371,39 @@ function (_React$Component) {
     _classCallCheck(this, BagPage);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(BagPage).call(this, props));
-    _this.state = {};
+    _this.state = {
+      bags: _this.props.bags || [],
+      viewList: false,
+      viewListID: null
+    };
+    _this.deleteItem = _this.deleteItem.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.addInventory = _this.addInventory.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(BagPage, [{
+    key: "deleteItem",
+    value: function deleteItem(id) {
+      this.props.deleteBag(id);
+    }
+  }, {
+    key: "addInventory",
+    value: function addInventory(viewListID) {
+      console.log('hit');
+      this.setState(function (prevState) {
+        return {
+          viewListID: prevState.viewListID == viewListID ? null : viewListID
+        };
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "bag page"), this.props.bags.map(function (bag) {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "All of your bags are below"), this.props.bagsData.map(function (bag) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           id: "card",
           class: "card"
@@ -363,8 +415,22 @@ function (_React$Component) {
           class: "card-text"
         }, bag.destination), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "#",
+          onClick: function onClick() {
+            _this2.addInventory(bag.id);
+          },
           class: "btn btn-primary"
-        }, "Add Inventory")));
+        }, "Add Inventory"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: "#",
+          onClick: function onClick() {
+            return _this2.deleteItem(bag.id);
+          },
+          class: "btn btn-danger"
+        }, "Delete"), _this2.state.viewListID == bag.id && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagList__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          key: bag.id,
+          id: bag.id,
+          description: bag.description,
+          destination: bag.destination
+        })));
       }));
     }
   }]);
@@ -372,7 +438,22 @@ function (_React$Component) {
   return BagPage;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (BagPage);
+function mapStateToProps(state) {
+  return {
+    bags: state.bags
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    deleteBag: function deleteBag(description, destination) {
+      console.log(description, destination);
+      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_1__["deleteBagAction"])(description, destination));
+    }
+  };
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps, mapDispatchToProps)(BagPage));
 
 /***/ }),
 
@@ -549,9 +630,13 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   switch (action.type) {
     case "ADD_TO_BAGS":
       return _toConsumableArray(state).concat([action]);
+
+    case "DELETE_BAGS":
+      return state.filter(function (item) {
+        return item.id !== action.id;
+      });
   }
 
-  console.log(state);
   return state;
 });
 

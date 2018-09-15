@@ -1,53 +1,53 @@
 #mainForm {
-    max-width: 50%;
-    border: 1px solid black;
-    border-radius: 4px;
+  max-width: 50%;
+  border: 1px solid black;
+  border-radius: 4px;
 }
 
-.todolist{
-    background-color:#FFF;
-    padding:20px 20px 10px 20px;
-    margin-top:30px;
+.todolist {
+  background-color: #fff;
+  padding: 20px 20px 10px 20px;
+  margin-top: 30px;
 }
-.todolist h1{
-    margin:0;
-    padding-bottom:20px;
-    text-align:center;
+.todolist h1 {
+  margin: 0;
+  padding-bottom: 20px;
+  text-align: center;
 }
-.form-control{
-    border-radius:0;
+.form-control {
+  border-radius: 0;
 }
-li.ui-state-default{
-    background:#fff;
-    border:none;
-    border-bottom:1px solid #ddd;
-}
-
-li.ui-state-default:last-child{
-    border-bottom:none;
+li.ui-state-default {
+  background: #fff;
+  border: none;
+  border-bottom: 1px solid #ddd;
 }
 
-.todo-footer{
-    background-color:#F4FCE8;
-    margin:0 -20px -10px -20px;
-    padding: 10px 20px;
-}
-#done-items li{
-    padding:10px 0;
-    border-top:1px solid #ddd;
-    text-decoration:line-through;
-}
-#done-items li:last-child{
-    border-bottom:none;
-}
-#checkAll{
-    margin-top:10px;
+li.ui-state-default:last-child {
+  border-bottom: none;
 }
 
-#card{
-    display: flex;
-    display: inline-flex;
-    width: 32rem;
-    margin-left: 2%;
-    margin-top: 2%;
+.todo-footer {
+  background-color: #f4fce8;
+  margin: 0 -20px -10px -20px;
+  padding: 10px 20px;
+}
+#done-items li {
+  padding: 10px 0;
+  border-top: 1px solid #ddd;
+  text-decoration: line-through;
+}
+#done-items li:last-child {
+  border-bottom: none;
+}
+#checkAll {
+  margin-top: 10px;
+}
+
+#card {
+  display: flex;
+  display: inline-flex;
+  width: 32rem;
+  margin-left: 2%;
+  margin-top: 2%;
 }

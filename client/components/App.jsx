@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import MainForm from "./MainForm";
-import BagPage from "./BagPage";
-import { addBagAction } from "../actions/addBag";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import MainForm from './MainForm';
+import BagPage from './BagPage';
+import { addBagAction } from '../actions/addBag';
 
 class App extends Component {
   constructor(props) {

@@ -1,5 +1,5 @@
 export const addBagAction = (id, description, destination) => ({
-  type: "ADD_TO_BAGS",
+  type: 'ADD_TO_BAGS',
   id,
   description,
   destination,
@@ -8,6 +8,13 @@ export const addBagAction = (id, description, destination) => ({
 });
 
 export const deleteBagAction = id => ({
-  type: "DELETE_BAGS",
+  type: 'DELETE_BAGS',
   id
+});
+
+export const updateBagAction = (id, destination, description) => ({
+  type: 'UPDATE_BAG',
+  id,
+  description,
+  destination
 });

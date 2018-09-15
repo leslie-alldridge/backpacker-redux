@@ -90,16 +90,17 @@
 /*!**********************************!*\
   !*** ./client/actions/addBag.js ***!
   \**********************************/
-/*! exports provided: addBagAction, deleteBagAction */
+/*! exports provided: addBagAction, deleteBagAction, updateBagAction */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addBagAction", function() { return addBagAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteBagAction", function() { return deleteBagAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBagAction", function() { return updateBagAction; });
 var addBagAction = function addBagAction(id, description, destination) {
   return {
-    type: "ADD_TO_BAGS",
+    type: 'ADD_TO_BAGS',
     id: id,
     description: description,
     destination: destination,
@@ -109,8 +110,16 @@ var addBagAction = function addBagAction(id, description, destination) {
 };
 var deleteBagAction = function deleteBagAction(id) {
   return {
-    type: "DELETE_BAGS",
+    type: 'DELETE_BAGS',
     id: id
+  };
+};
+var updateBagAction = function updateBagAction(id, destination, description) {
+  return {
+    type: 'UPDATE_BAG',
+    id: id,
+    description: description,
+    destination: destination
   };
 };
 
@@ -418,6 +427,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_addBag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/addBag */ "./client/actions/addBag.js");
 /* harmony import */ var _BagList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./BagList */ "./client/components/BagList.jsx");
+/* harmony import */ var _UpdateBag__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./UpdateBag */ "./client/components/UpdateBag.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -441,6 +451,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
+
 var BagPage =
 /*#__PURE__*/
 function (_React$Component) {
@@ -455,14 +466,25 @@ function (_React$Component) {
     _this.state = {
       bags: _this.props.bags || [],
       viewList: false,
-      viewListID: null
+      viewListID: null,
+      viewBagUpdate: null
     };
+    _this.updateBagToggle = _this.updateBagToggle.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.deleteItem = _this.deleteItem.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.addInventory = _this.addInventory.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(BagPage, [{
+    key: "updateBagToggle",
+    value: function updateBagToggle(id) {
+      this.setState(function (prevState) {
+        return {
+          viewBagUpdate: prevState.viewBagUpdate == id ? null : id
+        };
+      });
+    }
+  }, {
     key: "deleteItem",
     value: function deleteItem(id) {
       this.props.deleteBag(id);
@@ -501,10 +523,20 @@ function (_React$Component) {
           className: "btn btn-primary"
         }, "Add Inventory"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           onClick: function onClick() {
+            return _this2.updateBagToggle(bag.id);
+          },
+          className: "btn btn-secondary"
+        }, "Update"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: function onClick() {
             return _this2.deleteItem(bag.id);
           },
           className: "btn btn-danger"
         }, "Delete"), _this2.state.viewListID === bag.id && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagList__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          key: bag.id,
+          id: bag.id,
+          description: bag.description,
+          destination: bag.destination
+        }), _this2.state.viewBagUpdate === bag.id && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_UpdateBag__WEBPACK_IMPORTED_MODULE_4__["default"], {
           key: bag.id,
           id: bag.id,
           description: bag.description,
@@ -676,6 +708,141 @@ function (_React$Component) {
 
 /***/ }),
 
+/***/ "./client/components/UpdateBag.jsx":
+/*!*****************************************!*\
+  !*** ./client/components/UpdateBag.jsx ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_addBag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/addBag */ "./client/actions/addBag.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+
+
+
+
+var UpdateBag =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(UpdateBag, _React$Component);
+
+  function UpdateBag(props) {
+    var _this;
+
+    _classCallCheck(this, UpdateBag);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(UpdateBag).call(this, props));
+    _this.state = {
+      updateInput: '',
+      desInput: ''
+    };
+    _this.destinationChange = _this.destinationChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.desChange = _this.desChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    return _this;
+  }
+
+  _createClass(UpdateBag, [{
+    key: "destinationChange",
+    value: function destinationChange(e) {
+      console.log(e.target.value);
+      this.setState({
+        updateInput: e.target.value
+      });
+      console.log(this.state);
+    }
+  }, {
+    key: "desChange",
+    value: function desChange(e) {
+      this.setState({
+        desInput: e.target.value
+      });
+    } //   checkItem(id, item) {
+    //     const { checkIt } = this.props;
+    //     checkIt(id, item);
+    //   }
+
+  }, {
+    key: "updateBag",
+    value: function updateBag(id, destination, description) {
+      var updateIt = this.props.updateIt;
+      updateIt(id, destination, description);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-md-6"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Update Bag"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", _defineProperty({
+        onChange: this.desChange,
+        type: "text",
+        className: "form-control add-todo",
+        placeholder: "Bag Description"
+      }, "placeholder", this.props.description)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        onChange: this.destinationChange,
+        type: "text",
+        className: "form-control add-todo",
+        placeholder: this.props.destination
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          _this2.updateBag(_this2.props.id, _this2.state.updateInput, _this2.state.desInput);
+        },
+        id: "checkAll",
+        className: "btn btn-success"
+      }, "Save Changes"))));
+    }
+  }]);
+
+  return UpdateBag;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+function mapStateToProps(state) {
+  return {
+    bags: state.bags
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    updateIt: function updateIt(id, destination, description) {
+      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_2__["updateBagAction"])(id, destination, description));
+    }
+  };
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(UpdateBag));
+
+/***/ }),
+
 /***/ "./client/index.js":
 /*!*************************!*\
   !*** ./client/index.js ***!
@@ -729,9 +896,8 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
-  /*eslint-disable */
   switch (action.type) {
-    case "ADD_TO_BAGS":
+    case 'ADD_TO_BAGS':
       var index1 = state.findIndex(function (item) {
         return item.description === action.description && item.destination === action.destination;
       });
@@ -746,12 +912,12 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         return _toConsumableArray(state).concat([action]);
       }
 
-    case "DELETE_BAGS":
+    case 'DELETE_BAGS':
       return state.filter(function (item) {
         return item.id !== action.id;
       });
 
-    case "ADD_ITEM":
+    case 'ADD_ITEM':
       var index = state.findIndex(function (item) {
         return item.id === action.id;
       });
@@ -763,7 +929,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         });
       }
 
-    case "CHECK_ITEM":
+    case 'CHECK_ITEM':
       var index2 = state.findIndex(function (item) {
         return item.id === action.id;
       });
@@ -775,6 +941,23 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             item.items = item.items.filter(function (x) {
               return x !== action.inventory;
             });
+            return item;
+          }
+
+          return item;
+        });
+      }
+
+    case 'UPDATE_BAG':
+      var index3 = state.findIndex(function (item) {
+        return item.id === action.id;
+      });
+
+      if (index3 > -1) {
+        return state.map(function (item) {
+          if (item.id === action.id) {
+            item.description = action.description;
+            item.destination = action.destination;
             return item;
           }
 

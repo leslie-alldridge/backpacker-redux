@@ -32,6 +32,8 @@ class BagPage extends React.Component{
         <div id="container">
             <h3>All of your bags are below</h3>
             {this.props.bagsData.map(bag => {
+                console.log(bag);
+                
             return <div key={bag.id} id="card" className="card" >
                 {/* <img className="card-img-top" src=".../100px180/" alt="Card image cap"/> */}
                 <div className="card-body">

@@ -18,13 +18,14 @@ class App extends Component {
     }
 
     handleClick(e, description, destination){
+        let len = Object.keys(this.props.bags)
         e.preventDefault()
-        console.log('submitted');
-        this.props.addBag(this.state.bagCount, description, destination)
+        this.props.addBag(len.length, description, destination)
         this.setState({
-            bagCount: this.state.bagCount + 1
+            bagCount: this.state.bags.length
         })
-        console.log(this.state);
+        
+        console.log(len.length);
         
     }
 
@@ -52,9 +53,7 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
     return {
-        addBag: (id, description, destination) => {
-            console.log(id, description, destination);
-            
+        addBag: (id, description, destination) => {            
             dispatch(addBagAction(id, description, destination))
         }
     }

@@ -213,13 +213,13 @@ function (_Component) {
   _createClass(App, [{
     key: "handleClick",
     value: function handleClick(e, description, destination) {
+      var len = Object.keys(this.props.bags);
       e.preventDefault();
-      console.log('submitted');
-      this.props.addBag(this.state.bagCount, description, destination);
+      this.props.addBag(len.length, description, destination);
       this.setState({
-        bagCount: this.state.bagCount + 1
+        bagCount: this.state.bags.length
       });
-      console.log(this.state);
+      console.log(len.length);
     }
   }, {
     key: "render",
@@ -248,7 +248,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     addBag: function addBag(id, description, destination) {
-      console.log(id, description, destination);
       dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_5__["addBagAction"])(id, description, destination));
     }
   };
@@ -357,15 +356,23 @@ function (_React$Component) {
         },
         id: "checkAll",
         className: "btn btn-success"
-      }, "Add Item"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), console.log(this.props), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.bags[this.props.id - 1].items.map(function (item) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          key: item
-        }, item, " -  ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          onClick: function onClick() {
-            _this2.checkItem(_this2.props.id, item);
-          },
-          className: "fas fa-check"
-        }));
+      }, "Add Item"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.bags.map(function (item) {
+        console.log(item.id);
+        console.log(_this2.props.id);
+        return item.items.map(function (newItem) {
+          console.log(newItem);
+
+          if (_this2.props.id == item.id) {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+              key: newItem
+            }, newItem, " -  ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              onClick: function onClick() {
+                _this2.checkItem(_this2.props.id, newItem);
+              },
+              className: "fas fa-check"
+            }));
+          }
+        });
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -486,6 +493,7 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "All of your bags are below"), this.props.bagsData.map(function (bag) {
+        console.log(bag);
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: bag.id,
           id: "card",

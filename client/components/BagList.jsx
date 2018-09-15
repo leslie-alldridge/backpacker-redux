@@ -42,11 +42,19 @@ class BagList extends React.Component{
                 <input onChange={this.formChange} type="text" className="form-control add-todo" placeholder="Item Description"/>
                     <button onClick={() => {this.saveItem(this.props.id, this.state.formInput)}} id="checkAll" className="btn btn-success">Add Item</button>
                     <hr/>
-                    {console.log(this.props)}
                     <ul>
-                        {this.props.bags[this.props.id - 1].items.map(item => {
-                           return <li key={item}>{item} -  <i onClick={() => {this.checkItem(this.props.id, item)}} 
-                            className="fas fa-check"></i></li>
+                        {this.props.bags.map(item => {
+                            console.log(item.id);
+                            console.log(this.props.id);
+                            
+                            
+                            return item.items.map(newItem => {
+                                console.log(newItem);
+                                if (this.props.id == item.id){
+                                return <li key={newItem}>{newItem} -  <i onClick={() => {this.checkItem(this.props.id, newItem)}} 
+                                className="fas fa-check"></i></li>
+                                }
+                            })
                         })}
                     </ul>
             </div>

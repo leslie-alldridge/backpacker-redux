@@ -12,8 +12,6 @@ export const addBagAction = (id, description, destination) => {
   }
 
   export const deleteBagAction = (id) => {
-    console.log(id);
-    
       return {
         type: 'DELETE_BAGS',
         id: id

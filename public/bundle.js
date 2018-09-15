@@ -109,7 +109,6 @@ var addBagAction = function addBagAction(id, description, destination) {
   };
 };
 var deleteBagAction = function deleteBagAction(id) {
-  console.log(id);
   return {
     type: 'DELETE_BAGS',
     id: id
@@ -742,7 +741,19 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
   switch (action.type) {
     case "ADD_TO_BAGS":
-      return _toConsumableArray(state).concat([action]);
+      var index1 = state.findIndex(function (item) {
+        return item.description === action.description && item.destination === action.destination;
+      });
+
+      if (index1 > -1) {
+        return state.map(function (item) {
+          if (item.description === action.description && item.destination === action.destination) {}
+
+          return item;
+        });
+      } else {
+        return _toConsumableArray(state).concat([action]);
+      }
 
     case "DELETE_BAGS":
       return state.filter(function (item) {

@@ -12,8 +12,8 @@ class MainForm extends React.Component{
 
     handleDescChange (e) {
         this.setState({
-          description: e.target.value,
-          destination: this.state.destination
+            description: e.target.value,
+            destination: this.state.destination
         })
       }
 

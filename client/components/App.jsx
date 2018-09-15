@@ -18,6 +18,10 @@ class App extends Component {
     }
 
     handleClick(e, description, destination){
+
+        
+        
+
         let len = Object.keys(this.props.bags)
         e.preventDefault()
         this.props.addBag(len.length, description, destination)

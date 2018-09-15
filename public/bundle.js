@@ -606,6 +606,20 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      $("#btnSubmit").click(function (event) {
+        var form = $("#myForm");
+
+        if (form[0].checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+
+        form.addClass('was-validated');
+      });
+    }
+  }, {
     key: "handleChange",
     value: function handleChange(e) {
       this.setState({
@@ -620,11 +634,15 @@ function (_React$Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "mainForm"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        novalidate: "",
+        id: "myForm"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Enter Bag Description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        required: true,
         onChange: this.handleDescChange,
         type: "text",
         className: "form-control",
@@ -634,16 +652,26 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", {
         id: "emailHelp",
         className: "form-text text-muted"
-      }, "You can save multiple bags.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "You can save multiple bags."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        class: "valid-feedback"
+      }, "Nice! You got this one!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        class: "invalid-feedback"
+      }, "Sorry, you missed this one.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Destination"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        required: true,
         onChange: this.handleChange,
         type: "text",
         className: "form-control",
         id: "exampleInputPassword1",
         placeholder: "Bag Destination"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        class: "valid-feedback"
+      }, "Nice! You got this one!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        class: "invalid-feedback"
+      }, "Sorry, you missed this one.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit",
+        id: "btnSubmit",
         onClick: function onClick(e) {
           return _this2.props.handleClick(e, _this2.state.description, _this2.state.destination);
         },

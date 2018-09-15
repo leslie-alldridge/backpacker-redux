@@ -171,10 +171,6 @@ function (_Component) {
   _createClass(App, [{
     key: "handleClick",
     value: function handleClick(e, description, destination) {
-      this.setState({
-        bagPage: true,
-        formPage: false
-      });
       e.preventDefault();
       console.log('submitted');
       this.props.addBag(description, destination);
@@ -190,7 +186,9 @@ function (_Component) {
         handleClick: this.handleClick
       }), this.state.bagPage && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagPage__WEBPACK_IMPORTED_MODULE_2__["default"], {
         bags: this.props.bags
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagList__WEBPACK_IMPORTED_MODULE_3__["default"], null));
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagPage__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        bags: this.props.bags
+      }));
     }
   }]);
 

@@ -21,7 +21,7 @@ class BagPage extends React.Component{
        {this.props.bags.map(bag => {
         return   <p>{bag.description} and {bag.destination}</p>
        })}
-
+        
        
         </div>
     )

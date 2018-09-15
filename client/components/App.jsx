@@ -17,10 +17,6 @@ class App extends Component {
     }
 
     handleClick(e, description, destination){
-        this.setState({
-            bagPage: true,
-            formPage: false
-        })
         e.preventDefault()
         console.log('submitted');
         this.props.addBag(description, destination)
@@ -35,7 +31,7 @@ class App extends Component {
                 </div>
                 {this.state.formPage && <MainForm handleClick={this.handleClick}/>}
                 {this.state.bagPage && <BagPage bags={this.props.bags} />}
-                {/* <BagList /> */}
+                <BagPage bags={this.props.bags} />
             </div>
         );
     }

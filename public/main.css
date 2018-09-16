@@ -112,7 +112,7 @@ li.ui-state-default:last-child {
   background-color: rgba(179, 229, 252, 0.9);
   border: 1px solid #00838F;
   border-radius: 3px;
-  padding-top: 1%;
+  padding-top: 2%;
   padding-bottom: 2%;
 }
 
@@ -142,9 +142,14 @@ li.ui-state-default:last-child {
   display: flex;
 }
 
+#formBody{
+  height: 100%;
+}
+
 #myForm {
   margin-left: 6%;
   min-width: 35%;
+  min-height: 35%;
 }
 
 #info {

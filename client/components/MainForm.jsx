@@ -59,9 +59,6 @@ class MainForm extends React.Component {
                 aria-describedby="emailHelp"
                 placeholder="Large, small, hand luggage.."
               />
-              <small id="emailHelp" className="form-text text-muted">
-                You can save multiple bags.
-              </small>
               <div className="valid-feedback">Saved!</div>
               <div className="invalid-feedback">Sorry, you missed this one.</div>
             </div>

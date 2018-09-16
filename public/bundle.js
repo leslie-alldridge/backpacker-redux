@@ -760,10 +760,7 @@ function (_React$Component) {
         id: "exampleInputEmail1",
         "aria-describedby": "emailHelp",
         placeholder: "Large, small, hand luggage.."
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", {
-        id: "emailHelp",
-        className: "form-text text-muted"
-      }, "You can save multiple bags."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "valid-feedback"
       }, "Saved!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "invalid-feedback"

@@ -8,7 +8,7 @@ My goals are to create a web app where you can track bags and belongings, and di
 
 This web app should use React and Redux as a minimum.
 
-### MVP
+### MVP - Achieved
 
 1. As a user I want to save my onboard and checked in bags with an itemized list of what's inside - Done
 2. As a user I would like to tick off my items as I go through my bag - Done

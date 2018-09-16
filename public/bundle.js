@@ -540,6 +540,8 @@ function (_React$Component) {
       var _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "containerBags"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         id: "bagHead"
@@ -591,7 +593,7 @@ function (_React$Component) {
           description: bag.description,
           destination: bag.destination
         })));
-      }));
+      })));
     }
   }]);
 

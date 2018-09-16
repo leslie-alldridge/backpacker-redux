@@ -219,8 +219,10 @@ li.ui-state-default:last-child {
   #containerBags {
     margin-left: 0px;
     margin-top: 1%;
-    padding-left: 0.5%;
-    padding-right: 0.5%;
+    padding-left: 1%;
+    margin-right: 1%;
   }
- 
+  #bagHead {
+    margin-left: 1%;
+  }
 }

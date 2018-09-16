@@ -39,7 +39,7 @@ class BagPage extends React.Component {
   render() {
     return (
       <div id="containerBags">
-        <h3 id="bagHead"><i class="fas fa-suitcase"></i> Your Current Bags :</h3>
+        <h3 id="bagHead"><i className="fas fa-suitcase"></i> Your Current Bags :</h3>
         {this.props.bagsData.map(bag => (
           <div key={bag.id} id="card" className="card">
             <div data-aos="flip-up"
@@ -47,7 +47,7 @@ class BagPage extends React.Component {
       data-aos-duration="600"
       data-aos-easing="ease-in-out"
       data-aos-mirror="true"
-      data-aos-once="false" className="card-body">
+      data-aos-once="true" className="card-body">
               <h5 className="card-title">{bag.description}</h5>
               <p className="card-text">{bag.destination}</p>
               <button
@@ -57,12 +57,12 @@ class BagPage extends React.Component {
                 }}
                 className="btn btn-primary"
               >
-                Add Inventory
+                Add Items to Bag
               </button>
               <button 
               id="mainBtn"
               onClick={() => this.updateBagToggle(bag.id)} className="btn btn-secondary">
-                Update
+                Edit Bag
               </button>
               <button id="mainBtn" onClick={() => this.deleteItem(bag.id)} className="btn btn-danger">
                 Delete

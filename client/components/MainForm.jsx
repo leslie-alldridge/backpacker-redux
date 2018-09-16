@@ -92,9 +92,9 @@ class MainForm extends React.Component {
          
         </form>
         <div id="info" className="col-md-6">
-        <blockquote class="blockquote text-center">
-  <p class="mb-0"> <i class="fas fa-quote-left"></i> I didn't freeze halfway through the flight and panic about what I'd packed <i class="fas fa-quote-right"></i></p>
-  <footer class="blockquote-footer">Avid Traveller: <cite title="Source Title">John Smith</cite></footer>
+        <blockquote className="blockquote text-center">
+  <p className="mb-0"> <i className="fas fa-quote-left"></i> I didn't freeze halfway through the flight and panic about what I'd packed <i className="fas fa-quote-right"></i></p>
+  <footer className="blockquote-footer">Avid Traveller: <cite title="Source Title">John Smith</cite></footer>
 </blockquote>
 <p>How to use this app:</p>
 <ol>

@@ -544,7 +544,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         id: "bagHead"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        class: "fas fa-suitcase"
+        className: "fas fa-suitcase"
       }), " Your Current Bags :"), this.props.bagsData.map(function (bag) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: bag.id,
@@ -556,7 +556,7 @@ function (_React$Component) {
           "data-aos-duration": "600",
           "data-aos-easing": "ease-in-out",
           "data-aos-mirror": "true",
-          "data-aos-once": "false",
+          "data-aos-once": "true",
           className: "card-body"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
           className: "card-title"
@@ -568,13 +568,13 @@ function (_React$Component) {
             _this2.addInventory(bag.id);
           },
           className: "btn btn-primary"
-        }, "Add Inventory"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, "Add Items to Bag"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           id: "mainBtn",
           onClick: function onClick() {
             return _this2.updateBagToggle(bag.id);
           },
           className: "btn btn-secondary"
-        }, "Update"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, "Edit Bag"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           id: "mainBtn",
           onClick: function onClick() {
             return _this2.deleteItem(bag.id);
@@ -632,9 +632,9 @@ __webpack_require__.r(__webpack_exports__);
 var Footer = function Footer() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
     id: "footer",
-    class: "footer"
+    className: "footer"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    class: "content has-text-centered"
+    className: "content has-text-centered"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Bag Tracker by Leslie Alldridge - 2018. Created with ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     href: "https://reactjs.org/"
   }, "React"), ", ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -793,15 +793,15 @@ function (_React$Component) {
         id: "info",
         className: "col-md-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("blockquote", {
-        class: "blockquote text-center"
+        className: "blockquote text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        class: "mb-0"
+        className: "mb-0"
       }, " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        class: "fas fa-quote-left"
+        className: "fas fa-quote-left"
       }), " I didn't freeze halfway through the flight and panic about what I'd packed ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        class: "fas fa-quote-right"
+        className: "fas fa-quote-right"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
-        class: "blockquote-footer"
+        className: "blockquote-footer"
       }, "Avid Traveller: ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("cite", {
         title: "Source Title"
       }, "John Smith"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "How to use this app:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ol", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Enter bag Description and Destination and save as many as you need."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Each bag will have its own inventory and checklist."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Have a great holiday!"))));

@@ -45,7 +45,7 @@ class BagList extends React.Component {
         <div className="row">
           <div className="col-md-6">
             <div className="todolist not-done">
-              <h4>Bag List</h4>
+              <h3 id="list">Bag List</h3>
               <input
                 onChange={this.formChange}
                 type="text"
@@ -57,6 +57,7 @@ class BagList extends React.Component {
                   this.saveItem(this.props.id, this.state.formInput);
                 }}
                 id="checkAll"
+                type="submit"
                 className="btn btn-success"
               >
                 Add Item

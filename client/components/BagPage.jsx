@@ -39,13 +39,18 @@ class BagPage extends React.Component {
   render() {
     return (
       <div id="container">
-        <h3>All of your bags are below</h3>
+        <h3 id="bagHead"><i class="fas fa-suitcase"></i> Your Current Bags :</h3>
         {this.props.bagsData.map(bag => (
           <div key={bag.id} id="card" className="card">
-            <div className="card-body">
+            <div data-aos="flip-up"
+      data-aos-duration="600"
+      data-aos-easing="ease-in-out"
+      data-aos-mirror="true"
+      data-aos-once="false" className="card-body">
               <h5 className="card-title">{bag.description}</h5>
               <p className="card-text">{bag.destination}</p>
               <button
+              id="mainBtn"
                 onClick={() => {
                   this.addInventory(bag.id);
                 }}
@@ -53,10 +58,12 @@ class BagPage extends React.Component {
               >
                 Add Inventory
               </button>
-              <button onClick={() => this.updateBagToggle(bag.id)} className="btn btn-secondary">
+              <button 
+              id="mainBtn"
+              onClick={() => this.updateBagToggle(bag.id)} className="btn btn-secondary">
                 Update
               </button>
-              <button onClick={() => this.deleteItem(bag.id)} className="btn btn-danger">
+              <button id="mainBtn" onClick={() => this.deleteItem(bag.id)} className="btn btn-danger">
                 Delete
               </button>
               {this.state.viewListID === bag.id && (

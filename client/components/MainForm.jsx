@@ -38,11 +38,18 @@ class MainForm extends React.Component {
 
   render() {
     return (
-      <div id="mainForm">
+      <div  data-aos="fade-left"
+      data-aos-duration="1000"
+      data-aos-easing="ease-in-out"
+      data-aos-mirror="true"
+      data-aos-once="false"
+     
+   className= "col-xl-12" id="mainForm">
         <form noValidate="" id="myForm">
-          <div className="container">
+          
+            <div className = "col-xl-12" id="formBody">
             <div className="form-group">
-              <label>Enter Bag Description</label>
+              <label id="formLabel">Enter Bag Description</label>
               <input
                 required
                 onChange={this.handleDescChange}
@@ -55,11 +62,11 @@ class MainForm extends React.Component {
               <small id="emailHelp" className="form-text text-muted">
                 You can save multiple bags.
               </small>
-              <div className="valid-feedback">Nice! You got this one!</div>
+              <div className="valid-feedback">Saved!</div>
               <div className="invalid-feedback">Sorry, you missed this one.</div>
             </div>
             <div className="form-group">
-              <label>Destination</label>
+              <label id="formLabel">Destination</label>
               <input
                 required
                 onChange={this.handleChange}
@@ -68,7 +75,7 @@ class MainForm extends React.Component {
                 id="exampleInputPassword1"
                 placeholder="Bag Destination"
               />
-              <div className="valid-feedback">Nice! You got this one!</div>
+              <div className="valid-feedback">Saved!</div>
               <div className="invalid-feedback">Sorry, you missed this one.</div>
             </div>
             <button
@@ -82,7 +89,26 @@ class MainForm extends React.Component {
               Save Bag
             </button>
           </div>
+         
         </form>
+        <div id="info" className="col-md-6">
+        <blockquote class="blockquote text-center">
+  <p class="mb-0"> <i class="fas fa-quote-left"></i> I didn't freeze halfway through the flight and panic about what I'd packed <i class="fas fa-quote-right"></i></p>
+  <footer class="blockquote-footer">Avid Traveller: <cite title="Source Title">John Smith</cite></footer>
+</blockquote>
+<p>How to use this app:</p>
+<ol>
+  <li>
+    Enter bag Description and Destination and save as many as you need.
+  </li>
+  <li>
+    Each bag will have its own inventory and checklist.
+  </li>
+  <li>
+    Have a great holiday! 
+  </li>
+</ol>
+        </div>
       </div>
     );
   }

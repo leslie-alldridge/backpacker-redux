@@ -364,7 +364,9 @@ function (_React$Component) {
         className: "col-md-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "todolist not-done"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Bag List"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+        id: "list"
+      }, "Bag List"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onChange: this.formChange,
         type: "text",
         className: "form-control add-todo",
@@ -374,6 +376,7 @@ function (_React$Component) {
           _this2.saveItem(_this2.props.id, _this2.state.formInput);
         },
         id: "checkAll",
+        type: "submit",
         className: "btn btn-success"
       }, "Add Item"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.bags.map(function (item) {
         return item.items.map(function (newItem) {
@@ -535,28 +538,40 @@ function (_React$Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "All of your bags are below"), this.props.bagsData.map(function (bag) {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+        id: "bagHead"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        class: "fas fa-suitcase"
+      }), " Your Current Bags :"), this.props.bagsData.map(function (bag) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: bag.id,
           id: "card",
           className: "card"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          "data-aos": "flip-up",
+          "data-aos-duration": "600",
+          "data-aos-easing": "ease-in-out",
+          "data-aos-mirror": "true",
+          "data-aos-once": "false",
           className: "card-body"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
           className: "card-title"
         }, bag.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "card-text"
         }, bag.destination), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          id: "mainBtn",
           onClick: function onClick() {
             _this2.addInventory(bag.id);
           },
           className: "btn btn-primary"
         }, "Add Inventory"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          id: "mainBtn",
           onClick: function onClick() {
             return _this2.updateBagToggle(bag.id);
           },
           className: "btn btn-secondary"
         }, "Update"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          id: "mainBtn",
           onClick: function onClick() {
             return _this2.deleteItem(bag.id);
           },
@@ -684,15 +699,24 @@ function (_React$Component) {
       var _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        "data-aos": "fade-left",
+        "data-aos-duration": "1000",
+        "data-aos-easing": "ease-in-out",
+        "data-aos-mirror": "true",
+        "data-aos-once": "false",
+        className: "col-xl-12",
         id: "mainForm"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         noValidate: "",
         id: "myForm"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "container"
+        className: "col-xl-12",
+        id: "formBody"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Enter Bag Description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        id: "formLabel"
+      }, "Enter Bag Description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         required: true,
         onChange: this.handleDescChange,
         type: "text",
@@ -705,11 +729,13 @@ function (_React$Component) {
         className: "form-text text-muted"
       }, "You can save multiple bags."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "valid-feedback"
-      }, "Nice! You got this one!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Saved!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "invalid-feedback"
       }, "Sorry, you missed this one.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Destination"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        id: "formLabel"
+      }, "Destination"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         required: true,
         onChange: this.handleChange,
         type: "text",
@@ -718,7 +744,7 @@ function (_React$Component) {
         placeholder: "Bag Destination"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "valid-feedback"
-      }, "Nice! You got this one!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Saved!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "invalid-feedback"
       }, "Sorry, you missed this one.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit",
@@ -727,7 +753,22 @@ function (_React$Component) {
           return _this2.props.handleClick(e, _this2.state.description, _this2.state.destination);
         },
         className: "btn btn-primary"
-      }, "Save Bag"))));
+      }, "Save Bag"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "info",
+        className: "col-md-6"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("blockquote", {
+        class: "blockquote text-center"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        class: "mb-0"
+      }, " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        class: "fas fa-quote-left"
+      }), " I didn't freeze halfway through the flight and panic about what I'd packed ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        class: "fas fa-quote-right"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
+        class: "blockquote-footer"
+      }, "Avid Traveller: ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("cite", {
+        title: "Source Title"
+      }, "John Smith"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "How to use this app:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ol", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Enter bag Description and Destination and save as many as you need."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Each bag will have its own inventory and checklist."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Have a great holiday!"))));
     }
   }]);
 

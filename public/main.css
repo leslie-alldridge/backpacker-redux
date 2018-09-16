@@ -1,9 +1,6 @@
-#mainForm {
-  max-width: 50%;
-  border: 1px solid black;
-  border-radius: 4px;
+body {
+  background-color: #FEFBF7;
 }
-
 .todolist {
   background-color: #fff;
   padding: 20px 20px 10px 20px;
@@ -50,6 +47,12 @@ li.ui-state-default:last-child {
   width: 32rem;
   margin-left: 2%;
   margin-top: 2%;
+  border: 1px solid #00838F;
+  transition: border-width 0s linear;
+}
+
+#card:hover {
+  border-width: 2px;
 }
 
 #tick {
@@ -73,11 +76,9 @@ li.ui-state-default:last-child {
   background-size: cover;
 }
 .container {
-  background-color: rgba(221, 221, 221, 0.171);
   width: 100%;
   min-width: 100%;
-  margin-top: 1%;
-  min-height: 100vh;
+  padding-top: 1%;
 }
 
 #titleText {
@@ -99,4 +100,72 @@ li.ui-state-default:last-child {
   text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   font-size: 1.8em;
   letter-spacing: 1px;
+}
+
+#formBody{
+  font-family: 'Raleway', sans-serif;
+  background-color: rgba(179, 229, 252, 0.9);
+  border: 1px solid #00838F;
+  border-radius: 3px;
+  padding-top: 1%;
+  padding-bottom: 2%;
+}
+
+#formLabel{
+  font-weight: 600;
+}
+
+.text-muted {
+  color: black !important;
+  font-style: italic !important;
+}
+
+#bagHead {
+  padding-top: 2%;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 900;
+  -webkit-text-stroke: 1px black;
+  color: white;
+  text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  font-size: 1.8em;
+  letter-spacing: 1px;
+}
+/* 179, 229, 252
+#00838F */
+
+#mainForm {
+  display: flex;
+}
+
+#myForm {
+  margin-left: 6%;
+  min-width: 35%;
+}
+
+#info {
+  padding-top: 1%;
+  font-family: 'Raleway', sans-serif;
+  background-color: rgba(179, 229, 252, 0.9);
+  border: 1px solid #00838F;
+  border-radius: 3px;
+  margin-left: 3%;
+}
+
+#mainBtn {
+  margin-left: 0.5%;
+}
+
+.card-body {
+  font-family: 'Raleway', sans-serif;
+  margin-left: 0.5%;
+}
+
+.card-title {
+  font-weight: 700;
+  font-size: 2em;
+}
+
+#list {
+  font-weight: 500;
+  font-size: 1.5em;
 }

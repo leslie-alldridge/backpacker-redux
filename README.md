@@ -16,13 +16,13 @@ This web app should use React and Redux as a minimum.
 
 ### Stretch Goals
 
-1. Ability to edit and delete items within a bag (MVP is edit + delete for bags themselves). EDIT: Delete works but edit doesn't seem like an essential piece of functionality. Will ask some colleagues for their opinion.
-2. Login and Database for persistent storage and privacy
-3. Courtesy email to say thanks for signing up
+1. Ability to edit and delete items within a bag (MVP is edit + delete for bags themselves). EDIT: Delete works but edit doesn't seem like an essential piece of functionality. Will ask some colleagues for their opinion. Decided against Edit. - Done
+2. Login and Database for persistent storage and privacy - In progress, local storage in the meantime
+3. Mobile friendly - In progress, works on modern devices but not older narrow screens
 
 ## Reflections
 
-TBA
+Reflecting at the end of day two. I really enjoyed learning all of the CRUD actions in Redux and saving the state to local storage. Next week I'll aim to incorporate login and database on this application and deploy it to Heroku. I learned a lot from this project and also pitched it to be created during weeks 2 and 3 of bootcamp. Sadly other people didn't seem to bond with the idea of leaving stuff behind on holiday, so I set out to make my idea a reality this weekend. I've conducted user testing with my colleagues and they identified some bugs and difficult to understand button names I didn't notice at the time, which were rectified as a result. This highlighted the importance that user testing has.
 
 ## Intentions
 

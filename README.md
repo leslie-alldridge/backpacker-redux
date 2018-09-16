@@ -18,7 +18,7 @@ This web app should use React and Redux as a minimum.
 
 1. Ability to edit and delete items within a bag (MVP is edit + delete for bags themselves). EDIT: Delete works but edit doesn't seem like an essential piece of functionality. Will ask some colleagues for their opinion. Decided against Edit. - Done
 2. Login and Database for persistent storage and privacy - In progress, local storage in the meantime
-3. Mobile friendly - In progress, works on modern devices but not older narrow screens
+3. Mobile friendly - Done
 
 ## Reflections
 

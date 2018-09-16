@@ -5,11 +5,18 @@ import { createStore } from "redux";
 
 import reducers from "./reducers";
 import App from "./components/App";
+import { loadState, saveState } from './localStorage'
 
+const persistedState = loadState();
 const store = createStore(
   reducers,
+  persistedState,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
+
+store.subscribe(() => {
+  saveState(store.getState());
+});
 
 document.addEventListener("DOMContentLoaded", () => {
   render(

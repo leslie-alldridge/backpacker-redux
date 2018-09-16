@@ -961,18 +961,58 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./reducers */ "./client/reducers/index.js");
 /* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/App */ "./client/components/App.jsx");
+/* harmony import */ var _localStorage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./localStorage */ "./client/localStorage.js");
 
 
 
 
 
 
-var store = Object(redux__WEBPACK_IMPORTED_MODULE_3__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_4__["default"], window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+
+var persistedState = Object(_localStorage__WEBPACK_IMPORTED_MODULE_6__["loadState"])();
+var store = Object(redux__WEBPACK_IMPORTED_MODULE_3__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_4__["default"], persistedState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+store.subscribe(function () {
+  Object(_localStorage__WEBPACK_IMPORTED_MODULE_6__["saveState"])(store.getState());
+});
 document.addEventListener("DOMContentLoaded", function () {
   Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__["Provider"], {
     store: store
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_App__WEBPACK_IMPORTED_MODULE_5__["default"], null)), document.getElementById("app"));
 });
+
+/***/ }),
+
+/***/ "./client/localStorage.js":
+/*!********************************!*\
+  !*** ./client/localStorage.js ***!
+  \********************************/
+/*! exports provided: loadState, saveState */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadState", function() { return loadState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveState", function() { return saveState; });
+var loadState = function loadState() {
+  try {
+    var serializedState = localStorage.getItem('state');
+
+    if (serializedState === null) {
+      return undefined;
+    }
+
+    return JSON.parse(serializedState);
+  } catch (err) {
+    return undefined;
+  }
+};
+var saveState = function saveState(state) {
+  try {
+    var serializedState = JSON.stringify(state);
+    localStorage.setItem('state', serializedState);
+  } catch (err) {//ignore errors
+  }
+};
 
 /***/ }),
 

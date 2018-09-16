@@ -42,7 +42,7 @@ class BagList extends React.Component {
   render() {
     return (
       <div id="container">
-        <div className="row">
+        <div id="line" className="row">
           <div className="col-md-6">
             <div className="todolist not-done">
               <h3 id="list">Bag List</h3>

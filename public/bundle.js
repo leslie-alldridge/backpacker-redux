@@ -176,7 +176,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _MainForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MainForm */ "./client/components/MainForm.jsx");
 /* harmony import */ var _BagPage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./BagPage */ "./client/components/BagPage.jsx");
-/* harmony import */ var _actions_addBag__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../actions/addBag */ "./client/actions/addBag.js");
+/* harmony import */ var _Footer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Footer */ "./client/components/Footer.jsx");
+/* harmony import */ var _actions_addBag__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../actions/addBag */ "./client/actions/addBag.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -194,6 +195,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 
 
 
@@ -243,7 +245,7 @@ function (_Component) {
         handleClick: this.handleClick
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagPage__WEBPACK_IMPORTED_MODULE_3__["default"], {
         bagsData: this.props.bags
-      }));
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Footer__WEBPACK_IMPORTED_MODULE_4__["default"], null));
     }
   }]);
 
@@ -259,7 +261,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     addBag: function addBag(id, description, destination) {
-      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_4__["addBagAction"])(id, description, destination));
+      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_5__["addBagAction"])(id, description, destination));
     }
   };
 }
@@ -359,6 +361,7 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "line",
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-6"
@@ -537,7 +540,7 @@ function (_React$Component) {
       var _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "container"
+        id: "containerBags"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         id: "bagHead"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -549,6 +552,7 @@ function (_React$Component) {
           className: "card"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           "data-aos": "flip-up",
+          "data-aos-anchor-placement": "bottom-bottom",
           "data-aos-duration": "600",
           "data-aos-easing": "ease-in-out",
           "data-aos-mirror": "true",
@@ -609,6 +613,38 @@ function mapDispatchToProps(dispatch) {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(BagPage));
+
+/***/ }),
+
+/***/ "./client/components/Footer.jsx":
+/*!**************************************!*\
+  !*** ./client/components/Footer.jsx ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var Footer = function Footer() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
+    id: "footer",
+    class: "footer"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    class: "content has-text-centered"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Bag Tracker by Leslie Alldridge - 2018. Created with ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "https://reactjs.org/"
+  }, "React"), ", ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "https://redux.js.org/"
+  }, "Redux"), ", ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "https://getbootstrap.com/"
+  }, "Bootstrap"), ", Node JS and CSS3."))));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Footer);
 
 /***/ }),
 

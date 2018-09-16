@@ -38,11 +38,12 @@ class BagPage extends React.Component {
 
   render() {
     return (
-      <div id="container">
+      <div id="containerBags">
         <h3 id="bagHead"><i class="fas fa-suitcase"></i> Your Current Bags :</h3>
         {this.props.bagsData.map(bag => (
           <div key={bag.id} id="card" className="card">
             <div data-aos="flip-up"
+            data-aos-anchor-placement="bottom-bottom"
       data-aos-duration="600"
       data-aos-easing="ease-in-out"
       data-aos-mirror="true"

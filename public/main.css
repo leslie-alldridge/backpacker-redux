@@ -4,7 +4,7 @@ body {
 .todolist {
   background-color: #fff;
   padding: 20px 20px 10px 20px;
-  margin-top: 30px;
+  margin-top: 10px;
 }
 .todolist h1 {
   margin: 0;
@@ -79,6 +79,11 @@ li.ui-state-default:last-child {
   width: 100%;
   min-width: 100%;
   padding-top: 1%;
+}
+
+#containerBags {
+  min-height: 500px;
+  margin-left: 5%;
 }
 
 #titleText {
@@ -169,3 +174,17 @@ li.ui-state-default:last-child {
   font-weight: 500;
   font-size: 1.5em;
 }
+
+#footer {
+  margin-top: 10%;
+  margin-bottom: 1%;
+  padding-top: 1.5%;
+  text-align: center;
+  background-color: rgba(179, 229, 252, 0.4);
+  border: 1px solid #00838F;
+  border-radius: 3px;
+}
+#line {
+  border-top: 1px dotted black;
+  margin-top: 3%;
+} 

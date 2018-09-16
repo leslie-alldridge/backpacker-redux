@@ -38,7 +38,7 @@ class BagPage extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div id="cont" className="container">
       <div id="containerBags">
         <h3 id="bagHead"><i className="fas fa-suitcase"></i> Your Current Bags :</h3>
         {this.props.bagsData.map(bag => (

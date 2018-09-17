@@ -405,8 +405,7 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
     _this.state = {
       bags: _this.props.bags || [],
-      formPage: true,
-      auth: false || _this.props.auth.isAuthenticated
+      formPage: true
     };
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
@@ -431,9 +430,9 @@ function (_Component) {
         id: "titleText"
       }, "Bag Tracker"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
         id: "subtitleText"
-      }, "Keep track of packed bags")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_RegisterForm__WEBPACK_IMPORTED_MODULE_7__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LoginForm__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Logout__WEBPACK_IMPORTED_MODULE_8__["default"], null), this.state.formPage && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MainForm__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      }, "Keep track of packed bags")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_RegisterForm__WEBPACK_IMPORTED_MODULE_7__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LoginForm__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Logout__WEBPACK_IMPORTED_MODULE_8__["default"], null), this.state.formPage && this.props.auth.isAuthenticated && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MainForm__WEBPACK_IMPORTED_MODULE_2__["default"], {
         handleClick: this.handleClick
-      }), this.state.auth && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagPage__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }), this.props.auth.isAuthenticated && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagPage__WEBPACK_IMPORTED_MODULE_3__["default"], {
         bagsData: this.props.bags
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Footer__WEBPACK_IMPORTED_MODULE_5__["default"], null));
     }
@@ -996,7 +995,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_logout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions/logout */ "./client/actions/logout.js");
+/* harmony import */ var _actions_logout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/logout */ "./client/actions/logout.js");
 
 
 
@@ -1010,7 +1009,7 @@ var Logout = function Logout(props) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     logoutUser: function logoutUser() {
-      dispatch(Object(_actions_logout__WEBPACK_IMPORTED_MODULE_3__["logoutUser"])());
+      dispatch(Object(_actions_logout__WEBPACK_IMPORTED_MODULE_2__["logoutUser"])());
     }
   };
 };
@@ -1290,7 +1289,7 @@ function (_React$Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "password",
         name: "confirm",
-        placeholder: "Confirm",
+        placeholder: "Confirm Password",
         onChange: this.handleChange,
         value: confirm
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -1519,20 +1518,22 @@ document.addEventListener('DOMContentLoaded', function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return auth; });
-/* harmony import */ var _actions_login__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/login */ "./client/actions/login.js");
-/* harmony import */ var _utils_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/auth */ "./client/utils/auth.js");
+/* harmony import */ var _actions_logout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/logout */ "./client/actions/logout.js");
+/* harmony import */ var _actions_register__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/register */ "./client/actions/register.js");
+/* harmony import */ var _actions_login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/login */ "./client/actions/login.js");
+/* harmony import */ var _utils_auth__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/auth */ "./client/utils/auth.js");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-// import {LOGOUT_SUCCESS} from '../actions/logout'
-// import {REGISTER_REQUEST, REGISTER_FAILURE} from '../actions/register'
+
+
 
 
 var initialState = {
   isFetching: false,
-  isAuthenticated: Object(_utils_auth__WEBPACK_IMPORTED_MODULE_1__["isAuthenticated"])(),
-  user: Object(_utils_auth__WEBPACK_IMPORTED_MODULE_1__["getUserTokenInfo"])(),
+  isAuthenticated: Object(_utils_auth__WEBPACK_IMPORTED_MODULE_3__["isAuthenticated"])(),
+  user: Object(_utils_auth__WEBPACK_IMPORTED_MODULE_3__["getUserTokenInfo"])(),
   errorMessage: ''
 };
 function auth() {
@@ -1540,46 +1541,46 @@ function auth() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case _actions_login__WEBPACK_IMPORTED_MODULE_0__["LOGIN_REQUEST"]:
+    case _actions_login__WEBPACK_IMPORTED_MODULE_2__["LOGIN_REQUEST"]:
       return _objectSpread({}, state, {
         isFetching: true,
         isAuthenticated: false,
         errorMessage: ''
       });
 
-    case _actions_login__WEBPACK_IMPORTED_MODULE_0__["LOGIN_SUCCESS"]:
+    case _actions_login__WEBPACK_IMPORTED_MODULE_2__["LOGIN_SUCCESS"]:
       return _objectSpread({}, state, {
         isFetching: false,
         isAuthenticated: true,
         user: action.user
       });
 
-    case _actions_login__WEBPACK_IMPORTED_MODULE_0__["LOGIN_FAILURE"]:
+    case _actions_login__WEBPACK_IMPORTED_MODULE_2__["LOGIN_FAILURE"]:
       return _objectSpread({}, state, {
         isFetching: false,
         isAuthenticated: false,
-        errorMessage: action.message // case LOGOUT_SUCCESS:
-        //   return {
-        //     ...state,
-        //     isFetching: false,
-        //     isAuthenticated: false,
-        //     user: null
-        //   }
-        // case REGISTER_REQUEST:
-        //   return {
-        //     ...state,
-        //     isFetching: true,
-        //     isAuthenticated: false,
-        //     errorMessage: ''
-        //   }
-        // case REGISTER_FAILURE:
-        //   return {
-        //     ...state,
-        //     isFetching: false,
-        //     isAuthenticated: false,
-        //     errorMessage: action.message
-        //   }
+        errorMessage: action.message
+      });
 
+    case _actions_logout__WEBPACK_IMPORTED_MODULE_0__["LOGOUT_SUCCESS"]:
+      return _objectSpread({}, state, {
+        isFetching: false,
+        isAuthenticated: false,
+        user: null
+      });
+
+    case _actions_register__WEBPACK_IMPORTED_MODULE_1__["REGISTER_REQUEST"]:
+      return _objectSpread({}, state, {
+        isFetching: true,
+        isAuthenticated: false,
+        errorMessage: ''
+      });
+
+    case _actions_register__WEBPACK_IMPORTED_MODULE_1__["REGISTER_FAILURE"]:
+      return _objectSpread({}, state, {
+        isFetching: false,
+        isAuthenticated: false,
+        errorMessage: action.message
       });
 
     default:

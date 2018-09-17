@@ -14,7 +14,7 @@ class App extends Component {
     this.state = {
       bags: this.props.bags || [],
       formPage: true,
-      auth: false || this.props.auth.isAuthenticated
+      
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -35,8 +35,8 @@ class App extends Component {
         <RegisterForm/>
         <LoginForm />
         <Logout />
-        {this.state.formPage && <MainForm handleClick={this.handleClick} />}
-        {this.state.auth && <BagPage bagsData={this.props.bags} />}
+        {this.state.formPage && this.props.auth.isAuthenticated && <MainForm handleClick={this.handleClick} />}
+        {this.props.auth.isAuthenticated && <BagPage bagsData={this.props.bags} />}
         <Footer />
       </div>
     );

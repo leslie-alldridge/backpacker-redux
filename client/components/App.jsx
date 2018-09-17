@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MainForm from './MainForm';
 import BagPage from './BagPage';
-// import LoginForm from './LoginForm'
+import LoginForm from './LoginForm'
 import Footer from './Footer'
 import { addBagAction } from '../actions/addBag';
 import RegisterForm from './RegisterForm';
+import Logout from './Logout'
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       bags: this.props.bags || [],
-      formPage: true
+      formPage: true,
+      auth: false || this.props.auth.isAuthenticated
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -31,8 +33,10 @@ class App extends Component {
           <h4 id="subtitleText">Keep track of packed bags</h4>
         </div>
         <RegisterForm/>
+        <LoginForm />
+        <Logout />
         {this.state.formPage && <MainForm handleClick={this.handleClick} />}
-        <BagPage bagsData={this.props.bags} />
+        {this.state.auth && <BagPage bagsData={this.props.bags} />}
         <Footer />
       </div>
     );
@@ -41,7 +45,8 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    bags: state.bags
+    bags: state.bags,
+    auth: state.auth
   };
 }
 

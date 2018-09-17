@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MainForm from './MainForm';
 import BagPage from './BagPage';
-import LoginForm from './LoginForm'
+// import LoginForm from './LoginForm'
 import Footer from './Footer'
 import { addBagAction } from '../actions/addBag';
+import RegisterForm from './RegisterForm';
 
 class App extends Component {
   constructor(props) {
@@ -29,7 +30,7 @@ class App extends Component {
           <h1 id="titleText">Bag Tracker</h1>
           <h4 id="subtitleText">Keep track of packed bags</h4>
         </div>
-        <LoginForm/>
+        <RegisterForm/>
         {this.state.formPage && <MainForm handleClick={this.handleClick} />}
         <BagPage bagsData={this.props.bags} />
         <Footer />

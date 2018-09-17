@@ -7,7 +7,8 @@ const initialState = {
   isFetching: false,
   isAuthenticated: isAuthenticated(),
   user: getUserTokenInfo(),
-  errorMessage: ''
+  errorMessage: '',
+  bags: []
 }
 
 export default function auth (state = initialState, action) {
@@ -54,6 +55,16 @@ export default function auth (state = initialState, action) {
         isAuthenticated: false,
         errorMessage: action.message
       }
+     case 'GET_BAGS':
+     console.log('getting bags');
+     
+     return {
+      ...state,
+      isFetching: false,
+      isAuthenticated: true,
+      user,
+      bags
+     } 
     default:
       return state
   }

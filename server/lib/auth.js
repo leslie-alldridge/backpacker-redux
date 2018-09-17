@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken')
-const bags = require('../lib/bags')
 const users = require('./users')
 
 function createToken (user, secret) {
@@ -32,13 +31,10 @@ function issueJwt (req, res, next) {
         message: 'Authentication successful.',
         token
       })
-      let username = user.username;
-      console.log('can i func here' + username);
-      bags.getBags(username)
-      .then(data => {
-        console.log(data);
-        
-      })
+
+
+      //let username = user.username;
+     
       
     })
     .catch(err => {

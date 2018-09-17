@@ -94,11 +94,24 @@ router.use(
 )
 
 // These routes are protected
-router.get('/secret', (req, res) => {
-  res.json({
-    message: 'This is a SECRET quote.',
-    user: `Your user ID is: ${req.user.id}`
-  })
+router.get('/bags', (req, res) => {
+  console.log('req route');
+  console.log(req.user.username);
+  
+   bags.getBags(req.user.username)
+   .then(data => {
+    console.log('i found the bag below from a DB function');
+     console.log(data);
+     res.json({
+        message: 'This is your bag.',
+        bag: data
+      })
+
+   })
+  // res.json({
+  //   message: 'This is a SECRET quote.',
+  //   user: `Your user ID is: ${req.user.id}`
+  // })
 })
 
 module.exports = router

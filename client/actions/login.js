@@ -1,8 +1,6 @@
 import request from '../utils/api'
 import {saveUserToken} from '../utils/auth'
 
-
-
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
@@ -16,16 +14,12 @@ function requestLogin () {
 }
 
 export function receiveLogin (user) {
-  request('get', '/bags')
-      .then(res => {
-        // console.log(user);
-        console.log('res came back from api');
-        
-        // console.log('my response from api in actions folder');
-        // console.log(res.body.bag);
-        dispatch(receiveBag(res.body.bag, user.username))
-      })
-      .catch(err => dispatch(quoteError(err.response.body.message)))
+  // request('get', '/bags')
+  //     .then(res => {
+  //       console.log('res came back from api');
+  //       console.log(res);
+  //     })
+  //     .catch(err => dispatch(quoteError(err.response.body.message)))
   
   return {
     type: LOGIN_SUCCESS,
@@ -35,6 +29,7 @@ export function receiveLogin (user) {
   }
 }
 
+//this function never gets hit 
 export function receiveBag (bag, user) {
   console.log(bag);
   console.log(user);
@@ -43,13 +38,6 @@ export function receiveBag (bag, user) {
     isFetching: false,
     response: bag
   }
-  
-  // quote = user ? `${quote} ${user}` : quote
-  // return {
-  //   type: QUOTE_SUCCESS,
-  //   isFetching: false,
-  //   response: quote
-  // }
 }
 
 function loginError (message) {
@@ -61,22 +49,26 @@ function loginError (message) {
   }
 }
 
-function getBags(user){
-  console.log(user + 'this is my action GET BAGS');
+function fetchBag(user){
+  console.log(user + ' this is my action GET BAGS');
+  return function (dispatch) {
+    dispatch(requestBag())
+    request('get', '/bags')
+      .then(res => {
+        console.log(res.body.bag);
+        
+        dispatch(receiveBag(res.body.bag, user))
+      })
+      .catch(err)
+  }
+}  
   
-
+function requestBag(){
   return {
-    type: 'GET_BAGS',
+    type: 'BAG_REQUEST',
     isFetching: true,
     isAuthenticated: true,
-    user
   }
-// console.log('can i func here' + username);
-// bags.getBags(username)
-// .then(data => {
-//   console.log(data);
-  
-// })
 }
 
 // Calls the API to get a token and
@@ -99,7 +91,7 @@ export function loginUser (creds) {
           // Dispatch the success action
           dispatch(receiveLogin(userInfo))
           console.log(userInfo);
-          dispatch(getBags(userInfo.username))
+          dispatch(fetchBag(userInfo.username))
           
         }
       }).catch(err => dispatch(loginError(err.response.body.message)))

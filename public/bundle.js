@@ -194,35 +194,27 @@ function requestLogin() {
 }
 
 function receiveLogin(user) {
-  Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])('get', '/bags').then(function (res) {
-    // console.log(user);
-    console.log('res came back from api'); // console.log('my response from api in actions folder');
-    // console.log(res.body.bag);
-
-    dispatch(receiveBag(res.body.bag, user.username));
-  }).catch(function (err) {
-    return dispatch(quoteError(err.response.body.message));
-  });
+  // request('get', '/bags')
+  //     .then(res => {
+  //       console.log('res came back from api');
+  //       console.log(res);
+  //     })
+  //     .catch(err => dispatch(quoteError(err.response.body.message)))
   return {
     type: LOGIN_SUCCESS,
     isFetching: false,
     isAuthenticated: true,
     user: user
   };
-}
+} //this function never gets hit 
+
 function receiveBag(bag, user) {
   console.log(bag);
   console.log(user);
   return {
     type: 'BAG_SUCCESS',
     isFetching: false,
-    response: bag // quote = user ? `${quote} ${user}` : quote
-    // return {
-    //   type: QUOTE_SUCCESS,
-    //   isFetching: false,
-    //   response: quote
-    // }
-
+    response: bag
   };
 }
 
@@ -235,18 +227,22 @@ function loginError(message) {
   };
 }
 
-function getBags(user) {
-  console.log(user + 'this is my action GET BAGS');
-  return {
-    type: 'GET_BAGS',
-    isFetching: true,
-    isAuthenticated: true,
-    user: user // console.log('can i func here' + username);
-    // bags.getBags(username)
-    // .then(data => {
-    //   console.log(data);
-    // })
+function fetchBag(user) {
+  console.log(user + ' this is my action GET BAGS');
+  return function (dispatch) {
+    dispatch(requestBag());
+    Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])('get', '/bags').then(function (res) {
+      console.log(res.body.bag);
+      dispatch(receiveBag(res.body.bag, user));
+    }).catch(err);
+  };
+}
 
+function requestBag() {
+  return {
+    type: 'BAG_REQUEST',
+    isFetching: true,
+    isAuthenticated: true
   };
 } // Calls the API to get a token and
 // dispatches actions along the way
@@ -268,7 +264,7 @@ function loginUser(creds) {
 
         dispatch(receiveLogin(userInfo));
         console.log(userInfo);
-        dispatch(getBags(userInfo.username));
+        dispatch(fetchBag(userInfo.username));
       }
     }).catch(function (err) {
       return dispatch(loginError(err.response.body.message));
@@ -1700,14 +1696,32 @@ function auth() {
         errorMessage: action.message
       });
 
-    case 'GET_BAGS':
-      console.log('getting bags');
-      return _objectSpread({}, state, {
+    case 'BAG_SUCCESS':
+      console.log('my get bags switch statement');
+      return {
         isFetching: false,
-        isAuthenticated: true,
-        user: user,
-        bags: bags
-      });
+        quote: action.response,
+        errorMessage: '',
+        response: action.bag //  return {
+        //   ...state,
+        //   isFetching: false,
+        //   isAuthenticated: true,
+        //   errorMessage: action.message,
+        //   user: action.user,
+        //   bags: action.bags
+        // }
+        //in this request they are authenticated already and we're fetching bags
+
+      };
+
+    case 'BAG_REQUEST':
+      {
+        console.log('hit bag request');
+        return _objectSpread({}, state, {
+          isFetching: true,
+          isAuthenticated: true
+        });
+      }
 
     default:
       return state;

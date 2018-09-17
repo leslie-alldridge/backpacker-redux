@@ -7,6 +7,7 @@ import Footer from './Footer'
 import { addBagAction } from '../actions/addBag';
 import RegisterForm from './RegisterForm';
 import Logout from './Logout'
+import Loading from './Loading'
 
 class App extends Component {
   constructor(props) {
@@ -32,9 +33,10 @@ class App extends Component {
           <h1 id="titleText">Bag Tracker</h1>
           <h4 id="subtitleText">Keep track of packed bags</h4>
         </div>
-        <RegisterForm/>
-        <LoginForm />
-        <Logout />
+        {!this.props.auth.isAuthenticated && <RegisterForm/>}
+        {!this.props.auth.isAuthenticated && <LoginForm />}
+        <Loading />
+        {this.props.auth.isAuthenticated && <Logout />}
         {this.state.formPage && this.props.auth.isAuthenticated && <MainForm handleClick={this.handleClick} />}
         {this.props.auth.isAuthenticated && <BagPage bagsData={this.props.bags} />}
         <Footer />

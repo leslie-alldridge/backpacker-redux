@@ -407,9 +407,11 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
     _this.state = {
       bags: _this.props.bags || [],
-      formPage: true
+      formPage: true,
+      registerToggle: false
     };
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.registerToggle = _this.registerToggle.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -419,6 +421,16 @@ function (_Component) {
       var len = Object.keys(this.props.bags);
       e.preventDefault();
       this.props.addBag(len.length, description, destination);
+    }
+  }, {
+    key: "registerToggle",
+    value: function registerToggle() {
+      console.log('hit register toggle');
+      this.setState(function (prevState) {
+        return {
+          registerToggle: !prevState.registerToggle
+        };
+      });
     }
   }, {
     key: "render",
@@ -432,7 +444,13 @@ function (_Component) {
         id: "titleText"
       }, "Bag Tracker"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
         id: "subtitleText"
-      }, "Keep track of packed bags")), !this.props.auth.isAuthenticated && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_RegisterForm__WEBPACK_IMPORTED_MODULE_7__["default"], null), !this.props.auth.isAuthenticated && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LoginForm__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Loading__WEBPACK_IMPORTED_MODULE_9__["default"], null), this.props.auth.isAuthenticated && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Logout__WEBPACK_IMPORTED_MODULE_8__["default"], null), this.state.formPage && this.props.auth.isAuthenticated && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MainForm__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      }, "Keep track of packed bags")), !this.props.auth.isAuthenticated && this.state.registerToggle && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_RegisterForm__WEBPACK_IMPORTED_MODULE_7__["default"], {
+        registerToggle: this.registerToggle
+      }), !this.props.auth.isAuthenticated && !this.state.registerToggle && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LoginForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        registerToggle: this.registerToggle
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Loading__WEBPACK_IMPORTED_MODULE_9__["default"], null), this.props.auth.isAuthenticated && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Logout__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        user: this.props.auth.user.username
+      }), this.state.formPage && this.props.auth.isAuthenticated && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MainForm__WEBPACK_IMPORTED_MODULE_2__["default"], {
         handleClick: this.handleClick
       }), this.props.auth.isAuthenticated && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagPage__WEBPACK_IMPORTED_MODULE_3__["default"], {
         bagsData: this.props.bags
@@ -1008,7 +1026,10 @@ function (_React$Component) {
         onChange: this.handleChange
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleClick
-      }, "Login"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, "Login"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#",
+        onClick: this.props.registerToggle
+      }, "Register"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
         reducer: "auth"
       }));
     }
@@ -1047,9 +1068,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Logout = function Logout(props) {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Welcome back: ", props.user), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     onClick: props.logoutUser
-  }, "Logout");
+  }, "Logout"));
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -1298,6 +1319,7 @@ function (_React$Component) {
   }, {
     key: "handleClick",
     value: function handleClick(event) {
+      console.log('handleclick');
       var _this$state = this.state,
           username = _this$state.username,
           password = _this$state.password,
@@ -1317,6 +1339,8 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var _this$state2 = this.state,
           username = _this$state2.username,
           password = _this$state2.password,
@@ -1339,7 +1363,11 @@ function (_React$Component) {
         onChange: this.handleChange,
         value: confirm
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.handleClick
+        onClick: function onClick() {
+          _this2.handleClick();
+
+          _this2.props.registerToggle();
+        }
       }, "Register"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
         reducer: "auth"
       }));

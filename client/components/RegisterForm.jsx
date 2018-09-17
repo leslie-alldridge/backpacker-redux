@@ -24,6 +24,8 @@ class RegisterForm extends React.Component {
   }
 
   handleClick (event) {
+    console.log('handleclick');
+    
     const {username, password, confirm} = this.state
     if (password !== confirm) {
       this.props.registerError('Passwords do not match!')
@@ -49,7 +51,7 @@ class RegisterForm extends React.Component {
         <p><input type='password' name='confirm' placeholder='Confirm Password'
           onChange={this.handleChange} value={confirm} /></p>
 
-        <button onClick={this.handleClick}>Register</button>
+        <button onClick={ () => {this.handleClick(); this.props.registerToggle()} }>Register</button>
 
         <ErrorMessage reducer='auth' />
       </div>

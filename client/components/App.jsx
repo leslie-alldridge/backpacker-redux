@@ -15,15 +15,24 @@ class App extends Component {
     this.state = {
       bags: this.props.bags || [],
       formPage: true,
-      
+      registerToggle: false
     };
     this.handleClick = this.handleClick.bind(this);
+    this.registerToggle = this.registerToggle.bind(this);
   }
 
   handleClick(e, description, destination) {
     const len = Object.keys(this.props.bags);
     e.preventDefault();
     this.props.addBag(len.length, description, destination);
+  }
+
+  registerToggle(){
+    console.log('hit register toggle');
+    
+    this.setState(prevState => ({
+      registerToggle: !prevState.registerToggle
+    }));
   }
 
   render() {
@@ -33,10 +42,10 @@ class App extends Component {
           <h1 id="titleText">Bag Tracker</h1>
           <h4 id="subtitleText">Keep track of packed bags</h4>
         </div>
-        {!this.props.auth.isAuthenticated && <RegisterForm/>}
-        {!this.props.auth.isAuthenticated && <LoginForm />}
+        {!this.props.auth.isAuthenticated && this.state.registerToggle && <RegisterForm registerToggle={this.registerToggle}/>}
+        {!this.props.auth.isAuthenticated && !this.state.registerToggle && <LoginForm registerToggle={this.registerToggle}/>}
         <Loading />
-        {this.props.auth.isAuthenticated && <Logout />}
+        {this.props.auth.isAuthenticated && <Logout user={this.props.auth.user.username}/>}
         {this.state.formPage && this.props.auth.isAuthenticated && <MainForm handleClick={this.handleClick} />}
         {this.props.auth.isAuthenticated && <BagPage bagsData={this.props.bags} />}
         <Footer />

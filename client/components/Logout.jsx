@@ -5,9 +5,13 @@ import {logoutUser} from '../actions/logout'
 
 const Logout = (props) => {
   return (
-    <button onClick={props.logoutUser}>
-      Logout
-    </button>
+    <div>
+      <p>Welcome back: {props.user}</p>
+      <button onClick={props.logoutUser}>
+            Logout
+      </button>
+    </div>
+    
   )
 }
 

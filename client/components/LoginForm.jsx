@@ -41,6 +41,7 @@ class LoginForm extends React.Component {
           placeholder='Password'
           onChange={this.handleChange} /></p>
         <button onClick={this.handleClick}>Login</button>
+        <a href="#" onClick={this.props.registerToggle}>Register</a>
         <ErrorMessage reducer='auth' />
       </div>
     )

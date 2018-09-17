@@ -4,6 +4,7 @@ const verifyJwt = require('express-jwt')
 const crypto = require('../lib/crypto')
 const users = require('../lib/users')
 const auth = require('../lib/auth')
+const bags = require('../lib/bags')
 
 const router = express.Router()
 router.use(express.json())

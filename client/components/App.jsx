@@ -83,10 +83,10 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveBagToDB: () => {
+    saveBagToDB: (user, description, destination) => {
       console.log("dispatch it");
 
-      return dispatch(saveBagToDB());
+      return dispatch(saveBagToDB(user, description, destination));
     }
   };
 };

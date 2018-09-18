@@ -14,13 +14,6 @@ function requestLogin() {
 }
 
 export function receiveLogin(user) {
-  // request('get', '/bags')
-  //     .then(res => {
-  //       console.log('res came back from api');
-  //       console.log(res);
-  //     })
-  //     .catch(err => dispatch(quoteError(err.response.body.message)))
-
   return {
     type: LOGIN_SUCCESS,
     isFetching: false,
@@ -29,10 +22,7 @@ export function receiveLogin(user) {
   };
 }
 
-//this function never gets hit
 export function receiveBag(bag, user) {
-  console.log(bag);
-  console.log(user);
   return {
     type: "BAG_SUCCESS",
     isFetching: false,

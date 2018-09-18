@@ -150,16 +150,15 @@ function receiveAddBag(user, bag) {
 function saveBagToDB(user, description, destination) {
   console.log("made it ");
   var req = {
-    user: user,
     description: description,
     destination: destination
-  }; // console.log(user);
-  // console.log(description);
+  };
+  console.log(req); // console.log(description);
   // console.log(destination);
 
   return function (dispatch) {
     dispatch(requestAddBag());
-    return Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("post", "/bags", req).then(function (response) {
+    Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("post", "/bags", req).then(function (response) {
       if (!response.ok) {// If there was a problem, we want to
         // dispatch the error condition
         //dispatch(loginError(response.body.message));
@@ -248,23 +247,14 @@ function requestLogin() {
 }
 
 function receiveLogin(user) {
-  // request('get', '/bags')
-  //     .then(res => {
-  //       console.log('res came back from api');
-  //       console.log(res);
-  //     })
-  //     .catch(err => dispatch(quoteError(err.response.body.message)))
   return {
     type: LOGIN_SUCCESS,
     isFetching: false,
     isAuthenticated: true,
     user: user
   };
-} //this function never gets hit
-
+}
 function receiveBag(bag, user) {
-  console.log(bag);
-  console.log(user);
   return {
     type: "BAG_SUCCESS",
     isFetching: false,
@@ -566,9 +556,9 @@ function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    saveBagToDB: function saveBagToDB() {
+    saveBagToDB: function saveBagToDB(user, description, destination) {
       console.log("dispatch it");
-      return dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_6__["saveBagToDB"])());
+      return dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_6__["saveBagToDB"])(user, description, destination));
     }
   };
 }; // function mapDispatchToProps(dispatch) {

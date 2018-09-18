@@ -47,20 +47,18 @@ export function receiveAddBag(user, bag) {
 
 export function saveBagToDB(user, description, destination) {
   console.log("made it ");
-
   let req = {
-    user,
     description,
     destination
   };
-
-  // console.log(user);
+  console.log(req);
   // console.log(description);
   // console.log(destination);
 
   return function(dispatch) {
     dispatch(requestAddBag());
-    return request("post", "/bags", req)
+
+    request("post", "/bags", req)
       .then(response => {
         if (!response.ok) {
           // If there was a problem, we want to

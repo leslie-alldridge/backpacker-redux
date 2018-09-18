@@ -10,10 +10,14 @@ function getBags(username, testDb) {
     .where("username", username);
 }
 
-function addBags(username, testDb) {
+function addBags(username, description, destination, testDb) {
   console.log("adding bags for " + username);
   const connection = testDb || knex;
-  return connection("bags").insert({ username: username });
+  return connection("bags").insert({
+    username: username,
+    destination: destination,
+    description: description
+  });
 }
 
 module.exports = {

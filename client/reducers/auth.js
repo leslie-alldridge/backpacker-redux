@@ -77,6 +77,20 @@ export default function auth(state = initialState, action) {
     //   user: action.user,
     //   bags: action.bags
     // }
+
+    case "BAG_DEL_DONE":
+      console.log("hit bag del done switch");
+      console.log(action);
+
+      return {
+        ...state,
+        isFetching: false,
+        isAuthenticated: true,
+        // quote: action.response,
+        errorMessage: "",
+        bag: action.response
+      };
+
     //in this request they are authenticated already and we're fetching bags
     case "BAG_REQUEST": {
       console.log("hit bag request");

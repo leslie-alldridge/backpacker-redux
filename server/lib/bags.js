@@ -20,7 +20,21 @@ function addBags(username, description, destination, testDb) {
   });
 }
 
+function deleteBag(id, username, testDb) {
+  console.log("nuking bag" + id);
+  const connection = testDb || knex;
+  return connection("bags")
+    .where("id", id)
+    .del()
+    .then(data => {
+      return connection("bags")
+        .select()
+        .where("username", username);
+    });
+}
+
 module.exports = {
   getBags,
-  addBags
+  addBags,
+  deleteBag
 };

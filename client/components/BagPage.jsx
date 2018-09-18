@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { deleteBagAction } from "../actions/addBag";
+import { deleteBagDB } from "../actions/addBag";
 import BagList from "./BagList";
 import UpdateBag from "./UpdateBag";
 
@@ -8,7 +8,6 @@ class BagPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // bags: this.props.auth.bags,
       viewList: false,
       viewListID: null,
       viewBagUpdate: null,
@@ -19,14 +18,7 @@ class BagPage extends React.Component {
     this.addInventory = this.addInventory.bind(this);
   }
 
-  componentDidUpdate() {
-    console.log("bag state is below");
-    console.log(this.state.bagState);
-    console.log("bag props here");
-    console.log(this.props);
-
-    // console.log(this.props.state.bag)
-  }
+  componentDidUpdate() {}
 
   addInventory(viewListID) {
     this.setState(prevState => ({
@@ -43,7 +35,10 @@ class BagPage extends React.Component {
   }
 
   deleteItem(id) {
-    this.props.deleteBag(id);
+    //bag id to be deleted
+    console.log(id);
+    this.props.deleteBagDB(id);
+    // this.props.deleteBag(id);
   }
 
   render() {
@@ -125,8 +120,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    deleteBag: (description, destination) => {
-      dispatch(deleteBagAction(description, destination));
+    deleteBagDB: id => {
+      dispatch(deleteBagDB(id));
     }
   };
 }

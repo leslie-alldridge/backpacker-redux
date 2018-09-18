@@ -9,7 +9,8 @@ const initialState = {
   user: getUserTokenInfo(),
   errorMessage: "",
   bags: [],
-  bag: []
+  bag: [],
+  bagItems: []
 };
 
 export default function auth(state = initialState, action) {
@@ -104,9 +105,28 @@ export default function auth(state = initialState, action) {
       console.log("hit done update request");
       return {
         ...state,
-        isFetching: true,
+        isFetching: false,
         isAuthenticated: true,
         bag: action.response
+      };
+    }
+
+    case "ITEM_ADD_REQ": {
+      console.log("hit add item request");
+      return {
+        ...state,
+        isFetching: true,
+        isAuthenticated: true
+      };
+    }
+
+    case "ITEM_ADD_DONE": {
+      console.log("hit done bag item");
+      return {
+        ...state,
+        isFetching: false,
+        isAuthenticated: true,
+        bagItems: action.response
       };
     }
 

@@ -137,4 +137,16 @@ router.post("/bagsupdate", (req, res) => {
     });
 });
 
+//routes for updating items within a specific bag
+
+//add
+router.post("/itemadd", (req, res) => {
+  bags.addBagItem(req.user.username, req.body.id, req.body.input).then(data => {
+    res.json({
+      message: "These are your bag items.",
+      bagItems: data
+    });
+  });
+});
+
 module.exports = router;

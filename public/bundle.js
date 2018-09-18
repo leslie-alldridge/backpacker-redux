@@ -90,7 +90,7 @@
 /*!**********************************!*\
   !*** ./client/actions/addBag.js ***!
   \**********************************/
-/*! exports provided: updateBagAction, addBagReceived, receiveAddBag, saveBagToDB, deleteBagDB, updateBagDB */
+/*! exports provided: updateBagAction, addBagReceived, receiveAddBag, saveBagToDB, deleteBagDB, updateBagDB, saveItemAction */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -101,6 +101,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveBagToDB", function() { return saveBagToDB; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteBagDB", function() { return deleteBagDB; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBagDB", function() { return updateBagDB; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveItemAction", function() { return saveItemAction; });
 /* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/api */ "./client/utils/api.js");
 
 var updateBagAction = function updateBagAction(id, destination, description) {
@@ -113,6 +114,7 @@ var updateBagAction = function updateBagAction(id, destination, description) {
 }; //all func below this line are for adding bags
 
 function addBagReceived(bag, user) {
+  console.log(bag);
   return {
     type: "BAG_ADD_SUCCESS",
     isFetching: false,
@@ -129,6 +131,7 @@ function requestAddBag() {
 }
 
 function receiveAddBag(user, bag) {
+  console.log(bag);
   return {
     type: "BAG_SUCCESS",
     isFetching: false,
@@ -217,44 +220,47 @@ function updateBagDB(id, destination, description) {
       }
     });
   };
+} //all func below this line are for bag items
+
+function saveItemAction(id, input) {
+  console.log(id, input);
+  console.log("actions");
+  return function (dispatch) {
+    dispatch(addReqItem(id, input));
+    Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("post", "/itemadd", {
+      id: id,
+      input: input
+    }).then(function (response) {
+      console.log(response);
+
+      if (!response.ok) {} else {
+        console.log("hit the else for add item");
+        console.log(response);
+        console.log(response.body.bagItems);
+        dispatch(receieveItem(response.body.bagItems));
+      }
+    });
+  };
 }
 
-/***/ }),
+function addReqItem(id, input) {
+  return {
+    type: "ITEM_ADD_REQ",
+    isFetching: true,
+    isAuthenticated: true,
+    id: id,
+    input: input
+  };
+}
 
-/***/ "./client/actions/addItem.js":
-/*!***********************************!*\
-  !*** ./client/actions/addItem.js ***!
-  \***********************************/
-/*! exports provided: saveItemAction, checkItAction, deleteItAction */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveItemAction", function() { return saveItemAction; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkItAction", function() { return checkItAction; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteItAction", function() { return deleteItAction; });
-var saveItemAction = function saveItemAction(id, item) {
+function receieveItem(response) {
   return {
-    type: "ADD_ITEM",
-    id: id,
-    inventory: item,
-    quantity: 1
+    type: "ITEM_ADD_DONE",
+    isFetching: false,
+    isAuthenticated: true,
+    response: response
   };
-};
-var checkItAction = function checkItAction(id, item) {
-  return {
-    type: "CHECK_ITEM",
-    id: id,
-    inventory: item
-  };
-};
-var deleteItAction = function deleteItAction(id, item) {
-  return {
-    type: "DEL_ITEM",
-    id: id,
-    inventory: item
-  };
-};
+}
 
 /***/ }),
 
@@ -618,7 +624,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_addItem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/addItem */ "./client/actions/addItem.js");
+/* harmony import */ var _actions_addBag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/addBag */ "./client/actions/addBag.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -665,8 +671,6 @@ function (_React$Component) {
   _createClass(BagList, [{
     key: "delete",
     value: function _delete(id, input) {
-      console.log(id);
-      console.log(input);
       var deleteIt = this.props.deleteIt;
       deleteIt(id, input);
     }
@@ -686,6 +690,7 @@ function (_React$Component) {
   }, {
     key: "saveItem",
     value: function saveItem(id, input) {
+      console.log(id, input);
       var saveIt = this.props.saveIt;
       saveIt(id, input);
     }
@@ -717,42 +722,29 @@ function (_React$Component) {
         id: "checkAll",
         type: "submit",
         className: "btn btn-success"
-      }, "Add Item"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.bags.map(function (item) {
-        return item.items.map(function (newItem) {
-          if (_this2.props.id == item.id) {
-            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-              key: newItem
-            }, newItem, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-              onClick: function onClick() {
-                _this2.checkItem(_this2.props.id, newItem);
-              },
-              className: "fas fa-check",
-              id: "tick"
-            }));
-          }
-        });
-      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Add Item"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), console.log(this.props.state.bagItems), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.state.bagItems.map(function (item) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, item.bag_item);
+      } // item.items.map(newItem => {
+      //   if (this.props.id == item.id) {
+      //     return (
+      //       <li key={newItem}>
+      //         {newItem}
+      //         <i
+      //           onClick={() => {
+      //             this.checkItem(this.props.id, newItem);
+      //           }}
+      //           className="fas fa-check"
+      //           id="tick"
+      //         />
+      //       </li>
+      //     );
+      //   }
+      // })
+      )))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "todolist"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Items Checked"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        id: "done-items",
-        className: "list-unstyled"
-      }, this.props.bags.map(function (item) {
-        return item.checked.map(function (newItem) {
-          if (_this2.props.id === item.id) {
-            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-              key: newItem
-            }, newItem, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-              onClick: function onClick() {
-                _this2.delete(_this2.props.id, newItem);
-              },
-              id: "trash",
-              className: "fas fa-trash-alt"
-            }));
-          }
-        });
-      }))))));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Items Checked")))));
     }
   }]);
 
@@ -761,21 +753,21 @@ function (_React$Component) {
 
 function mapStateToProps(state) {
   return {
-    state: state.bags
+    state: state.auth
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    saveIt: function saveIt(id, description, destination) {
-      dispatch(Object(_actions_addItem__WEBPACK_IMPORTED_MODULE_2__["saveItemAction"])(id, description, destination));
-    },
-    checkIt: function checkIt(id, item) {
-      dispatch(Object(_actions_addItem__WEBPACK_IMPORTED_MODULE_2__["checkItAction"])(id, item));
-    },
-    deleteIt: function deleteIt(id, item) {
-      dispatch(Object(_actions_addItem__WEBPACK_IMPORTED_MODULE_2__["deleteItAction"])(id, item));
-    }
+    saveIt: function saveIt(id, input) {
+      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_2__["saveItemAction"])(id, input));
+    } // checkIt: (id, item) => {
+    //   dispatch(checkItAction(id, item));
+    // },
+    // deleteIt: (id, item) => {
+    //   dispatch(deleteItAction(id, item));
+    // }
+
   };
 }
 
@@ -1720,7 +1712,8 @@ var initialState = {
   user: Object(_utils_auth__WEBPACK_IMPORTED_MODULE_3__["getUserTokenInfo"])(),
   errorMessage: "",
   bags: [],
-  bag: []
+  bag: [],
+  bagItems: []
 };
 function auth() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
@@ -1815,9 +1808,28 @@ function auth() {
       {
         console.log("hit done update request");
         return _objectSpread({}, state, {
-          isFetching: true,
+          isFetching: false,
           isAuthenticated: true,
           bag: action.response
+        });
+      }
+
+    case "ITEM_ADD_REQ":
+      {
+        console.log("hit add item request");
+        return _objectSpread({}, state, {
+          isFetching: true,
+          isAuthenticated: true
+        });
+      }
+
+    case "ITEM_ADD_DONE":
+      {
+        console.log("hit done bag item");
+        return _objectSpread({}, state, {
+          isFetching: false,
+          isAuthenticated: true,
+          bagItems: action.response
         });
       }
 

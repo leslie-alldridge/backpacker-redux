@@ -10,6 +10,8 @@ export const updateBagAction = (id, destination, description) => ({
 //all func below this line are for adding bags
 
 export function addBagReceived(bag, user) {
+  console.log(bag);
+
   return {
     type: "BAG_ADD_SUCCESS",
     isFetching: false,
@@ -26,6 +28,7 @@ function requestAddBag() {
 }
 
 export function receiveAddBag(user, bag) {
+  console.log(bag);
   return {
     type: "BAG_SUCCESS",
     isFetching: false,
@@ -121,5 +124,50 @@ export function updateBagDB(id, destination, description) {
         dispatch(receiveUpdBag(response.body.bag));
       }
     });
+  };
+}
+
+//all func below this line are for bag items
+
+export function saveItemAction(id, input) {
+  console.log(id, input);
+  console.log("actions");
+
+  return function(dispatch) {
+    dispatch(addReqItem(id, input));
+    request("post", "/itemadd", {
+      id: id,
+      input: input
+    }).then(response => {
+      console.log(response);
+
+      if (!response.ok) {
+      } else {
+        console.log("hit the else for add item");
+        console.log(response);
+        console.log(response.body.bagItems);
+
+        dispatch(receieveItem(response.body.bagItems));
+      }
+    });
+  };
+}
+
+function addReqItem(id, input) {
+  return {
+    type: "ITEM_ADD_REQ",
+    isFetching: true,
+    isAuthenticated: true,
+    id,
+    input
+  };
+}
+
+function receieveItem(response) {
+  return {
+    type: "ITEM_ADD_DONE",
+    isFetching: false,
+    isAuthenticated: true,
+    response: response
   };
 }

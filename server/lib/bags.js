@@ -51,9 +51,28 @@ function updateBag(id, destination, description, username, testDb) {
     });
 }
 
+function addBagItem(username, id, input, testDb) {
+  console.log("adding bags item for " + username);
+  console.log(id, input);
+
+  const connection = testDb || knex;
+  return connection("bagitems")
+    .insert({
+      bag_id: id,
+      username: username,
+      bag_item: input
+    })
+    .then(data => {
+      return connection("bagitems").where({
+        bag_id: id
+      });
+    });
+}
+
 module.exports = {
   getBags,
   addBags,
   deleteBag,
-  updateBag
+  updateBag,
+  addBagItem
 };

@@ -11,11 +11,16 @@ class BagPage extends React.Component {
       bags: this.props.bags || [],
       viewList: false,
       viewListID: null,
-      viewBagUpdate: null
+      viewBagUpdate: null,
+      bagState: false || this.props.auth
     };
     this.updateBagToggle = this.updateBagToggle.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.addInventory = this.addInventory.bind(this);
+  }
+
+  componentDidUpdate(){
+    console.log(this.props.state.bag)
   }
 
   addInventory(viewListID) {
@@ -41,6 +46,9 @@ class BagPage extends React.Component {
       <div id="cont" className="container">
       <div id="containerBags">
         <h3 id="bagHead"><i className="fas fa-suitcase"></i> Your Current Bags :</h3>
+       {/* {console.log(this.state.bagState)}
+       {console.log(this.state.bagState.bag.id)} */}
+       <p>{this.state.bagState && this.state.bagState.bag.id}</p> 
         {this.props.bagsData.map(bag => (
           <div key={bag.id} id="card" className="card">
             <div data-aos="flip-up"
@@ -95,7 +103,7 @@ class BagPage extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    bags: state.bags
+    state: state.auth
   };
 }
 

@@ -41,6 +41,8 @@ export function receiveBag (bag, user) {
 }
 
 function loginError (message) {
+  console.log(message);
+  
   return {
     type: LOGIN_FAILURE,
     isFetching: false,
@@ -59,7 +61,7 @@ function fetchBag(user){
         
         dispatch(receiveBag(res.body.bag, user))
       })
-      .catch(err)
+      .catch(err => dispatch(loginError(err.message)))
   }
 }  
   
@@ -94,6 +96,6 @@ export function loginUser (creds) {
           dispatch(fetchBag(userInfo.username))
           
         }
-      }).catch(err => dispatch(loginError(err.response.body.message)))
+      }).catch(err => dispatch(loginError(err.message)))
   }
 }

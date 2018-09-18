@@ -219,6 +219,7 @@ function receiveBag(bag, user) {
 }
 
 function loginError(message) {
+  console.log(message);
   return {
     type: LOGIN_FAILURE,
     isFetching: false,
@@ -234,7 +235,9 @@ function fetchBag(user) {
     Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])('get', '/bags').then(function (res) {
       console.log(res.body.bag);
       dispatch(receiveBag(res.body.bag, user));
-    }).catch(err);
+    }).catch(function (err) {
+      return dispatch(loginError(err.message));
+    });
   };
 }
 
@@ -267,7 +270,7 @@ function loginUser(creds) {
         dispatch(fetchBag(userInfo.username));
       }
     }).catch(function (err) {
-      return dispatch(loginError(err.response.body.message));
+      return dispatch(loginError(err.message));
     });
   };
 }
@@ -749,7 +752,8 @@ function (_React$Component) {
       bags: _this.props.bags || [],
       viewList: false,
       viewListID: null,
-      viewBagUpdate: null
+      viewBagUpdate: null,
+      bagState: false || _this.props.auth
     };
     _this.updateBagToggle = _this.updateBagToggle.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.deleteItem = _this.deleteItem.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -758,6 +762,11 @@ function (_React$Component) {
   }
 
   _createClass(BagPage, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      console.log(this.props.state.bag);
+    }
+  }, {
     key: "addInventory",
     value: function addInventory(viewListID) {
       this.setState(function (prevState) {
@@ -796,7 +805,7 @@ function (_React$Component) {
         id: "bagHead"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-suitcase"
-      }), " Your Current Bags :"), this.props.bagsData.map(function (bag) {
+      }), " Your Current Bags :"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.bagState && this.state.bagState.bag.id), this.props.bagsData.map(function (bag) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: bag.id,
           id: "card",
@@ -851,7 +860,7 @@ function (_React$Component) {
 
 function mapStateToProps(state) {
   return {
-    bags: state.bags
+    state: state.auth
   };
 }
 
@@ -1698,11 +1707,11 @@ function auth() {
 
     case 'BAG_SUCCESS':
       console.log('my get bags switch statement');
-      return {
+      return _objectSpread({}, state, {
         isFetching: false,
-        quote: action.response,
+        // quote: action.response,
         errorMessage: '',
-        response: action.bag //  return {
+        bag: action.response //  return {
         //   ...state,
         //   isFetching: false,
         //   isAuthenticated: true,
@@ -1712,7 +1721,7 @@ function auth() {
         // }
         //in this request they are authenticated already and we're fetching bags
 
-      };
+      });
 
     case 'BAG_REQUEST':
       {

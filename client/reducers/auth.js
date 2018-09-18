@@ -58,10 +58,12 @@ export default function auth (state = initialState, action) {
      case 'BAG_SUCCESS':
      console.log('my get bags switch statement');
       return {
+        ...state,
         isFetching: false,
-        quote: action.response,
+        
+        // quote: action.response,
         errorMessage: '',
-        response: action.bag
+        bag: action.response
       }
 
     //  return {

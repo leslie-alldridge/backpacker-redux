@@ -90,7 +90,7 @@
 /*!**********************************!*\
   !*** ./client/actions/addBag.js ***!
   \**********************************/
-/*! exports provided: updateBagAction, addBagReceived, receiveAddBag, saveBagToDB, deleteBagDB */
+/*! exports provided: updateBagAction, addBagReceived, receiveAddBag, saveBagToDB, deleteBagDB, updateBagDB */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -100,6 +100,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveAddBag", function() { return receiveAddBag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveBagToDB", function() { return saveBagToDB; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteBagDB", function() { return deleteBagDB; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBagDB", function() { return updateBagDB; });
 /* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/api */ "./client/utils/api.js");
 
 var updateBagAction = function updateBagAction(id, destination, description) {
@@ -150,7 +151,6 @@ function saveBagToDB(user, description, destination) {
 } //all func below this line are for deleting a bag
 
 function deleteReqBag(id) {
-  console.log("hit delete bag request");
   return {
     type: "BAG_DEL_REQ",
     isFetching: true,
@@ -160,8 +160,6 @@ function deleteReqBag(id) {
 }
 
 function receiveDelBag(response) {
-  console.log("hit delete done request");
-  console.log(response);
   return {
     type: "BAG_DEL_DONE",
     isFetching: false,
@@ -171,18 +169,51 @@ function receiveDelBag(response) {
 }
 
 function deleteBagDB(id) {
-  console.log("made it to action");
   return function (dispatch) {
     dispatch(deleteReqBag(id));
-    console.log(id);
     Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("post", "/bagsdel", {
       id: id
     }).then(function (response) {
-      if (!response.ok) {
-        console.log("broken");
-      } else {
-        //console.log(response);
+      if (!response.ok) {} else {
         dispatch(receiveDelBag(response.body.bag));
+      }
+    });
+  };
+} //all func below this line are for updating a bag
+
+function updateReqBag(id, destination, description) {
+  return {
+    type: "BAG_UPD_REQ",
+    isFetching: true,
+    isAuthenticated: true,
+    id: id,
+    destination: destination,
+    description: description
+  };
+}
+
+function receiveUpdBag(response) {
+  return {
+    type: "BAG_UPD_DONE",
+    isFetching: false,
+    isAuthenticated: true,
+    response: response
+  };
+}
+
+function updateBagDB(id, destination, description) {
+  return function (dispatch) {
+    dispatch(updateReqBag(id, destination, description));
+    Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("post", "/bagsupdate", {
+      id: id,
+      destination: destination,
+      description: description
+    }).then(function (response) {
+      console.log(response);
+
+      if (!response.ok) {} else {
+        console.log("hit the else");
+        dispatch(receiveUpdBag(response.body.bag));
       }
     });
   };
@@ -840,9 +871,7 @@ function (_React$Component) {
   }, {
     key: "deleteItem",
     value: function deleteItem(id) {
-      //bag id to be deleted
-      console.log(id);
-      this.props.deleteBagDB(id); // this.props.deleteBag(id);
+      this.props.deleteBagDB(id);
     }
   }, {
     key: "render",
@@ -858,7 +887,7 @@ function (_React$Component) {
         id: "bagHead"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-suitcase"
-      }), " Your Current Bags :"), console.log(this.props.bagsData.bag), this.props.bagsData.bag.map(function (bag) {
+      }), " Your Current Bags :"), this.props.bagsData.bag.map(function (bag) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: bag.id,
           id: "card",
@@ -1569,10 +1598,10 @@ function (_React$Component) {
       });
     }
   }, {
-    key: "updateBag",
-    value: function updateBag(id, destination, description) {
-      var updateIt = this.props.updateIt;
-      updateIt(id, destination, description);
+    key: "updateBagDB",
+    value: function updateBagDB(id, destination, description) {
+      this.props.updateBagDB(id, destination, description); // const { updateIt } = this.props;
+      // updateIt(id, destination, description);
     }
   }, {
     key: "render",
@@ -1597,7 +1626,7 @@ function (_React$Component) {
         placeholder: this.props.destination
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
-          _this2.updateBag(_this2.props.id, _this2.state.updateInput, _this2.state.desInput);
+          _this2.updateBagDB(_this2.props.id, _this2.state.updateInput, _this2.state.desInput);
         },
         id: "checkAll",
         className: "btn btn-success"
@@ -1616,8 +1645,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    updateIt: function updateIt(id, destination, description) {
-      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_2__["updateBagAction"])(id, destination, description));
+    updateBagDB: function updateBagDB(id, destination, description) {
+      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_2__["updateBagDB"])(id, destination, description));
     }
   };
 }
@@ -1769,6 +1798,26 @@ function auth() {
         return _objectSpread({}, state, {
           isFetching: true,
           isAuthenticated: true
+        });
+      }
+    //update cases
+
+    case "BAG_UPD_REQ":
+      {
+        console.log("hit update request");
+        return _objectSpread({}, state, {
+          isFetching: true,
+          isAuthenticated: true
+        });
+      }
+
+    case "BAG_UPD_DONE":
+      {
+        console.log("hit done update request");
+        return _objectSpread({}, state, {
+          isFetching: true,
+          isAuthenticated: true,
+          bag: action.response
         });
       }
 

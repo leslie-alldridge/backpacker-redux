@@ -119,4 +119,22 @@ router.post("/bagsdel", (req, res) => {
   });
 });
 
+router.post("/bagsupdate", (req, res) => {
+  console.log("hit the update route");
+  console.log(req.body);
+  bags
+    .updateBag(
+      req.body.id,
+      req.body.destination,
+      req.body.description,
+      req.user.username
+    )
+    .then(updBag => {
+      res.json({
+        message: "updated bag",
+        bag: updBag
+      });
+    });
+});
+
 module.exports = router;

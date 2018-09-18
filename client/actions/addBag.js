@@ -53,7 +53,6 @@ export function saveBagToDB(user, description, destination) {
 //all func below this line are for deleting a bag
 
 function deleteReqBag(id) {
-  console.log("hit delete bag request");
   return {
     type: "BAG_DEL_REQ",
     isFetching: true,
@@ -63,9 +62,6 @@ function deleteReqBag(id) {
 }
 
 function receiveDelBag(response) {
-  console.log("hit delete done request");
-  console.log(response);
-
   return {
     type: "BAG_DEL_DONE",
     isFetching: false,
@@ -75,18 +71,54 @@ function receiveDelBag(response) {
 }
 
 export function deleteBagDB(id) {
-  console.log("made it to action");
-
   return function(dispatch) {
     dispatch(deleteReqBag(id));
-    console.log(id);
-
     request("post", "/bagsdel", { id: id }).then(response => {
       if (!response.ok) {
-        console.log("broken");
       } else {
-        //console.log(response);
         dispatch(receiveDelBag(response.body.bag));
+      }
+    });
+  };
+}
+
+//all func below this line are for updating a bag
+
+function updateReqBag(id, destination, description) {
+  return {
+    type: "BAG_UPD_REQ",
+    isFetching: true,
+    isAuthenticated: true,
+    id,
+    destination,
+    description
+  };
+}
+
+function receiveUpdBag(response) {
+  return {
+    type: "BAG_UPD_DONE",
+    isFetching: false,
+    isAuthenticated: true,
+    response: response
+  };
+}
+
+export function updateBagDB(id, destination, description) {
+  return function(dispatch) {
+    dispatch(updateReqBag(id, destination, description));
+    request("post", "/bagsupdate", {
+      id: id,
+      destination: destination,
+      description: description
+    }).then(response => {
+      console.log(response);
+
+      if (!response.ok) {
+      } else {
+        console.log("hit the else");
+
+        dispatch(receiveUpdBag(response.body.bag));
       }
     });
   };

@@ -90,6 +90,26 @@ export default function auth(state = initialState, action) {
         isAuthenticated: true
       };
     }
+    //update cases
+    case "BAG_UPD_REQ": {
+      console.log("hit update request");
+      return {
+        ...state,
+        isFetching: true,
+        isAuthenticated: true
+      };
+    }
+
+    case "BAG_UPD_DONE": {
+      console.log("hit done update request");
+      return {
+        ...state,
+        isFetching: true,
+        isAuthenticated: true,
+        bag: action.response
+      };
+    }
+
     default:
       return state;
   }

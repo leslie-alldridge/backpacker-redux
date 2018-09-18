@@ -33,8 +33,27 @@ function deleteBag(id, username, testDb) {
     });
 }
 
+function updateBag(id, destination, description, username, testDb) {
+  console.log("updating bag" + id);
+  console.log(destination, description);
+
+  const connection = testDb || knex;
+  return connection("bags")
+    .where("id", id)
+    .update({
+      destination: destination,
+      description: description
+    })
+    .then(data => {
+      return connection("bags")
+        .select()
+        .where("username", username);
+    });
+}
+
 module.exports = {
   getBags,
   addBags,
-  deleteBag
+  deleteBag,
+  updateBag
 };

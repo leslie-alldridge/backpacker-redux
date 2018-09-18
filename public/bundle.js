@@ -167,12 +167,10 @@ function saveBagToDB(user, description, destination) {
         // If login was successful, set the token in local storage
         //const userInfo = saveUserToken(response.body.token);
         // Dispatch the success action
-        dispatch(receiveAddBag(user, response));
+        dispatch(receiveAddBag(user, response.body.bag));
         console.log("response sent"); // dispatch(fetchBag(userInfo.username));
       }
-    }).catch(function (err) {
-      return dispatch(loginError(err.message));
-    });
+    }); // .catch(err => dispatch(loginError(err.message)));
   };
 }
 

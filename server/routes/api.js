@@ -110,8 +110,13 @@ router.post("/bags", (req, res) => {
   bags
     .addBags(req.user.username, req.body.description, req.body.destination)
     .then(data => {
-      console.log(data);
-      console.log("bags should be in db");
+      bags.getBags(req.user.username).then(userBag => {
+        console.log(data);
+        res.json({
+          message: "This is your bag.",
+          bag: userBag
+        });
+      });
     });
 });
 

@@ -58,22 +58,21 @@ export function saveBagToDB(user, description, destination) {
   return function(dispatch) {
     dispatch(requestAddBag());
 
-    request("post", "/bags", req)
-      .then(response => {
-        if (!response.ok) {
-          // If there was a problem, we want to
-          // dispatch the error condition
-          //dispatch(loginError(response.body.message));
-          //return Promise.reject(response.body.message);
-        } else {
-          // If login was successful, set the token in local storage
-          //const userInfo = saveUserToken(response.body.token);
-          // Dispatch the success action
-          dispatch(receiveAddBag(user, response));
-          console.log("response sent");
-          // dispatch(fetchBag(userInfo.username));
-        }
-      })
-      .catch(err => dispatch(loginError(err.message)));
+    request("post", "/bags", req).then(response => {
+      if (!response.ok) {
+        // If there was a problem, we want to
+        // dispatch the error condition
+        //dispatch(loginError(response.body.message));
+        //return Promise.reject(response.body.message);
+      } else {
+        // If login was successful, set the token in local storage
+        //const userInfo = saveUserToken(response.body.token);
+        // Dispatch the success action
+        dispatch(receiveAddBag(user, response.body.bag));
+        console.log("response sent");
+        // dispatch(fetchBag(userInfo.username));
+      }
+    });
+    // .catch(err => dispatch(loginError(err.message)));
   };
 }

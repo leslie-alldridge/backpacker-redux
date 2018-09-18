@@ -1,22 +1,27 @@
 export default function(state = [], action) {
   switch (action.type) {
     // BAGS
-    case 'ADD_TO_BAGS':
+    case "ADD_TO_BAGS":
       const index1 = state.findIndex(
-        item => item.description === action.description && item.destination === action.destination
+        item =>
+          item.description === action.description &&
+          item.destination === action.destination
       );
       if (index1 > -1) {
         return state.map(item => {
-          if (item.description === action.description && item.destination === action.destination) {
+          if (
+            item.description === action.description &&
+            item.destination === action.destination
+          ) {
           }
           return item;
         });
       } else {
         return [...state, action];
       }
-    case 'DELETE_BAGS':
+    case "DELETE_BAGS":
       return state.filter(item => item.id !== action.id);
-    case 'UPDATE_BAG':
+    case "UPDATE_BAG":
       const index3 = state.findIndex(item => item.id === action.id);
       if (index3 > -1) {
         return state.map(item => {
@@ -29,7 +34,7 @@ export default function(state = [], action) {
         });
       }
     //ITEMS
-    case 'ADD_ITEM':
+    case "ADD_ITEM":
       const index = state.findIndex(item => item.id === action.id);
       if (index > -1) {
         return state.map(item => {
@@ -37,7 +42,7 @@ export default function(state = [], action) {
           return item;
         });
       }
-    case 'CHECK_ITEM':
+    case "CHECK_ITEM":
       const index2 = state.findIndex(item => item.id === action.id);
       if (index2 > -1) {
         return state.map(item => {
@@ -49,7 +54,7 @@ export default function(state = [], action) {
           return item;
         });
       }
-    case 'DEL_ITEM':
+    case "DEL_ITEM":
       const index4 = state.findIndex(item => item.id === action.id);
       if (index4 > -1) {
         return state.map(item => {

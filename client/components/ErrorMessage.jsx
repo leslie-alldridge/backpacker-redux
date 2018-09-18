@@ -1,16 +1,14 @@
-import React from 'react'
-import {connect} from 'react-redux'
+import React from "react";
+import { connect } from "react-redux";
 
-const ErrorMessage = (props) => {
-  return (
-    <p>{props.message}</p>
-  )
-}
+const ErrorMessage = props => {
+  return <p>{props.message}</p>;
+};
 
 const mapStateToProps = (state, ownProps) => {
   return {
     message: state[ownProps.reducer].errorMessage
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps)(ErrorMessage)
+export default connect(mapStateToProps)(ErrorMessage);

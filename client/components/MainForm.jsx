@@ -1,24 +1,24 @@
-import React from 'react';
+import React from "react";
 
 class MainForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      description: '',
-      destination: ''
+      description: "",
+      destination: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleDescChange = this.handleDescChange.bind(this);
   }
 
   componentDidMount() {
-    $('#btnSubmit').click(event => {
-      const form = $('#myForm');
+    $("#btnSubmit").click(event => {
+      const form = $("#myForm");
       if (form[0].checkValidity() === false) {
         event.preventDefault();
         event.stopPropagation();
       }
-      form.addClass('was-validated');
+      form.addClass("was-validated");
     });
   }
 
@@ -38,16 +38,17 @@ class MainForm extends React.Component {
 
   render() {
     return (
-      <div  data-aos="fade-left"
-      data-aos-duration="1000"
-      data-aos-easing="ease-in-out"
-      data-aos-mirror="true"
-      data-aos-once="false"
-     
-   className= "col-xl-12" id="mainForm">
+      <div
+        data-aos="fade-left"
+        data-aos-duration="1000"
+        data-aos-easing="ease-in-out"
+        data-aos-mirror="true"
+        data-aos-once="false"
+        className="col-xl-12"
+        id="mainForm"
+      >
         <form noValidate="" id="myForm">
-          
-            <div className = "col-xl-12" id="formBody">
+          <div className="col-xl-12" id="formBody">
             <div className="form-group">
               <label id="formLabel">Enter Bag Description</label>
               <input
@@ -60,7 +61,9 @@ class MainForm extends React.Component {
                 placeholder="Large, small, hand luggage.."
               />
               <div className="valid-feedback">Saved!</div>
-              <div className="invalid-feedback">Sorry, you missed this one.</div>
+              <div className="invalid-feedback">
+                Sorry, you missed this one.
+              </div>
             </div>
             <div className="form-group">
               <label id="formLabel">Destination</label>
@@ -73,38 +76,47 @@ class MainForm extends React.Component {
                 placeholder="Bag Destination"
               />
               <div className="valid-feedback">Saved!</div>
-              <div className="invalid-feedback">Sorry, you missed this one.</div>
+              <div className="invalid-feedback">
+                Sorry, you missed this one.
+              </div>
             </div>
             <button
               type="submit"
               id="btnSubmit"
               onClick={e =>
-                this.props.handleClick(e, this.state.description, this.state.destination)
+                this.props.handleClick(
+                  e,
+                  this.state.description,
+                  this.state.destination
+                )
               }
               className="btn btn-primary"
             >
               Save Bag
             </button>
           </div>
-         
         </form>
         <div id="info" className="col-md-6">
-        <blockquote className="blockquote text-center">
-  <p className="mb-0"> <i className="fas fa-quote-left"></i> I didn't freeze halfway through the flight and panic about what I'd packed <i className="fas fa-quote-right"></i></p>
-  <footer className="blockquote-footer">Avid Traveller: <cite title="Source Title">John Smith</cite></footer>
-</blockquote>
-<p>How to use this app:</p>
-<ol>
-  <li>
-    Enter bag Description and Destination and save as many as you need.
-  </li>
-  <li>
-    Each bag will have its own inventory and checklist.
-  </li>
-  <li>
-    Have a great holiday! 
-  </li>
-</ol>
+          <blockquote className="blockquote text-center">
+            <p className="mb-0">
+              {" "}
+              <i className="fas fa-quote-left" /> I didn't freeze halfway
+              through the flight and panic about what I'd packed{" "}
+              <i className="fas fa-quote-right" />
+            </p>
+            <footer className="blockquote-footer">
+              Avid Traveller: <cite title="Source Title">John Smith</cite>
+            </footer>
+          </blockquote>
+          <p>How to use this app:</p>
+          <ol>
+            <li>
+              Enter bag Description and Destination and save as many as you
+              need.
+            </li>
+            <li>Each bag will have its own inventory and checklist.</li>
+            <li>Have a great holiday!</li>
+          </ol>
         </div>
       </div>
     );

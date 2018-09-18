@@ -100,7 +100,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBagAction", function() { return updateBagAction; });
 var addBagAction = function addBagAction(id, description, destination) {
   return {
-    type: 'ADD_TO_BAGS',
+    type: "ADD_TO_BAGS",
     id: id,
     description: description,
     destination: destination,
@@ -110,13 +110,13 @@ var addBagAction = function addBagAction(id, description, destination) {
 };
 var deleteBagAction = function deleteBagAction(id) {
   return {
-    type: 'DELETE_BAGS',
+    type: "DELETE_BAGS",
     id: id
   };
 };
 var updateBagAction = function updateBagAction(id, destination, description) {
   return {
-    type: 'UPDATE_BAG',
+    type: "UPDATE_BAG",
     id: id,
     description: description,
     destination: destination
@@ -139,7 +139,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteItAction", function() { return deleteItAction; });
 var saveItemAction = function saveItemAction(id, item) {
   return {
-    type: 'ADD_ITEM',
+    type: "ADD_ITEM",
     id: id,
     inventory: item,
     quantity: 1
@@ -147,14 +147,14 @@ var saveItemAction = function saveItemAction(id, item) {
 };
 var checkItAction = function checkItAction(id, item) {
   return {
-    type: 'CHECK_ITEM',
+    type: "CHECK_ITEM",
     id: id,
     inventory: item
   };
 };
 var deleteItAction = function deleteItAction(id, item) {
   return {
-    type: 'DEL_ITEM',
+    type: "DEL_ITEM",
     id: id,
     inventory: item
   };
@@ -181,9 +181,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/auth */ "./client/utils/auth.js");
 
 
-var LOGIN_REQUEST = 'LOGIN_REQUEST';
-var LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-var LOGIN_FAILURE = 'LOGIN_FAILURE';
+var LOGIN_REQUEST = "LOGIN_REQUEST";
+var LOGIN_SUCCESS = "LOGIN_SUCCESS";
+var LOGIN_FAILURE = "LOGIN_FAILURE";
 
 function requestLogin() {
   return {
@@ -206,13 +206,13 @@ function receiveLogin(user) {
     isAuthenticated: true,
     user: user
   };
-} //this function never gets hit 
+} //this function never gets hit
 
 function receiveBag(bag, user) {
   console.log(bag);
   console.log(user);
   return {
-    type: 'BAG_SUCCESS',
+    type: "BAG_SUCCESS",
     isFetching: false,
     response: bag
   };
@@ -229,10 +229,10 @@ function loginError(message) {
 }
 
 function fetchBag(user) {
-  console.log(user + ' this is my action GET BAGS');
+  console.log(user + " this is my action GET BAGS");
   return function (dispatch) {
     dispatch(requestBag());
-    Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])('get', '/bags').then(function (res) {
+    Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("get", "/bags").then(function (res) {
       console.log(res.body.bag);
       dispatch(receiveBag(res.body.bag, user));
     }).catch(function (err) {
@@ -243,7 +243,7 @@ function fetchBag(user) {
 
 function requestBag() {
   return {
-    type: 'BAG_REQUEST',
+    type: "BAG_REQUEST",
     isFetching: true,
     isAuthenticated: true
   };
@@ -255,7 +255,7 @@ function loginUser(creds) {
   return function (dispatch) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds));
-    return Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])('post', '/signin', creds).then(function (response) {
+    return Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("post", "/signin", creds).then(function (response) {
       if (!response.ok) {
         // If there was a problem, we want to
         // dispatch the error condition
@@ -292,9 +292,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logoutUser", function() { return logoutUser; });
 /* harmony import */ var _utils_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/auth */ "./client/utils/auth.js");
 
-var LOGOUT_REQUEST = 'LOGOUT_REQUEST';
-var LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
-var LOGOUT_FAILURE = 'LOGOUT_FAILURE';
+var LOGOUT_REQUEST = "LOGOUT_REQUEST";
+var LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+var LOGOUT_FAILURE = "LOGOUT_FAILURE";
 
 function requestLogout() {
   return {
@@ -342,8 +342,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var REGISTER_REQUEST = 'REGISTER_REQUEST';
-var REGISTER_FAILURE = 'REGISTER_FAILURE';
+var REGISTER_REQUEST = "REGISTER_REQUEST";
+var REGISTER_FAILURE = "REGISTER_FAILURE";
 
 function requestRegister(creds) {
   return {
@@ -366,7 +366,7 @@ function registerUser(creds) {
   return function (dispatch) {
     // We dispatch requestRegister to kickoff the call to the API
     dispatch(requestRegister(creds));
-    return Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])('post', '/register', creds).then(function (response) {
+    return Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("post", "/register", creds).then(function (response) {
       if (!response.ok) {
         // If there was a problem, we want to
         // dispatch the error condition
@@ -466,7 +466,7 @@ function (_Component) {
   }, {
     key: "registerToggle",
     value: function registerToggle() {
-      console.log('hit register toggle');
+      console.log("hit register toggle");
       this.setState(function (prevState) {
         return {
           registerToggle: !prevState.registerToggle
@@ -568,7 +568,7 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(BagList).call(this, props));
     _this.state = {
-      formInput: ''
+      formInput: ""
     };
     _this.formChange = _this.formChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.saveItem = _this.saveItem.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -764,9 +764,9 @@ function (_React$Component) {
   _createClass(BagPage, [{
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
-      console.log('bag state is below');
+      console.log("bag state is below");
       console.log(this.state.bagState);
-      console.log('bag props here');
+      console.log("bag props here");
       console.log(this.props); // console.log(this.props.state.bag)
     }
   }, {
@@ -927,11 +927,11 @@ var Footer = function Footer() {
     className: "footer"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "content has-text-centered"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Bag Tracker by Leslie Alldridge - 2018. Created with ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Bag Tracker by Leslie Alldridge - 2018. Created with", " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     href: "https://reactjs.org/"
-  }, "React"), ", ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+  }, "React"), ",", " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     href: "https://redux.js.org/"
-  }, "Redux"), ", ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+  }, "Redux"), ",", " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     href: "https://getbootstrap.com/"
   }, "Bootstrap"), ", Node JS and CSS3."))));
 };
@@ -969,7 +969,7 @@ var Loading = function Loading(props) {
     className: override,
     sizeUnit: "px",
     size: 90,
-    color: '#123abc',
+    color: "#123abc",
     loading: props.isFetching
   }));
 };
@@ -1037,8 +1037,8 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(LoginForm).call(this, props));
     _this.state = {
-      username: '',
-      password: ''
+      username: "",
+      password: ""
     };
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -1178,8 +1178,8 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MainForm).call(this, props));
     _this.state = {
-      description: '',
-      destination: ''
+      description: "",
+      destination: ""
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.handleDescChange = _this.handleDescChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -1189,15 +1189,15 @@ function (_React$Component) {
   _createClass(MainForm, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      $('#btnSubmit').click(function (event) {
-        var form = $('#myForm');
+      $("#btnSubmit").click(function (event) {
+        var form = $("#myForm");
 
         if (form[0].checkValidity() === false) {
           event.preventDefault();
           event.stopPropagation();
         }
 
-        form.addClass('was-validated');
+        form.addClass("was-validated");
       });
     }
   }, {
@@ -1282,7 +1282,7 @@ function (_React$Component) {
         className: "mb-0"
       }, " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-quote-left"
-      }), " I didn't freeze halfway through the flight and panic about what I'd packed ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      }), " I didn't freeze halfway through the flight and panic about what I'd packed", " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-quote-right"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
         className: "blockquote-footer"
@@ -1352,9 +1352,9 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(RegisterForm).call(this, props));
     _this.state = {
-      username: '',
-      password: '',
-      confirm: ''
+      username: "",
+      password: "",
+      confirm: ""
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -1369,14 +1369,14 @@ function (_React$Component) {
   }, {
     key: "handleClick",
     value: function handleClick(event) {
-      console.log('handleclick');
+      console.log("handleclick");
       var _this$state = this.state,
           username = _this$state.username,
           password = _this$state.password,
           confirm = _this$state.confirm;
 
       if (password !== confirm) {
-        this.props.registerError('Passwords do not match!');
+        this.props.registerError("Passwords do not match!");
         return;
       }
 
@@ -1418,7 +1418,11 @@ function (_React$Component) {
 
           _this2.props.registerToggle();
         }
-      }, "Register"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, "Register"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          _this2.props.registerToggle();
+        }
+      }, "Back"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
         reducer: "auth"
       }));
     }
@@ -1491,8 +1495,8 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(UpdateBag).call(this, props));
     _this.state = {
-      updateInput: '',
-      desInput: ''
+      updateInput: "",
+      desInput: ""
     };
     _this.destinationChange = _this.destinationChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.desChange = _this.desChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -1600,35 +1604,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var store = Object(redux__WEBPACK_IMPORTED_MODULE_3__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_6__["default"], Object(redux__WEBPACK_IMPORTED_MODULE_3__["compose"])(Object(redux__WEBPACK_IMPORTED_MODULE_3__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_5__["default"]), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
   Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__["Provider"], {
     store: store
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_App__WEBPACK_IMPORTED_MODULE_7__["default"], null))), document.getElementById('app'));
-}); //my code
-// import React from "react";
-// import { render } from "react-dom";
-// import { Provider } from "react-redux";
-// import { createStore } from "redux";
-// import reducers from "./reducers";
-// import App from "./components/App";
-// import { loadState, saveState } from './localStorage'
-// const persistedState = loadState();
-// const store = createStore(
-//   reducers,
-//   persistedState,
-//   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-// );
-// store.subscribe(() => {
-//   saveState(store.getState());
-// });
-// document.addEventListener("DOMContentLoaded", () => {
-//   render(
-//     <Provider store={store}>
-//       <App />
-//     </Provider>,
-//     document.getElementById("app")
-//   );
-// });
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_App__WEBPACK_IMPORTED_MODULE_7__["default"], null))), document.getElementById("app"));
+});
 
 /***/ }),
 
@@ -1658,7 +1638,7 @@ var initialState = {
   isFetching: false,
   isAuthenticated: Object(_utils_auth__WEBPACK_IMPORTED_MODULE_3__["isAuthenticated"])(),
   user: Object(_utils_auth__WEBPACK_IMPORTED_MODULE_3__["getUserTokenInfo"])(),
-  errorMessage: '',
+  errorMessage: "",
   bags: [],
   bag: []
 };
@@ -1671,7 +1651,7 @@ function auth() {
       return _objectSpread({}, state, {
         isFetching: true,
         isAuthenticated: false,
-        errorMessage: ''
+        errorMessage: ""
       });
 
     case _actions_login__WEBPACK_IMPORTED_MODULE_2__["LOGIN_SUCCESS"]:
@@ -1699,7 +1679,7 @@ function auth() {
       return _objectSpread({}, state, {
         isFetching: true,
         isAuthenticated: false,
-        errorMessage: ''
+        errorMessage: ""
       });
 
     case _actions_register__WEBPACK_IMPORTED_MODULE_1__["REGISTER_FAILURE"]:
@@ -1709,29 +1689,29 @@ function auth() {
         errorMessage: action.message
       });
 
-    case 'BAG_SUCCESS':
-      console.log('my get bags switch statement');
+    case "BAG_SUCCESS":
+      console.log("my get bags switch statement");
       console.log(action.response);
       return _objectSpread({}, state, {
         isFetching: false,
         isAuthenticated: true,
         // quote: action.response,
-        errorMessage: '',
-        bag: action.response //  return {
-        //   ...state,
-        //   isFetching: false,
-        //   isAuthenticated: true,
-        //   errorMessage: action.message,
-        //   user: action.user,
-        //   bags: action.bags
-        // }
-        //in this request they are authenticated already and we're fetching bags
-
+        errorMessage: "",
+        bag: action.response
       });
+    //  return {
+    //   ...state,
+    //   isFetching: false,
+    //   isAuthenticated: true,
+    //   errorMessage: action.message,
+    //   user: action.user,
+    //   bags: action.bags
+    // }
+    //in this request they are authenticated already and we're fetching bags
 
-    case 'BAG_REQUEST':
+    case "BAG_REQUEST":
       {
-        console.log('hit bag request');
+        console.log("hit bag request");
         return _objectSpread({}, state, {
           isFetching: true,
           isAuthenticated: true
@@ -1768,7 +1748,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
   switch (action.type) {
     // BAGS
-    case 'ADD_TO_BAGS':
+    case "ADD_TO_BAGS":
       var index1 = state.findIndex(function (item) {
         return item.description === action.description && item.destination === action.destination;
       });
@@ -1783,12 +1763,12 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         return _toConsumableArray(state).concat([action]);
       }
 
-    case 'DELETE_BAGS':
+    case "DELETE_BAGS":
       return state.filter(function (item) {
         return item.id !== action.id;
       });
 
-    case 'UPDATE_BAG':
+    case "UPDATE_BAG":
       var index3 = state.findIndex(function (item) {
         return item.id === action.id;
       });
@@ -1807,7 +1787,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
     //ITEMS
 
-    case 'ADD_ITEM':
+    case "ADD_ITEM":
       var index = state.findIndex(function (item) {
         return item.id === action.id;
       });
@@ -1819,7 +1799,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         });
       }
 
-    case 'CHECK_ITEM':
+    case "CHECK_ITEM":
       var index2 = state.findIndex(function (item) {
         return item.id === action.id;
       });
@@ -1838,7 +1818,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         });
       }
 
-    case 'DEL_ITEM':
+    case "DEL_ITEM":
       var index4 = state.findIndex(function (item) {
         return item.id === action.id;
       });
@@ -1902,19 +1882,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var baseUrl = '/api/v1';
+var baseUrl = "/api/v1";
 function consume() {
-  var method = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'get';
+  var method = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "get";
   var endpoint = arguments.length > 1 ? arguments[1] : undefined;
   var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  var dataMethod = method.toLowerCase() === 'get' ? 'query' : 'send';
-  var token = Object(_localstorage__WEBPACK_IMPORTED_MODULE_1__["get"])('token');
+  var dataMethod = method.toLowerCase() === "get" ? "query" : "send";
+  var token = Object(_localstorage__WEBPACK_IMPORTED_MODULE_1__["get"])("token");
   var headers = {
-    Accept: 'application/json'
+    Accept: "application/json"
   };
 
   if (Object(_auth__WEBPACK_IMPORTED_MODULE_2__["isAuthenticated"])()) {
-    headers['Authorization'] = "Bearer ".concat(token);
+    headers["Authorization"] = "Bearer ".concat(token);
   }
 
   return superagent__WEBPACK_IMPORTED_MODULE_0___default.a[method](baseUrl + endpoint).set(headers)[dataMethod](data).then(function (res) {
@@ -1945,7 +1925,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function isAuthenticated() {
-  var token = Object(_localstorage__WEBPACK_IMPORTED_MODULE_1__["get"])('token');
+  var token = Object(_localstorage__WEBPACK_IMPORTED_MODULE_1__["get"])("token");
 
   if (token) {
     var payload = jwt_decode__WEBPACK_IMPORTED_MODULE_0___default()(token);
@@ -1963,15 +1943,15 @@ function isAuthenticated() {
   }
 }
 function saveUserToken(token) {
-  Object(_localstorage__WEBPACK_IMPORTED_MODULE_1__["set"])('token', token);
+  Object(_localstorage__WEBPACK_IMPORTED_MODULE_1__["set"])("token", token);
   return jwt_decode__WEBPACK_IMPORTED_MODULE_0___default()(token);
 }
 function getUserTokenInfo() {
-  var token = Object(_localstorage__WEBPACK_IMPORTED_MODULE_1__["get"])('token');
+  var token = Object(_localstorage__WEBPACK_IMPORTED_MODULE_1__["get"])("token");
   return token ? jwt_decode__WEBPACK_IMPORTED_MODULE_0___default()(token) : null;
 }
 function removeUser() {
-  Object(_localstorage__WEBPACK_IMPORTED_MODULE_1__["set"])('token', null);
+  Object(_localstorage__WEBPACK_IMPORTED_MODULE_1__["set"])("token", null);
 }
 
 /***/ }),

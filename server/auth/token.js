@@ -1,14 +1,14 @@
-const verifyJwt = require('express-jwt');
+const verifyJwt = require("express-jwt");
 
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
-const db = require('../db/exampleDbFunctions');
+const db = require("../db/exampleDbFunctions");
 
 function issue(req, res) {
   db.getUserByName(req.body.username).then(user => {
     const token = createToken(user, process.env.JWT_SECRET);
     res.json({
-      message: 'Authentication successful.',
+      message: "Authentication successful.",
       token
     });
   });
@@ -22,7 +22,7 @@ function createToken(user, secret) {
     },
     secret,
     {
-      expiresIn: '1d'
+      expiresIn: "1d"
     }
   );
 }

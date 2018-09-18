@@ -1,26 +1,26 @@
-import React from 'react'
-import {connect} from 'react-redux'
+import React from "react";
+import { connect } from "react-redux";
 
-import {logoutUser} from '../actions/logout'
+import { logoutUser } from "../actions/logout";
 
-const Logout = (props) => {
+const Logout = props => {
   return (
     <div>
       <p>Welcome back: {props.user}</p>
-      <button onClick={props.logoutUser}>
-            Logout
-      </button>
+      <button onClick={props.logoutUser}>Logout</button>
     </div>
-    
-  )
-}
+  );
+};
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     logoutUser: () => {
-      dispatch(logoutUser())
+      dispatch(logoutUser());
     }
-  }
-}
+  };
+};
 
-export default connect(null, mapDispatchToProps)(Logout)
+export default connect(
+  null,
+  mapDispatchToProps
+)(Logout);

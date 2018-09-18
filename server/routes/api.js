@@ -165,14 +165,32 @@ router.get("/itemshow", (req, res) => {
 //archive
 
 router.post("/itemarchive", (req, res) => {
-  console.log("hit the route g");
   bags
     .archiveBagItem(req.user.username, req.body.id, req.body.item)
+    .then(data => {
+      res.json({
+        message: "These are your updated bag items.",
+        bagItems: data
+      });
+    });
+});
+
+//delete
+
+router.post("/itemdel", (req, res) => {
+  console.log(req.body);
+
+  console.log("hit the route g");
+  console.log(req.body.id);
+  console.log(req.body.bagid);
+  console.log(req.body.item);
+  bags
+    .deleteBagItem(req.user.username, req.body.bagid, req.body.item)
     .then(data => {
       console.log(data);
 
       res.json({
-        message: "These are your updated bag items.",
+        message: "These are your new bag items.",
         bagItems: data
       });
     });

@@ -39,7 +39,6 @@ class BagList extends React.Component {
   }
 
   saveItem(id, input) {
-    // console.log(this.props);
     const { saveIt } = this.props;
     saveIt(id, input);
   }

@@ -3,31 +3,12 @@ export default function(state = [], action) {
     // BAGS
 
     case "BAG_ADD_REQUEST":
-      console.log("hit bag add request");
       return {
         ...state,
         isFetching: true,
         isAuthenticated: true
       };
 
-    case "ADD_TO_BAGS":
-      const index1 = state.findIndex(
-        item =>
-          item.description === action.description &&
-          item.destination === action.destination
-      );
-      if (index1 > -1) {
-        return state.map(item => {
-          if (
-            item.description === action.description &&
-            item.destination === action.destination
-          ) {
-          }
-          return item;
-        });
-      } else {
-        return [...state, action];
-      }
     case "DELETE_BAGS":
       return state.filter(item => item.id !== action.id);
     case "UPDATE_BAG":

@@ -57,26 +57,30 @@ export default function auth(state = initialState, action) {
         errorMessage: action.message
       };
     case "BAG_SUCCESS":
-      console.log("my get bags switch statement");
-      console.log(action.response);
-
       return {
         ...state,
         isFetching: false,
         isAuthenticated: true,
-        // quote: action.response,
         errorMessage: "",
         bag: action.response
       };
 
-    //  return {
-    //   ...state,
-    //   isFetching: false,
-    //   isAuthenticated: true,
-    //   errorMessage: action.message,
-    //   user: action.user,
-    //   bags: action.bags
-    // }
+    case "BAG_DEL_REQ":
+      return {
+        ...state,
+        isFetching: true,
+        isAuthenticated: true
+      };
+
+    case "BAG_DEL_DONE":
+      return {
+        ...state,
+        isFetching: false,
+        isAuthenticated: true,
+        errorMessage: "",
+        bag: action.response
+      };
+
     //in this request they are authenticated already and we're fetching bags
     case "BAG_REQUEST": {
       console.log("hit bag request");
@@ -86,6 +90,26 @@ export default function auth(state = initialState, action) {
         isAuthenticated: true
       };
     }
+    //update cases
+    case "BAG_UPD_REQ": {
+      console.log("hit update request");
+      return {
+        ...state,
+        isFetching: true,
+        isAuthenticated: true
+      };
+    }
+
+    case "BAG_UPD_DONE": {
+      console.log("hit done update request");
+      return {
+        ...state,
+        isFetching: true,
+        isAuthenticated: true,
+        bag: action.response
+      };
+    }
+
     default:
       return state;
   }

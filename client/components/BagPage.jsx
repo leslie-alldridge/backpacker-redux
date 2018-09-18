@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { deleteBagAction } from "../actions/addBag";
+import { deleteBagDB } from "../actions/addBag";
 import BagList from "./BagList";
 import UpdateBag from "./UpdateBag";
 
@@ -8,7 +8,6 @@ class BagPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // bags: this.props.auth.bags,
       viewList: false,
       viewListID: null,
       viewBagUpdate: null,
@@ -19,14 +18,7 @@ class BagPage extends React.Component {
     this.addInventory = this.addInventory.bind(this);
   }
 
-  componentDidUpdate() {
-    console.log("bag state is below");
-    console.log(this.state.bagState);
-    console.log("bag props here");
-    console.log(this.props);
-
-    // console.log(this.props.state.bag)
-  }
+  componentDidUpdate() {}
 
   addInventory(viewListID) {
     this.setState(prevState => ({
@@ -43,7 +35,7 @@ class BagPage extends React.Component {
   }
 
   deleteItem(id) {
-    this.props.deleteBag(id);
+    this.props.deleteBagDB(id);
   }
 
   render() {
@@ -53,9 +45,6 @@ class BagPage extends React.Component {
           <h3 id="bagHead">
             <i className="fas fa-suitcase" /> Your Current Bags :
           </h3>
-          {console.log(this.props.bagsData.bag)}
-          {/* {console.log(this.state.bagState.bag.id)} */}
-          {/* <p>{this.state.bagState && this.props.state.bag[0].username}</p>  */}
           {this.props.bagsData.bag.map(bag => (
             <div key={bag.id} id="card" className="card">
               <div
@@ -125,8 +114,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    deleteBag: (description, destination) => {
-      dispatch(deleteBagAction(description, destination));
+    deleteBagDB: id => {
+      dispatch(deleteBagDB(id));
     }
   };
 }

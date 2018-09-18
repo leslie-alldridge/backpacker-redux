@@ -20,7 +20,40 @@ function addBags(username, description, destination, testDb) {
   });
 }
 
+function deleteBag(id, username, testDb) {
+  console.log("nuking bag" + id);
+  const connection = testDb || knex;
+  return connection("bags")
+    .where("id", id)
+    .del()
+    .then(data => {
+      return connection("bags")
+        .select()
+        .where("username", username);
+    });
+}
+
+function updateBag(id, destination, description, username, testDb) {
+  console.log("updating bag" + id);
+  console.log(destination, description);
+
+  const connection = testDb || knex;
+  return connection("bags")
+    .where("id", id)
+    .update({
+      destination: destination,
+      description: description
+    })
+    .then(data => {
+      return connection("bags")
+        .select()
+        .where("username", username);
+    });
+}
+
 module.exports = {
   getBags,
-  addBags
+  addBags,
+  deleteBag,
+  updateBag
 };

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { connect } from "react-redux";
-import { updateBagAction } from "../actions/addBag";
+import { updateBagDB } from "../actions/addBag";
 class UpdateBag extends React.Component {
   constructor(props) {
     super(props);
@@ -25,9 +25,10 @@ class UpdateBag extends React.Component {
     });
   }
 
-  updateBag(id, destination, description) {
-    const { updateIt } = this.props;
-    updateIt(id, destination, description);
+  updateBagDB(id, destination, description) {
+    this.props.updateBagDB(id, destination, description);
+    // const { updateIt } = this.props;
+    // updateIt(id, destination, description);
   }
 
   render() {
@@ -51,7 +52,7 @@ class UpdateBag extends React.Component {
             />
             <button
               onClick={() => {
-                this.updateBag(
+                this.updateBagDB(
                   this.props.id,
                   this.state.updateInput,
                   this.state.desInput
@@ -77,8 +78,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    updateIt: (id, destination, description) => {
-      dispatch(updateBagAction(id, destination, description));
+    updateBagDB: (id, destination, description) => {
+      dispatch(updateBagDB(id, destination, description));
     }
   };
 }

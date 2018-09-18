@@ -90,26 +90,19 @@
 /*!**********************************!*\
   !*** ./client/actions/addBag.js ***!
   \**********************************/
-/*! exports provided: deleteBagAction, updateBagAction, addBagReceived, receiveAddBag, saveBagToDB */
+/*! exports provided: updateBagAction, addBagReceived, receiveAddBag, saveBagToDB, deleteBagDB, updateBagDB */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteBagAction", function() { return deleteBagAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBagAction", function() { return updateBagAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addBagReceived", function() { return addBagReceived; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveAddBag", function() { return receiveAddBag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveBagToDB", function() { return saveBagToDB; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteBagDB", function() { return deleteBagDB; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBagDB", function() { return updateBagDB; });
 /* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/api */ "./client/utils/api.js");
-/* harmony import */ var _utils_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/auth */ "./client/utils/auth.js");
 
-
-var deleteBagAction = function deleteBagAction(id) {
-  return {
-    type: "DELETE_BAGS",
-    id: id
-  };
-};
 var updateBagAction = function updateBagAction(id, destination, description) {
   return {
     type: "UPDATE_BAG",
@@ -120,8 +113,6 @@ var updateBagAction = function updateBagAction(id, destination, description) {
 }; //all func below this line are for adding bags
 
 function addBagReceived(bag, user) {
-  console.log(bag);
-  console.log(user);
   return {
     type: "BAG_ADD_SUCCESS",
     isFetching: false,
@@ -130,7 +121,6 @@ function addBagReceived(bag, user) {
 }
 
 function requestAddBag() {
-  console.log("here now");
   return {
     type: "BAG_ADD_REQUEST",
     isFetching: true,
@@ -139,8 +129,6 @@ function requestAddBag() {
 }
 
 function receiveAddBag(user, bag) {
-  console.log(bag);
-  console.log(user);
   return {
     type: "BAG_SUCCESS",
     isFetching: false,
@@ -148,29 +136,86 @@ function receiveAddBag(user, bag) {
   };
 }
 function saveBagToDB(user, description, destination) {
-  console.log("made it ");
   var req = {
     description: description,
     destination: destination
   };
-  console.log(req); // console.log(description);
-  // console.log(destination);
-
   return function (dispatch) {
     dispatch(requestAddBag());
     Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("post", "/bags", req).then(function (response) {
-      if (!response.ok) {// If there was a problem, we want to
-        // dispatch the error condition
-        //dispatch(loginError(response.body.message));
-        //return Promise.reject(response.body.message);
-      } else {
-        // If login was successful, set the token in local storage
-        //const userInfo = saveUserToken(response.body.token);
-        // Dispatch the success action
+      if (!response.ok) {} else {
         dispatch(receiveAddBag(user, response.body.bag));
-        console.log("response sent"); // dispatch(fetchBag(userInfo.username));
       }
-    }); // .catch(err => dispatch(loginError(err.message)));
+    });
+  };
+} //all func below this line are for deleting a bag
+
+function deleteReqBag(id) {
+  return {
+    type: "BAG_DEL_REQ",
+    isFetching: true,
+    isAuthenticated: true,
+    id: id
+  };
+}
+
+function receiveDelBag(response) {
+  return {
+    type: "BAG_DEL_DONE",
+    isFetching: false,
+    isAuthenticated: true,
+    response: response
+  };
+}
+
+function deleteBagDB(id) {
+  return function (dispatch) {
+    dispatch(deleteReqBag(id));
+    Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("post", "/bagsdel", {
+      id: id
+    }).then(function (response) {
+      if (!response.ok) {} else {
+        dispatch(receiveDelBag(response.body.bag));
+      }
+    });
+  };
+} //all func below this line are for updating a bag
+
+function updateReqBag(id, destination, description) {
+  return {
+    type: "BAG_UPD_REQ",
+    isFetching: true,
+    isAuthenticated: true,
+    id: id,
+    destination: destination,
+    description: description
+  };
+}
+
+function receiveUpdBag(response) {
+  return {
+    type: "BAG_UPD_DONE",
+    isFetching: false,
+    isAuthenticated: true,
+    response: response
+  };
+}
+
+function updateBagDB(id, destination, description) {
+  return function (dispatch) {
+    dispatch(updateReqBag(id, destination, description));
+    Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("post", "/bagsupdate", {
+      id: id,
+      destination: destination,
+      description: description
+    }).then(function (response) {
+      console.log(response);
+
+      if (!response.ok) {} else {
+        console.log("hit the else");
+        dispatch(receiveUpdBag(response.body.bag));
+      }
+    });
   };
 }
 
@@ -501,15 +546,12 @@ function (_Component) {
   _createClass(App, [{
     key: "handleClick",
     value: function handleClick(e, description, destination) {
-      console.log("app js");
-      var len = Object.keys(this.props.bags);
       e.preventDefault();
-      this.props.saveBagToDB(this.props.auth.user.username, description, destination); // this.props.addBag(len.length, description, destination);
+      this.props.saveBagToDB(this.props.auth.user.username, description, destination);
     }
   }, {
     key: "registerToggle",
     value: function registerToggle() {
-      console.log("hit register toggle");
       this.setState(function (prevState) {
         return {
           registerToggle: !prevState.registerToggle
@@ -555,18 +597,10 @@ function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     saveBagToDB: function saveBagToDB(user, description, destination) {
-      console.log("dispatch it");
       return dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_6__["saveBagToDB"])(user, description, destination));
     }
   };
-}; // function mapDispatchToProps(dispatch) {
-//   return {
-//     addBag: (id, description, destination) => {
-//       dispatch(addBagAction(id, description, destination));
-//     }
-//   };
-// }
-
+};
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(App));
 
@@ -652,7 +686,6 @@ function (_React$Component) {
   }, {
     key: "saveItem",
     value: function saveItem(id, input) {
-      // console.log(this.props);
       var saveIt = this.props.saveIt;
       saveIt(id, input);
     }
@@ -801,7 +834,6 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(BagPage).call(this, props));
     _this.state = {
-      // bags: this.props.auth.bags,
       viewList: false,
       viewListID: null,
       viewBagUpdate: null,
@@ -815,12 +847,7 @@ function (_React$Component) {
 
   _createClass(BagPage, [{
     key: "componentDidUpdate",
-    value: function componentDidUpdate() {
-      console.log("bag state is below");
-      console.log(this.state.bagState);
-      console.log("bag props here");
-      console.log(this.props); // console.log(this.props.state.bag)
-    }
+    value: function componentDidUpdate() {}
   }, {
     key: "addInventory",
     value: function addInventory(viewListID) {
@@ -844,7 +871,7 @@ function (_React$Component) {
   }, {
     key: "deleteItem",
     value: function deleteItem(id) {
-      this.props.deleteBag(id);
+      this.props.deleteBagDB(id);
     }
   }, {
     key: "render",
@@ -860,7 +887,7 @@ function (_React$Component) {
         id: "bagHead"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-suitcase"
-      }), " Your Current Bags :"), console.log(this.props.bagsData.bag), this.props.bagsData.bag.map(function (bag) {
+      }), " Your Current Bags :"), this.props.bagsData.bag.map(function (bag) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: bag.id,
           id: "card",
@@ -921,8 +948,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    deleteBag: function deleteBag(description, destination) {
-      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_2__["deleteBagAction"])(description, destination));
+    deleteBagDB: function deleteBagDB(id) {
+      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_2__["deleteBagDB"])(id));
     }
   };
 }
@@ -1571,10 +1598,10 @@ function (_React$Component) {
       });
     }
   }, {
-    key: "updateBag",
-    value: function updateBag(id, destination, description) {
-      var updateIt = this.props.updateIt;
-      updateIt(id, destination, description);
+    key: "updateBagDB",
+    value: function updateBagDB(id, destination, description) {
+      this.props.updateBagDB(id, destination, description); // const { updateIt } = this.props;
+      // updateIt(id, destination, description);
     }
   }, {
     key: "render",
@@ -1599,7 +1626,7 @@ function (_React$Component) {
         placeholder: this.props.destination
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
-          _this2.updateBag(_this2.props.id, _this2.state.updateInput, _this2.state.desInput);
+          _this2.updateBagDB(_this2.props.id, _this2.state.updateInput, _this2.state.desInput);
         },
         id: "checkAll",
         className: "btn btn-success"
@@ -1618,8 +1645,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    updateIt: function updateIt(id, destination, description) {
-      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_2__["updateBagAction"])(id, destination, description));
+    updateBagDB: function updateBagDB(id, destination, description) {
+      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_2__["updateBagDB"])(id, destination, description));
     }
   };
 }
@@ -1743,23 +1770,26 @@ function auth() {
       });
 
     case "BAG_SUCCESS":
-      console.log("my get bags switch statement");
-      console.log(action.response);
       return _objectSpread({}, state, {
         isFetching: false,
         isAuthenticated: true,
-        // quote: action.response,
         errorMessage: "",
         bag: action.response
       });
-    //  return {
-    //   ...state,
-    //   isFetching: false,
-    //   isAuthenticated: true,
-    //   errorMessage: action.message,
-    //   user: action.user,
-    //   bags: action.bags
-    // }
+
+    case "BAG_DEL_REQ":
+      return _objectSpread({}, state, {
+        isFetching: true,
+        isAuthenticated: true
+      });
+
+    case "BAG_DEL_DONE":
+      return _objectSpread({}, state, {
+        isFetching: false,
+        isAuthenticated: true,
+        errorMessage: "",
+        bag: action.response
+      });
     //in this request they are authenticated already and we're fetching bags
 
     case "BAG_REQUEST":
@@ -1768,6 +1798,26 @@ function auth() {
         return _objectSpread({}, state, {
           isFetching: true,
           isAuthenticated: true
+        });
+      }
+    //update cases
+
+    case "BAG_UPD_REQ":
+      {
+        console.log("hit update request");
+        return _objectSpread({}, state, {
+          isFetching: true,
+          isAuthenticated: true
+        });
+      }
+
+    case "BAG_UPD_DONE":
+      {
+        console.log("hit done update request");
+        return _objectSpread({}, state, {
+          isFetching: true,
+          isAuthenticated: true,
+          bag: action.response
         });
       }
 
@@ -1787,14 +1837,6 @@ function auth() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -1806,26 +1848,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   switch (action.type) {
     // BAGS
     case "BAG_ADD_REQUEST":
-      console.log("hit bag add request");
       return _objectSpread({}, state, {
         isFetching: true,
         isAuthenticated: true
       });
-
-    case "ADD_TO_BAGS":
-      var index1 = state.findIndex(function (item) {
-        return item.description === action.description && item.destination === action.destination;
-      });
-
-      if (index1 > -1) {
-        return state.map(function (item) {
-          if (item.description === action.description && item.destination === action.destination) {}
-
-          return item;
-        });
-      } else {
-        return _toConsumableArray(state).concat([action]);
-      }
 
     case "DELETE_BAGS":
       return state.filter(function (item) {

@@ -22,21 +22,15 @@ class App extends Component {
   }
 
   handleClick(e, description, destination) {
-    console.log("app js");
-
-    const len = Object.keys(this.props.bags);
     e.preventDefault();
     this.props.saveBagToDB(
       this.props.auth.user.username,
       description,
       destination
     );
-    // this.props.addBag(len.length, description, destination);
   }
 
   registerToggle() {
-    console.log("hit register toggle");
-
     this.setState(prevState => ({
       registerToggle: !prevState.registerToggle
     }));
@@ -84,20 +78,10 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => {
   return {
     saveBagToDB: (user, description, destination) => {
-      console.log("dispatch it");
-
       return dispatch(saveBagToDB(user, description, destination));
     }
   };
 };
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     addBag: (id, description, destination) => {
-//       dispatch(addBagAction(id, description, destination));
-//     }
-//   };
-// }
 
 export default connect(
   mapStateToProps,

@@ -1,10 +1,4 @@
 import request from "../utils/api";
-import { saveUserToken } from "../utils/auth";
-
-export const deleteBagAction = id => ({
-  type: "DELETE_BAGS",
-  id
-});
 
 export const updateBagAction = (id, destination, description) => ({
   type: "UPDATE_BAG",
@@ -16,8 +10,6 @@ export const updateBagAction = (id, destination, description) => ({
 //all func below this line are for adding bags
 
 export function addBagReceived(bag, user) {
-  console.log(bag);
-  console.log(user);
   return {
     type: "BAG_ADD_SUCCESS",
     isFetching: false,
@@ -26,8 +18,6 @@ export function addBagReceived(bag, user) {
 }
 
 function requestAddBag() {
-  console.log("here now");
-
   return {
     type: "BAG_ADD_REQUEST",
     isFetching: true,
@@ -36,8 +26,6 @@ function requestAddBag() {
 }
 
 export function receiveAddBag(user, bag) {
-  console.log(bag);
-  console.log(user);
   return {
     type: "BAG_SUCCESS",
     isFetching: false,
@@ -46,33 +34,92 @@ export function receiveAddBag(user, bag) {
 }
 
 export function saveBagToDB(user, description, destination) {
-  console.log("made it ");
   let req = {
     description,
     destination
   };
-  console.log(req);
-  // console.log(description);
-  // console.log(destination);
 
   return function(dispatch) {
     dispatch(requestAddBag());
-
     request("post", "/bags", req).then(response => {
       if (!response.ok) {
-        // If there was a problem, we want to
-        // dispatch the error condition
-        //dispatch(loginError(response.body.message));
-        //return Promise.reject(response.body.message);
       } else {
-        // If login was successful, set the token in local storage
-        //const userInfo = saveUserToken(response.body.token);
-        // Dispatch the success action
         dispatch(receiveAddBag(user, response.body.bag));
-        console.log("response sent");
-        // dispatch(fetchBag(userInfo.username));
       }
     });
-    // .catch(err => dispatch(loginError(err.message)));
+  };
+}
+
+//all func below this line are for deleting a bag
+
+function deleteReqBag(id) {
+  return {
+    type: "BAG_DEL_REQ",
+    isFetching: true,
+    isAuthenticated: true,
+    id
+  };
+}
+
+function receiveDelBag(response) {
+  return {
+    type: "BAG_DEL_DONE",
+    isFetching: false,
+    isAuthenticated: true,
+    response: response
+  };
+}
+
+export function deleteBagDB(id) {
+  return function(dispatch) {
+    dispatch(deleteReqBag(id));
+    request("post", "/bagsdel", { id: id }).then(response => {
+      if (!response.ok) {
+      } else {
+        dispatch(receiveDelBag(response.body.bag));
+      }
+    });
+  };
+}
+
+//all func below this line are for updating a bag
+
+function updateReqBag(id, destination, description) {
+  return {
+    type: "BAG_UPD_REQ",
+    isFetching: true,
+    isAuthenticated: true,
+    id,
+    destination,
+    description
+  };
+}
+
+function receiveUpdBag(response) {
+  return {
+    type: "BAG_UPD_DONE",
+    isFetching: false,
+    isAuthenticated: true,
+    response: response
+  };
+}
+
+export function updateBagDB(id, destination, description) {
+  return function(dispatch) {
+    dispatch(updateReqBag(id, destination, description));
+    request("post", "/bagsupdate", {
+      id: id,
+      destination: destination,
+      description: description
+    }).then(response => {
+      console.log(response);
+
+      if (!response.ok) {
+      } else {
+        console.log("hit the else");
+
+        dispatch(receiveUpdBag(response.body.bag));
+      }
+    });
   };
 }

@@ -8,7 +8,7 @@ const bags = require("../lib/bags");
 
 const router = express.Router();
 router.use(express.json());
-
+router.use(express.urlencoded({ extended: true }));
 router.post("/signin", sayHello, signIn, auth.issueJwt);
 
 function sayHello(req, res, next) {
@@ -101,10 +101,12 @@ router.get("/bags", (req, res) => {
       bag: data
     });
   });
-  // res.json({
-  //   message: 'This is a SECRET quote.',
-  //   user: `Your user ID is: ${req.user.id}`
-  // })
+});
+
+router.post("/bags", (req, res) => {
+  console.log("hit the post bags route");
+  console.log(req.user.username);
+  console.log(req);
 });
 
 module.exports = router;

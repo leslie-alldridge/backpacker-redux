@@ -47,7 +47,7 @@ class MainForm extends React.Component {
         className="col-xl-12"
         id="mainForm"
       >
-        <form noValidate="" id="myForm">
+        <form name="addBagForm" noValidate="" id="myForm">
           <div className="col-xl-12" id="formBody">
             <div className="form-group">
               <label id="formLabel">Enter Bag Description</label>

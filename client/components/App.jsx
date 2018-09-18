@@ -4,7 +4,7 @@ import MainForm from "./MainForm";
 import BagPage from "./BagPage";
 import LoginForm from "./LoginForm";
 import Footer from "./Footer";
-import { addBagAction } from "../actions/addBag";
+import { saveBagToDB } from "../actions/addBag";
 import RegisterForm from "./RegisterForm";
 import Logout from "./Logout";
 import Loading from "./Loading";
@@ -22,9 +22,16 @@ class App extends Component {
   }
 
   handleClick(e, description, destination) {
+    console.log("app js");
+
     const len = Object.keys(this.props.bags);
     e.preventDefault();
-    this.props.addBag(len.length, description, destination);
+    this.props.saveBagToDB(
+      this.props.auth.user.username,
+      description,
+      destination
+    );
+    // this.props.addBag(len.length, description, destination);
   }
 
   registerToggle() {
@@ -74,13 +81,23 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
   return {
-    addBag: (id, description, destination) => {
-      dispatch(addBagAction(id, description, destination));
+    saveBagToDB: () => {
+      console.log("dispatch it");
+
+      return dispatch(saveBagToDB());
     }
   };
-}
+};
+
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     addBag: (id, description, destination) => {
+//       dispatch(addBagAction(id, description, destination));
+//     }
+//   };
+// }
 
 export default connect(
   mapStateToProps,

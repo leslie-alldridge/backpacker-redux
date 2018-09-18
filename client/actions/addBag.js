@@ -1,11 +1,5 @@
-export const addBagAction = (id, description, destination) => ({
-  type: "ADD_TO_BAGS",
-  id,
-  description,
-  destination,
-  items: [],
-  checked: []
-});
+import request from "../utils/api";
+import { saveUserToken } from "../utils/auth";
 
 export const deleteBagAction = id => ({
   type: "DELETE_BAGS",
@@ -18,3 +12,59 @@ export const updateBagAction = (id, destination, description) => ({
   description,
   destination
 });
+
+//all func below this line are for adding bags
+
+export function addBagReceived(bag, user) {
+  console.log(bag);
+  console.log(user);
+  return {
+    type: "BAG_ADD_SUCCESS",
+    isFetching: false,
+    response: bag
+  };
+}
+
+function requestAddBag() {
+  console.log("here now");
+
+  return {
+    type: "BAG_ADD_REQUEST",
+    isFetching: true,
+    isAuthenticated: true
+  };
+}
+
+export function saveBagToDB(user, description, destination) {
+  console.log("made it ");
+
+  let req = {
+    description,
+    destination
+  };
+
+  // console.log(user);
+  // console.log(description);
+  // console.log(destination);
+
+  return function(dispatch) {
+    dispatch(requestAddBag());
+    return request("post", "/bags", req)
+      .then(response => {
+        if (!response.ok) {
+          // If there was a problem, we want to
+          // dispatch the error condition
+          //dispatch(loginError(response.body.message));
+          //return Promise.reject(response.body.message);
+        } else {
+          // If login was successful, set the token in local storage
+          const userInfo = saveUserToken(response.body.token);
+          // Dispatch the success action
+          // dispatch(receiveLogin(userInfo));
+          console.log("userInfo");
+          // dispatch(fetchBag(userInfo.username));
+        }
+      })
+      .catch(err => dispatch(loginError(err.message)));
+  };
+}

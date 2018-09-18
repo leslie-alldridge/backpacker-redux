@@ -90,24 +90,19 @@
 /*!**********************************!*\
   !*** ./client/actions/addBag.js ***!
   \**********************************/
-/*! exports provided: addBagAction, deleteBagAction, updateBagAction */
+/*! exports provided: deleteBagAction, updateBagAction, addBagReceived, saveBagToDB */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addBagAction", function() { return addBagAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteBagAction", function() { return deleteBagAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBagAction", function() { return updateBagAction; });
-var addBagAction = function addBagAction(id, description, destination) {
-  return {
-    type: "ADD_TO_BAGS",
-    id: id,
-    description: description,
-    destination: destination,
-    items: [],
-    checked: []
-  };
-};
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addBagReceived", function() { return addBagReceived; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveBagToDB", function() { return saveBagToDB; });
+/* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/api */ "./client/utils/api.js");
+/* harmony import */ var _utils_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/auth */ "./client/utils/auth.js");
+
+
 var deleteBagAction = function deleteBagAction(id) {
   return {
     type: "DELETE_BAGS",
@@ -121,7 +116,55 @@ var updateBagAction = function updateBagAction(id, destination, description) {
     description: description,
     destination: destination
   };
-};
+}; //all func below this line are for adding bags
+
+function addBagReceived(bag, user) {
+  console.log(bag);
+  console.log(user);
+  return {
+    type: "BAG_ADD_SUCCESS",
+    isFetching: false,
+    response: bag
+  };
+}
+
+function requestAddBag() {
+  console.log("here now");
+  return {
+    type: "BAG_ADD_REQUEST",
+    isFetching: true,
+    isAuthenticated: true
+  };
+}
+
+function saveBagToDB(user, description, destination) {
+  console.log("made it ");
+  var req = {
+    description: description,
+    destination: destination
+  }; // console.log(user);
+  // console.log(description);
+  // console.log(destination);
+
+  return function (dispatch) {
+    dispatch(requestAddBag());
+    return Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("post", "/bags", req).then(function (response) {
+      if (!response.ok) {// If there was a problem, we want to
+        // dispatch the error condition
+        //dispatch(loginError(response.body.message));
+        //return Promise.reject(response.body.message);
+      } else {
+        // If login was successful, set the token in local storage
+        var userInfo = Object(_utils_auth__WEBPACK_IMPORTED_MODULE_1__["saveUserToken"])(response.body.token); // Dispatch the success action
+        // dispatch(receiveLogin(userInfo));
+
+        console.log("userInfo"); // dispatch(fetchBag(userInfo.username));
+      }
+    }).catch(function (err) {
+      return dispatch(loginError(err.message));
+    });
+  };
+}
 
 /***/ }),
 
@@ -459,9 +502,10 @@ function (_Component) {
   _createClass(App, [{
     key: "handleClick",
     value: function handleClick(e, description, destination) {
+      console.log("app js");
       var len = Object.keys(this.props.bags);
       e.preventDefault();
-      this.props.addBag(len.length, description, destination);
+      this.props.saveBagToDB(this.props.auth.user.username, description, destination); // this.props.addBag(len.length, description, destination);
     }
   }, {
     key: "registerToggle",
@@ -509,13 +553,21 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    addBag: function addBag(id, description, destination) {
-      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_6__["addBagAction"])(id, description, destination));
+    saveBagToDB: function saveBagToDB() {
+      console.log("dispatch it");
+      return dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_6__["saveBagToDB"])());
     }
   };
-}
+}; // function mapDispatchToProps(dispatch) {
+//   return {
+//     addBag: (id, description, destination) => {
+//       dispatch(addBagAction(id, description, destination));
+//     }
+//   };
+// }
+
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(App));
 
@@ -601,6 +653,7 @@ function (_React$Component) {
   }, {
     key: "saveItem",
     value: function saveItem(id, input) {
+      // console.log(this.props);
       var saveIt = this.props.saveIt;
       saveIt(id, input);
     }
@@ -676,7 +729,7 @@ function (_React$Component) {
 
 function mapStateToProps(state) {
   return {
-    bags: state.bags
+    state: state.bags
   };
 }
 
@@ -1230,6 +1283,7 @@ function (_React$Component) {
         className: "col-xl-12",
         id: "mainForm"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        name: "addBagForm",
         noValidate: "",
         id: "myForm"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1742,12 +1796,23 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
     // BAGS
+    case "BAG_ADD_REQUEST":
+      console.log("hit bag add request");
+      return _objectSpread({}, state, {
+        isFetching: true,
+        isAuthenticated: true
+      });
+
     case "ADD_TO_BAGS":
       var index1 = state.findIndex(function (item) {
         return item.description === action.description && item.destination === action.destination;

@@ -39,6 +39,7 @@ class BagList extends React.Component {
   }
 
   saveItem(id, input) {
+    // console.log(this.props);
     const { saveIt } = this.props;
     saveIt(id, input);
   }
@@ -122,7 +123,7 @@ class BagList extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    bags: state.bags
+    state: state.bags
   };
 }
 

@@ -1,6 +1,15 @@
 export default function(state = [], action) {
   switch (action.type) {
     // BAGS
+
+    case "BAG_ADD_REQUEST":
+      console.log("hit bag add request");
+      return {
+        ...state,
+        isFetching: true,
+        isAuthenticated: true
+      };
+
     case "ADD_TO_BAGS":
       const index1 = state.findIndex(
         item =>

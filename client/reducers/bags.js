@@ -3,15 +3,6 @@ export default function(state = [], action) {
     // BAGS
 
     case "BAG_ADD_REQUEST":
-      console.log("hit bag add request");
-      return {
-        ...state,
-        isFetching: true,
-        isAuthenticated: true
-      };
-
-    case "BAG_DEL_REQ":
-      console.log("hit bag del request");
       return {
         ...state,
         isFetching: true,

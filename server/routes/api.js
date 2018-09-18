@@ -88,12 +88,7 @@ router.use(
 
 // These routes are protected
 router.get("/bags", (req, res) => {
-  // console.log("req route");
-  // console.log(req.user.username);
-
   bags.getBags(req.user.username).then(data => {
-    // console.log("i found the bag below from a DB function");
-    // console.log(data);
     res.json({
       message: "This is your bag.",
       bag: data
@@ -102,14 +97,10 @@ router.get("/bags", (req, res) => {
 });
 
 router.post("/bags", (req, res) => {
-  // console.log("hit the post bags route");
-  // console.log(req.user.username);
-  // console.log(req);
   bags
     .addBags(req.user.username, req.body.description, req.body.destination)
     .then(data => {
       bags.getBags(req.user.username).then(userBag => {
-        // console.log(data);
         res.json({
           message: "This is your bag.",
           bag: userBag
@@ -119,11 +110,8 @@ router.post("/bags", (req, res) => {
 });
 
 router.post("/bagsdel", (req, res) => {
-  console.log("hit bagsdel route");
-  // console.log(req);
   const { id } = req.body;
   bags.deleteBag(id, req.user.username).then(delBag => {
-    console.log(delBag);
     res.json({
       message: "deleted bag",
       bag: delBag

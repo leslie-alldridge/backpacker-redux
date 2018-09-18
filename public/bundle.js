@@ -1741,31 +1741,23 @@ function auth() {
       });
 
     case "BAG_SUCCESS":
-      console.log("my get bags switch statement");
-      console.log(action.response);
       return _objectSpread({}, state, {
         isFetching: false,
         isAuthenticated: true,
-        // quote: action.response,
         errorMessage: "",
         bag: action.response
       });
-    //  return {
-    //   ...state,
-    //   isFetching: false,
-    //   isAuthenticated: true,
-    //   errorMessage: action.message,
-    //   user: action.user,
-    //   bags: action.bags
-    // }
+
+    case "BAG_DEL_REQ":
+      return _objectSpread({}, state, {
+        isFetching: true,
+        isAuthenticated: true
+      });
 
     case "BAG_DEL_DONE":
-      console.log("hit bag del done switch");
-      console.log(action);
       return _objectSpread({}, state, {
         isFetching: false,
         isAuthenticated: true,
-        // quote: action.response,
         errorMessage: "",
         bag: action.response
       });
@@ -1807,14 +1799,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   switch (action.type) {
     // BAGS
     case "BAG_ADD_REQUEST":
-      console.log("hit bag add request");
-      return _objectSpread({}, state, {
-        isFetching: true,
-        isAuthenticated: true
-      });
-
-    case "BAG_DEL_REQ":
-      console.log("hit bag del request");
       return _objectSpread({}, state, {
         isFetching: true,
         isAuthenticated: true

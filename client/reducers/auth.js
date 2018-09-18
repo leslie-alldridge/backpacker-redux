@@ -57,36 +57,26 @@ export default function auth(state = initialState, action) {
         errorMessage: action.message
       };
     case "BAG_SUCCESS":
-      console.log("my get bags switch statement");
-      console.log(action.response);
-
       return {
         ...state,
         isFetching: false,
         isAuthenticated: true,
-        // quote: action.response,
         errorMessage: "",
         bag: action.response
       };
 
-    //  return {
-    //   ...state,
-    //   isFetching: false,
-    //   isAuthenticated: true,
-    //   errorMessage: action.message,
-    //   user: action.user,
-    //   bags: action.bags
-    // }
+    case "BAG_DEL_REQ":
+      return {
+        ...state,
+        isFetching: true,
+        isAuthenticated: true
+      };
 
     case "BAG_DEL_DONE":
-      console.log("hit bag del done switch");
-      console.log(action);
-
       return {
         ...state,
         isFetching: false,
         isAuthenticated: true,
-        // quote: action.response,
         errorMessage: "",
         bag: action.response
       };

@@ -1,24 +1,45 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import MainForm from './MainForm';
-import BagPage from './BagPage';
-import Footer from './Footer'
-import { addBagAction } from '../actions/addBag';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import MainForm from "./MainForm";
+import BagPage from "./BagPage";
+import LoginForm from "./LoginForm";
+import Footer from "./Footer";
+import { saveBagToDB } from "../actions/addBag";
+import RegisterForm from "./RegisterForm";
+import Logout from "./Logout";
+import Loading from "./Loading";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       bags: this.props.bags || [],
-      formPage: true
+      formPage: true,
+      registerToggle: false
     };
     this.handleClick = this.handleClick.bind(this);
+    this.registerToggle = this.registerToggle.bind(this);
   }
 
   handleClick(e, description, destination) {
+    console.log("app js");
+
     const len = Object.keys(this.props.bags);
     e.preventDefault();
-    this.props.addBag(len.length, description, destination);
+    this.props.saveBagToDB(
+      this.props.auth.user.username,
+      description,
+      destination
+    );
+    // this.props.addBag(len.length, description, destination);
+  }
+
+  registerToggle() {
+    console.log("hit register toggle");
+
+    this.setState(prevState => ({
+      registerToggle: !prevState.registerToggle
+    }));
   }
 
   render() {
@@ -28,8 +49,25 @@ class App extends Component {
           <h1 id="titleText">Bag Tracker</h1>
           <h4 id="subtitleText">Keep track of packed bags</h4>
         </div>
-        {this.state.formPage && <MainForm handleClick={this.handleClick} />}
-        <BagPage bagsData={this.props.bags} />
+        {!this.props.auth.isAuthenticated &&
+          this.state.registerToggle && (
+            <RegisterForm registerToggle={this.registerToggle} />
+          )}
+        {!this.props.auth.isAuthenticated &&
+          !this.state.registerToggle && (
+            <LoginForm registerToggle={this.registerToggle} />
+          )}
+        <Loading />
+        {this.props.auth.isAuthenticated && (
+          <Logout user={this.props.auth.user.username} />
+        )}
+        {this.state.formPage &&
+          this.props.auth.isAuthenticated && (
+            <MainForm handleClick={this.handleClick} />
+          )}
+        {this.props.auth.isAuthenticated && (
+          <BagPage bagsData={this.props.auth} />
+        )}
         <Footer />
       </div>
     );
@@ -38,17 +76,28 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    bags: state.bags
+    bags: state.bags,
+    auth: state.auth
   };
 }
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
   return {
-    addBag: (id, description, destination) => {
-      dispatch(addBagAction(id, description, destination));
+    saveBagToDB: (user, description, destination) => {
+      console.log("dispatch it");
+
+      return dispatch(saveBagToDB(user, description, destination));
     }
   };
-}
+};
+
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     addBag: (id, description, destination) => {
+//       dispatch(addBagAction(id, description, destination));
+//     }
+//   };
+// }
 
 export default connect(
   mapStateToProps,

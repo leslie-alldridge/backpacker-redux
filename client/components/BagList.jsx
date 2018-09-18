@@ -1,13 +1,17 @@
-import React from 'react';
+import React from "react";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import { saveItemAction, checkItAction, deleteItAction } from '../actions/addItem';
+import {
+  saveItemAction,
+  checkItAction,
+  deleteItAction
+} from "../actions/addItem";
 class BagList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      formInput: ''
+      formInput: ""
     };
     this.formChange = this.formChange.bind(this);
     this.saveItem = this.saveItem.bind(this);
@@ -35,6 +39,7 @@ class BagList extends React.Component {
   }
 
   saveItem(id, input) {
+    // console.log(this.props);
     const { saveIt } = this.props;
     saveIt(id, input);
   }
@@ -118,7 +123,7 @@ class BagList extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    bags: state.bags
+    state: state.bags
   };
 }
 

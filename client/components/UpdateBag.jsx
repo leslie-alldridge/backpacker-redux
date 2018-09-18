@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import { connect } from 'react-redux';
-import { updateBagAction } from '../actions/addBag';
+import { connect } from "react-redux";
+import { updateBagAction } from "../actions/addBag";
 class UpdateBag extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      updateInput: '',
-      desInput: ''
+      updateInput: "",
+      desInput: ""
     };
     this.destinationChange = this.destinationChange.bind(this);
     this.desChange = this.desChange.bind(this);
@@ -51,7 +51,11 @@ class UpdateBag extends React.Component {
             />
             <button
               onClick={() => {
-                this.updateBag(this.props.id, this.state.updateInput, this.state.desInput);
+                this.updateBag(
+                  this.props.id,
+                  this.state.updateInput,
+                  this.state.desInput
+                );
               }}
               id="checkAll"
               className="btn btn-success"

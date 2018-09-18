@@ -162,4 +162,20 @@ router.get("/itemshow", (req, res) => {
   });
 });
 
+//archive
+
+router.post("/itemarchive", (req, res) => {
+  console.log("hit the route g");
+  bags
+    .archiveBagItem(req.user.username, req.body.id, req.body.item)
+    .then(data => {
+      console.log(data);
+
+      res.json({
+        message: "These are your updated bag items.",
+        bagItems: data
+      });
+    });
+});
+
 module.exports = router;

@@ -200,3 +200,48 @@ function showItem(response) {
     response: response
   };
 }
+
+//archive an item
+
+export function checkItAction(id, item) {
+  console.log(id, item);
+  console.log("actions");
+
+  return function(dispatch) {
+    dispatch(arcReqItem(id, item));
+    request("post", "/itemarchive", {
+      id: id,
+      item: item
+    }).then(response => {
+      console.log(response);
+
+      if (!response.ok) {
+      } else {
+        console.log("hit the else for add item");
+        //console.log(response);
+        console.log(response.body.bagItems);
+
+        dispatch(arcDoneItem(response.body.bagItems));
+      }
+    });
+  };
+}
+
+function arcReqItem(id, item) {
+  return {
+    type: "ITEM_ARC_REQ",
+    isFetching: true,
+    isAuthenticated: true,
+    id,
+    item
+  };
+}
+
+function arcDoneItem(response) {
+  return {
+    type: "ITEM_ARC_DONE",
+    isFetching: true,
+    isAuthenticated: true,
+    response
+  };
+}

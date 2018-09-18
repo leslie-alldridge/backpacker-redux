@@ -8,7 +8,8 @@ const initialState = {
   isAuthenticated: isAuthenticated(),
   user: getUserTokenInfo(),
   errorMessage: '',
-  bags: []
+  bags: [],
+  bag: []
 }
 
 export default function auth (state = initialState, action) {
@@ -57,10 +58,12 @@ export default function auth (state = initialState, action) {
       }
      case 'BAG_SUCCESS':
      console.log('my get bags switch statement');
+     console.log(action.response);
+     
       return {
         ...state,
         isFetching: false,
-        
+        isAuthenticated: true,
         // quote: action.response,
         errorMessage: '',
         bag: action.response

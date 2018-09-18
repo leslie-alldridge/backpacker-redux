@@ -494,7 +494,7 @@ function (_Component) {
       }), this.state.formPage && this.props.auth.isAuthenticated && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MainForm__WEBPACK_IMPORTED_MODULE_2__["default"], {
         handleClick: this.handleClick
       }), this.props.auth.isAuthenticated && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagPage__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        bagsData: this.props.bags
+        bagsData: this.props.auth
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Footer__WEBPACK_IMPORTED_MODULE_5__["default"], null));
     }
   }]);
@@ -749,11 +749,11 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(BagPage).call(this, props));
     _this.state = {
-      bags: _this.props.bags || [],
+      // bags: this.props.auth.bags,
       viewList: false,
       viewListID: null,
       viewBagUpdate: null,
-      bagState: false || _this.props.auth
+      bagState: [] || _this.props.bagsData
     };
     _this.updateBagToggle = _this.updateBagToggle.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.deleteItem = _this.deleteItem.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -764,7 +764,10 @@ function (_React$Component) {
   _createClass(BagPage, [{
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
-      console.log(this.props.state.bag);
+      console.log('bag state is below');
+      console.log(this.state.bagState);
+      console.log('bag props here');
+      console.log(this.props); // console.log(this.props.state.bag)
     }
   }, {
     key: "addInventory",
@@ -805,7 +808,7 @@ function (_React$Component) {
         id: "bagHead"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-suitcase"
-      }), " Your Current Bags :"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.bagState && this.state.bagState.bag.id), this.props.bagsData.map(function (bag) {
+      }), " Your Current Bags :"), console.log(this.props.bagsData.bag), this.props.bagsData.bag.map(function (bag) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: bag.id,
           id: "card",
@@ -1656,7 +1659,8 @@ var initialState = {
   isAuthenticated: Object(_utils_auth__WEBPACK_IMPORTED_MODULE_3__["isAuthenticated"])(),
   user: Object(_utils_auth__WEBPACK_IMPORTED_MODULE_3__["getUserTokenInfo"])(),
   errorMessage: '',
-  bags: []
+  bags: [],
+  bag: []
 };
 function auth() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
@@ -1707,8 +1711,10 @@ function auth() {
 
     case 'BAG_SUCCESS':
       console.log('my get bags switch statement');
+      console.log(action.response);
       return _objectSpread({}, state, {
         isFetching: false,
+        isAuthenticated: true,
         // quote: action.response,
         errorMessage: '',
         bag: action.response //  return {

@@ -100,6 +100,7 @@ router.get('/bags', (req, res) => {
   
    bags.getBags(req.user.username)
    .then(data => {
+     
     console.log('i found the bag below from a DB function');
      console.log(data);
      res.json({

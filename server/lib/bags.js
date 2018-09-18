@@ -8,7 +8,6 @@ function getBags (username, testDb){
     return connection('bags')
             .select()
             .where('username', username)
-            .first()
 }
 
 module.exports = {

@@ -47,7 +47,7 @@ class App extends Component {
         <Loading />
         {this.props.auth.isAuthenticated && <Logout user={this.props.auth.user.username}/>}
         {this.state.formPage && this.props.auth.isAuthenticated && <MainForm handleClick={this.handleClick} />}
-        {this.props.auth.isAuthenticated && <BagPage bagsData={this.props.bags} />}
+        {this.props.auth.isAuthenticated && <BagPage bagsData={this.props.auth} />}
         <Footer />
       </div>
     );

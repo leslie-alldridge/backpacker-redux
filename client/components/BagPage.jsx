@@ -8,11 +8,11 @@ class BagPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bags: this.props.bags || [],
+      // bags: this.props.auth.bags,
       viewList: false,
       viewListID: null,
       viewBagUpdate: null,
-      bagState: false || this.props.auth
+      bagState: [] || this.props.bagsData
     };
     this.updateBagToggle = this.updateBagToggle.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
@@ -20,7 +20,13 @@ class BagPage extends React.Component {
   }
 
   componentDidUpdate(){
-    console.log(this.props.state.bag)
+    console.log('bag state is below');
+    console.log(this.state.bagState);
+    console.log('bag props here');
+    console.log(this.props);
+    
+    
+    // console.log(this.props.state.bag)
   }
 
   addInventory(viewListID) {
@@ -46,10 +52,10 @@ class BagPage extends React.Component {
       <div id="cont" className="container">
       <div id="containerBags">
         <h3 id="bagHead"><i className="fas fa-suitcase"></i> Your Current Bags :</h3>
-       {/* {console.log(this.state.bagState)}
-       {console.log(this.state.bagState.bag.id)} */}
-       <p>{this.state.bagState && this.state.bagState.bag.id}</p> 
-        {this.props.bagsData.map(bag => (
+       {console.log(this.props.bagsData.bag)}
+       {/* {console.log(this.state.bagState.bag.id)} */}
+       {/* <p>{this.state.bagState && this.props.state.bag[0].username}</p>  */}
+        {this.props.bagsData.bag.map(bag => (
           <div key={bag.id} id="card" className="card">
             <div data-aos="flip-up"
             data-aos-anchor-placement="bottom-bottom"

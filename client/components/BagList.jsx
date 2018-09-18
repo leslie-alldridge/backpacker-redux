@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import {
-  saveItemAction, checkItAction
+  saveItemAction, checkItAction, deleteItAction
 } from "../actions/addBag";
 class BagList extends React.Component {
   constructor(props) {
@@ -16,9 +16,11 @@ class BagList extends React.Component {
     this.delete = this.delete.bind(this);
   }
 
-  delete(id, input) {
+  delete(id, bagid, input) {
+    console.log(id, bagid, input);
+    
     const { deleteIt } = this.props;
-    deleteIt(id, input);
+    deleteIt(id, bagid, input);
   }
 
   formChange(e) {
@@ -28,14 +30,10 @@ class BagList extends React.Component {
   }
 
   checkItem(id, item) {
-    console.log('hit the func');
-    
-    //const { checkIt } = this.props;
     this.props.checkIt(id, item);
   }
 
   saveItem(id, input) {
-    console.log(id, input);
     const { saveIt } = this.props;
     saveIt(id, input);
   }
@@ -64,44 +62,22 @@ class BagList extends React.Component {
                 Add Item
               </button>
               <hr />
-              {console.log(this.props.state.bagItems)}
               <ul>
-
                 {this.props.state.bagItems.map(item => {
-                if (item.archived == 1) return (
-                    <li>{item.bag_item} 
-                    <i
-                      onClick={() => {
-                        this.checkItem(this.props.id, item.bag_item);
-                      }}
-                      className="fas fa-check"
-                      id="tick"
-                    />
-                    </li>
-                    )
-               
-                   
-                  
-                  
-                 
-                    
-                  // item.items.map(newItem => {
-                  //   if (this.props.id == item.id) {
-                  //     return (
-                  //       <li key={newItem}>
-                  //         {newItem}
-                  //         <i
-                  //           onClick={() => {
-                  //             this.checkItem(this.props.id, newItem);
-                  //           }}
-                  //           className="fas fa-check"
-                  //           id="tick"
-                  //         />
-                  //       </li>
-                  //     );
-                  //   }
-                  // })
-                          })}
+                  if (item.archived == 1)
+                    return (
+                      <li key={item.id}>
+                        {item.bag_item}
+                        <i
+                          onClick={() => {
+                            this.checkItem(this.props.id, item.bag_item);
+                          }}
+                          className="fas fa-check"
+                          id="tick"
+                        />
+                      </li>
+                    );
+                })}
               </ul>
             </div>
           </div>
@@ -109,21 +85,23 @@ class BagList extends React.Component {
             <div className="todolist">
               <h4>Items Checked</h4>
               <ul id="done-items" className="list-unstyled">
-              {this.props.state.bagItems.map(item => {
-                if (item.archived == 0) return (
-                        <li>
-                          {item.bag_item}
-                          <i
-                            onClick={() => {
-                              this.delete(this.props.id, item.bag_item);
-                            }}
-                            id="trash"
-                            className="fas fa-trash-alt"
-                          />
-                        </li>
-                      );
-                    }
-                )}
+                {this.props.state.bagItems.map(item => {
+                  if (item.archived == 0)
+                    return (
+                      <li key={item.id}>
+                        {item.bag_item}
+                        <i
+                          onClick={() => {
+                            console.log(item.bag_item)
+
+                            this.delete(item.id, item.bag_id, item.bag_item);
+                          }}
+                          id="trash"
+                          className="fas fa-trash-alt"
+                        />
+                      </li>
+                    );
+                })}
               </ul>
             </div>
           </div>
@@ -144,14 +122,12 @@ function mapDispatchToProps(dispatch) {
     saveIt: (id, input) => {
       dispatch(saveItemAction(id, input));
     },
-    checkIt: (id, item) => {
-      console.log('hit checkit');
-      
+    checkIt: (id, item) => {      
       dispatch(checkItAction(id, item));
+    },
+    deleteIt: (id, bagid, item) => {
+      dispatch(deleteItAction(id, bagid, item));
     }
-    // deleteIt: (id, item) => {
-    //   dispatch(deleteItAction(id, item));
-    // }
   };
 }
 

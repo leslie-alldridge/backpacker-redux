@@ -11,8 +11,8 @@
 //   inventory: item
 // });
 
-export const deleteItAction = (id, item) => ({
-  type: "DEL_ITEM",
-  id,
-  inventory: item
-});
+// export const deleteItAction = (id, item) => ({
+//   type: "DEL_ITEM",
+//   id,
+//   inventory: item
+// });

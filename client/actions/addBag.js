@@ -245,3 +245,49 @@ function arcDoneItem(response) {
     response
   };
 }
+
+//delete the archived item from db
+
+export function deleteItAction(id, bagid, item) {
+  console.log(id, bagid, item);
+  console.log("del actions");
+
+  return function(dispatch) {
+    dispatch(delReqItem(id, bagid, item));
+    request("post", "/itemdel", {
+      id: id,
+      item: item,
+      bagid: bagid
+    }).then(response => {
+      console.log(response);
+
+      if (!response.ok) {
+      } else {
+        console.log("hit the else for del item");
+        //console.log(response);
+        console.log(response.body.bagItems);
+
+        dispatch(delDoneItem(response.body.bagItems));
+      }
+    });
+  };
+}
+
+function delReqItem(id, item) {
+  return {
+    type: "ITEM_DEL_REQ",
+    isFetching: true,
+    isAuthenticated: true,
+    id,
+    item
+  };
+}
+
+function delDoneItem(response) {
+  return {
+    type: "ITEM_DEL_DONE",
+    isFetching: true,
+    isAuthenticated: true,
+    response
+  };
+}

@@ -90,7 +90,7 @@
 /*!**********************************!*\
   !*** ./client/actions/addBag.js ***!
   \**********************************/
-/*! exports provided: updateBagAction, addBagReceived, receiveAddBag, saveBagToDB, deleteBagDB, updateBagDB, showItems, saveItemAction, checkItAction */
+/*! exports provided: updateBagAction, addBagReceived, receiveAddBag, saveBagToDB, deleteBagDB, updateBagDB, showItems, saveItemAction, checkItAction, deleteItAction */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -104,6 +104,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showItems", function() { return showItems; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveItemAction", function() { return saveItemAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkItAction", function() { return checkItAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteItAction", function() { return deleteItAction; });
 /* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/api */ "./client/utils/api.js");
 
 var updateBagAction = function updateBagAction(id, destination, description) {
@@ -324,6 +325,48 @@ function arcReqItem(id, item) {
 function arcDoneItem(response) {
   return {
     type: "ITEM_ARC_DONE",
+    isFetching: true,
+    isAuthenticated: true,
+    response: response
+  };
+} //delete the archived item from db
+
+
+function deleteItAction(id, bagid, item) {
+  console.log(id, bagid, item);
+  console.log("del actions");
+  return function (dispatch) {
+    dispatch(delReqItem(id, bagid, item));
+    Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("post", "/itemdel", {
+      id: id,
+      item: item,
+      bagid: bagid
+    }).then(function (response) {
+      console.log(response);
+
+      if (!response.ok) {} else {
+        console.log("hit the else for del item"); //console.log(response);
+
+        console.log(response.body.bagItems);
+        dispatch(delDoneItem(response.body.bagItems));
+      }
+    });
+  };
+}
+
+function delReqItem(id, item) {
+  return {
+    type: "ITEM_DEL_REQ",
+    isFetching: true,
+    isAuthenticated: true,
+    id: id,
+    item: item
+  };
+}
+
+function delDoneItem(response) {
+  return {
+    type: "ITEM_DEL_DONE",
     isFetching: true,
     isAuthenticated: true,
     response: response
@@ -738,9 +781,10 @@ function (_React$Component) {
 
   _createClass(BagList, [{
     key: "delete",
-    value: function _delete(id, input) {
+    value: function _delete(id, bagid, input) {
+      console.log(id, bagid, input);
       var deleteIt = this.props.deleteIt;
-      deleteIt(id, input);
+      deleteIt(id, bagid, input);
     }
   }, {
     key: "formChange",
@@ -752,14 +796,11 @@ function (_React$Component) {
   }, {
     key: "checkItem",
     value: function checkItem(id, item) {
-      console.log('hit the func'); //const { checkIt } = this.props;
-
       this.props.checkIt(id, item);
     }
   }, {
     key: "saveItem",
     value: function saveItem(id, input) {
-      console.log(id, input);
       var saveIt = this.props.saveIt;
       saveIt(id, input);
     }
@@ -791,29 +832,16 @@ function (_React$Component) {
         id: "checkAll",
         type: "submit",
         className: "btn btn-success"
-      }, "Add Item"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), console.log(this.props.state.bagItems), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.state.bagItems.map(function (item) {
-        if (item.archived == 1) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, item.bag_item, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      }, "Add Item"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.state.bagItems.map(function (item) {
+        if (item.archived == 1) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          key: item.id
+        }, item.bag_item, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           onClick: function onClick() {
             _this2.checkItem(_this2.props.id, item.bag_item);
           },
           className: "fas fa-check",
           id: "tick"
-        })); // item.items.map(newItem => {
-        //   if (this.props.id == item.id) {
-        //     return (
-        //       <li key={newItem}>
-        //         {newItem}
-        //         <i
-        //           onClick={() => {
-        //             this.checkItem(this.props.id, newItem);
-        //           }}
-        //           className="fas fa-check"
-        //           id="tick"
-        //         />
-        //       </li>
-        //     );
-        //   }
-        // })
+        }));
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -822,9 +850,13 @@ function (_React$Component) {
         id: "done-items",
         className: "list-unstyled"
       }, this.props.state.bagItems.map(function (item) {
-        if (item.archived == 0) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, item.bag_item, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        if (item.archived == 0) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          key: item.id
+        }, item.bag_item, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           onClick: function onClick() {
-            _this2.delete(_this2.props.id, item.bag_item);
+            console.log(item.bag_item);
+
+            _this2.delete(item.id, item.bag_id, item.bag_item);
           },
           id: "trash",
           className: "fas fa-trash-alt"
@@ -848,12 +880,11 @@ function mapDispatchToProps(dispatch) {
       dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_2__["saveItemAction"])(id, input));
     },
     checkIt: function checkIt(id, item) {
-      console.log('hit checkit');
       dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_2__["checkItAction"])(id, item));
-    } // deleteIt: (id, item) => {
-    //   dispatch(deleteItAction(id, item));
-    // }
-
+    },
+    deleteIt: function deleteIt(id, bagid, item) {
+      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_2__["deleteItAction"])(id, bagid, item));
+    }
   };
 }
 
@@ -1878,7 +1909,6 @@ function auth() {
 
     case "BAG_REQUEST":
       {
-        console.log("hit bag request");
         return _objectSpread({}, state, {
           isFetching: true,
           isAuthenticated: true
@@ -1888,7 +1918,6 @@ function auth() {
 
     case "BAG_UPD_REQ":
       {
-        console.log("hit update request");
         return _objectSpread({}, state, {
           isFetching: true,
           isAuthenticated: true
@@ -1897,7 +1926,6 @@ function auth() {
 
     case "BAG_UPD_DONE":
       {
-        console.log("hit done update request");
         return _objectSpread({}, state, {
           isFetching: false,
           isAuthenticated: true,
@@ -1907,7 +1935,6 @@ function auth() {
 
     case "ITEM_ADD_REQ":
       {
-        console.log("hit add item request");
         return _objectSpread({}, state, {
           isFetching: true,
           isAuthenticated: true
@@ -1916,7 +1943,6 @@ function auth() {
 
     case "ITEM_ADD_DONE":
       {
-        console.log("hit done bag item");
         return _objectSpread({}, state, {
           isFetching: false,
           isAuthenticated: true,
@@ -1926,7 +1952,6 @@ function auth() {
 
     case "ITEM_SHOW_DONE":
       {
-        console.log("hit show bag item");
         return _objectSpread({}, state, {
           isFetching: false,
           isAuthenticated: true,
@@ -1935,7 +1960,6 @@ function auth() {
       }
 
     case "ITEM_ARC_REQ":
-      console.log("hit arc item request");
       return _objectSpread({}, state, {
         isFetching: true,
         isAuthenticated: true
@@ -1943,7 +1967,21 @@ function auth() {
 
     case "ITEM_ARC_DONE":
       {
-        console.log("hit done arc bag item");
+        return _objectSpread({}, state, {
+          isFetching: false,
+          isAuthenticated: true,
+          bagItems: action.response
+        });
+      }
+
+    case "ITEM_DEL_REQ":
+      return _objectSpread({}, state, {
+        isFetching: true,
+        isAuthenticated: true
+      });
+
+    case "ITEM_DEL_DONE":
+      {
         return _objectSpread({}, state, {
           isFetching: false,
           isAuthenticated: true,

@@ -93,6 +93,18 @@ function archiveBagItem(username, id, item, testDb) {
     });
 }
 
+function deleteBagItem(username, bagid, item, testDb) {
+  const connection = testDb || knex;
+  return connection("bagitems")
+    .where("bag_item", item)
+    .del()
+    .then(data => {
+      return connection("bagitems")
+        .select()
+        .where({ username: username, bag_id: bagid });
+    });
+}
+
 module.exports = {
   getBags,
   addBags,
@@ -100,5 +112,6 @@ module.exports = {
   updateBag,
   addBagItem,
   getBagItem,
-  archiveBagItem
+  archiveBagItem,
+  deleteBagItem
 };

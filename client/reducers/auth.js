@@ -84,7 +84,6 @@ export default function auth(state = initialState, action) {
 
     //in this request they are authenticated already and we're fetching bags
     case "BAG_REQUEST": {
-      console.log("hit bag request");
       return {
         ...state,
         isFetching: true,
@@ -93,7 +92,6 @@ export default function auth(state = initialState, action) {
     }
     //update cases
     case "BAG_UPD_REQ": {
-      console.log("hit update request");
       return {
         ...state,
         isFetching: true,
@@ -102,7 +100,6 @@ export default function auth(state = initialState, action) {
     }
 
     case "BAG_UPD_DONE": {
-      console.log("hit done update request");
       return {
         ...state,
         isFetching: false,
@@ -112,7 +109,6 @@ export default function auth(state = initialState, action) {
     }
 
     case "ITEM_ADD_REQ": {
-      console.log("hit add item request");
       return {
         ...state,
         isFetching: true,
@@ -121,7 +117,6 @@ export default function auth(state = initialState, action) {
     }
 
     case "ITEM_ADD_DONE": {
-      console.log("hit done bag item");
       return {
         ...state,
         isFetching: false,
@@ -131,7 +126,6 @@ export default function auth(state = initialState, action) {
     }
 
     case "ITEM_SHOW_DONE": {
-      console.log("hit show bag item");
       return {
         ...state,
         isFetching: false,
@@ -141,7 +135,6 @@ export default function auth(state = initialState, action) {
     }
 
     case "ITEM_ARC_REQ":
-      console.log("hit arc item request");
       return {
         ...state,
         isFetching: true,
@@ -149,7 +142,22 @@ export default function auth(state = initialState, action) {
       };
 
     case "ITEM_ARC_DONE": {
-      console.log("hit done arc bag item");
+      return {
+        ...state,
+        isFetching: false,
+        isAuthenticated: true,
+        bagItems: action.response
+      };
+    }
+
+    case "ITEM_DEL_REQ":
+      return {
+        ...state,
+        isFetching: true,
+        isAuthenticated: true
+      };
+
+    case "ITEM_DEL_DONE": {
       return {
         ...state,
         isFetching: false,

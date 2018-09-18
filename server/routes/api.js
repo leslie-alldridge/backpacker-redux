@@ -149,4 +149,17 @@ router.post("/itemadd", (req, res) => {
   });
 });
 
+router.get("/itemshow", (req, res) => {
+  console.log(req.query.bagid);
+
+  bags.getBagItem(req.user.username, req.query.bagid).then(data => {
+    console.log(data);
+
+    res.json({
+      message: "These are your bag items.",
+      bagItems: data
+    });
+  });
+});
+
 module.exports = router;

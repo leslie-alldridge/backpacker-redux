@@ -130,6 +130,16 @@ export default function auth(state = initialState, action) {
       };
     }
 
+    case "ITEM_SHOW_DONE": {
+      console.log("hit show bag item");
+      return {
+        ...state,
+        isFetching: false,
+        isAuthenticated: true,
+        bagItems: action.response
+      };
+    }
+
     default:
       return state;
   }

@@ -69,10 +69,19 @@ function addBagItem(username, id, input, testDb) {
     });
 }
 
+function getBagItem(username, id, testDb) {
+  console.log("getting bag items for " + username + "bag " + id);
+  const connection = testDb || knex;
+  return connection("bagitems")
+    .select()
+    .where({ username: username, bag_id: id });
+}
+
 module.exports = {
   getBags,
   addBags,
   deleteBag,
   updateBag,
-  addBagItem
+  addBagItem,
+  getBagItem
 };

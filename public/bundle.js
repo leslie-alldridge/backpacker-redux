@@ -90,7 +90,7 @@
 /*!**********************************!*\
   !*** ./client/actions/addBag.js ***!
   \**********************************/
-/*! exports provided: updateBagAction, addBagReceived, receiveAddBag, saveBagToDB, deleteBagDB, updateBagDB, saveItemAction */
+/*! exports provided: updateBagAction, addBagReceived, receiveAddBag, saveBagToDB, deleteBagDB, updateBagDB, showItems, saveItemAction */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -101,6 +101,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveBagToDB", function() { return saveBagToDB; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteBagDB", function() { return deleteBagDB; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBagDB", function() { return updateBagDB; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showItems", function() { return showItems; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveItemAction", function() { return saveItemAction; });
 /* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/api */ "./client/utils/api.js");
 
@@ -221,7 +222,23 @@ function updateBagDB(id, destination, description) {
     });
   };
 } //all func below this line are for bag items
+//show bag items
 
+function showItems(id) {
+  return function (dispatch) {
+    console.log(id);
+    Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("get", "/itemshow", {
+      bagid: id
+    }).then(function (response) {
+      console.log(response);
+
+      if (!response.ok) {} else {
+        console.log("hit the else for show item");
+        dispatch(showItem(response.body.bagItems));
+      }
+    });
+  };
+}
 function saveItemAction(id, input) {
   console.log(id, input);
   console.log("actions");
@@ -256,6 +273,15 @@ function addReqItem(id, input) {
 function receieveItem(response) {
   return {
     type: "ITEM_ADD_DONE",
+    isFetching: false,
+    isAuthenticated: true,
+    response: response
+  };
+}
+
+function showItem(response) {
+  return {
+    type: "ITEM_SHOW_DONE",
     isFetching: false,
     isAuthenticated: true,
     response: response
@@ -723,7 +749,13 @@ function (_React$Component) {
         type: "submit",
         className: "btn btn-success"
       }, "Add Item"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), console.log(this.props.state.bagItems), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.state.bagItems.map(function (item) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, item.bag_item);
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, item.bag_item, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          onClick: function onClick() {
+            _this2.checkItem(_this2.props.id, newItem);
+          },
+          className: "fas fa-check",
+          id: "tick"
+        }));
       } // item.items.map(newItem => {
       //   if (this.props.id == item.id) {
       //     return (
@@ -849,6 +881,7 @@ function (_React$Component) {
           viewBagUpdate: null
         };
       });
+      this.props.showItems(viewListID);
     }
   }, {
     key: "updateBagToggle",
@@ -942,6 +975,10 @@ function mapDispatchToProps(dispatch) {
   return {
     deleteBagDB: function deleteBagDB(id) {
       dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_2__["deleteBagDB"])(id));
+    },
+    showItems: function showItems(id) {
+      console.log(id);
+      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_2__["showItems"])(id));
     }
   };
 }
@@ -1826,6 +1863,16 @@ function auth() {
     case "ITEM_ADD_DONE":
       {
         console.log("hit done bag item");
+        return _objectSpread({}, state, {
+          isFetching: false,
+          isAuthenticated: true,
+          bagItems: action.response
+        });
+      }
+
+    case "ITEM_SHOW_DONE":
+      {
+        console.log("hit show bag item");
         return _objectSpread({}, state, {
           isFetching: false,
           isAuthenticated: true,

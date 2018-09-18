@@ -67,7 +67,16 @@ class BagList extends React.Component {
 
                 {this.props.state.bagItems.map(item =>
 
-                    <li>{item.bag_item}</li>
+                    <li>{item.bag_item} 
+                    <i
+                            onClick={() => {
+                              this.checkItem(this.props.id, newItem);
+                            }}
+                            className="fas fa-check"
+                            id="tick"
+                          />
+                    
+                    </li>
                   // item.items.map(newItem => {
                   //   if (this.props.id == item.id) {
                   //     return (

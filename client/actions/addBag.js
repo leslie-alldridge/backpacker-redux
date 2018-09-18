@@ -129,6 +129,26 @@ export function updateBagDB(id, destination, description) {
 
 //all func below this line are for bag items
 
+//show bag items
+
+export function showItems(id) {
+  return function(dispatch) {
+    console.log(id);
+
+    request("get", "/itemshow", {
+      bagid: id
+    }).then(response => {
+      console.log(response);
+
+      if (!response.ok) {
+      } else {
+        console.log("hit the else for show item");
+        dispatch(showItem(response.body.bagItems));
+      }
+    });
+  };
+}
+
 export function saveItemAction(id, input) {
   console.log(id, input);
   console.log("actions");
@@ -166,6 +186,15 @@ function addReqItem(id, input) {
 function receieveItem(response) {
   return {
     type: "ITEM_ADD_DONE",
+    isFetching: false,
+    isAuthenticated: true,
+    response: response
+  };
+}
+
+function showItem(response) {
+  return {
+    type: "ITEM_SHOW_DONE",
     isFetching: false,
     isAuthenticated: true,
     response: response

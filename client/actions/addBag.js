@@ -35,10 +35,21 @@ function requestAddBag() {
   };
 }
 
+export function receiveAddBag(user, bag) {
+  console.log(bag);
+  console.log(user);
+  return {
+    type: "BAG_SUCCESS",
+    isFetching: false,
+    response: bag
+  };
+}
+
 export function saveBagToDB(user, description, destination) {
   console.log("made it ");
 
   let req = {
+    user,
     description,
     destination
   };
@@ -58,10 +69,10 @@ export function saveBagToDB(user, description, destination) {
           //return Promise.reject(response.body.message);
         } else {
           // If login was successful, set the token in local storage
-          const userInfo = saveUserToken(response.body.token);
+          //const userInfo = saveUserToken(response.body.token);
           // Dispatch the success action
-          // dispatch(receiveLogin(userInfo));
-          console.log("userInfo");
+          dispatch(receiveAddBag(user, response));
+          console.log("response sent");
           // dispatch(fetchBag(userInfo.username));
         }
       })

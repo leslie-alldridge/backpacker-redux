@@ -90,7 +90,7 @@
 /*!**********************************!*\
   !*** ./client/actions/addBag.js ***!
   \**********************************/
-/*! exports provided: deleteBagAction, updateBagAction, addBagReceived, saveBagToDB */
+/*! exports provided: deleteBagAction, updateBagAction, addBagReceived, receiveAddBag, saveBagToDB */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98,6 +98,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteBagAction", function() { return deleteBagAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBagAction", function() { return updateBagAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addBagReceived", function() { return addBagReceived; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveAddBag", function() { return receiveAddBag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveBagToDB", function() { return saveBagToDB; });
 /* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/api */ "./client/utils/api.js");
 /* harmony import */ var _utils_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/auth */ "./client/utils/auth.js");
@@ -137,9 +138,19 @@ function requestAddBag() {
   };
 }
 
+function receiveAddBag(user, bag) {
+  console.log(bag);
+  console.log(user);
+  return {
+    type: "BAG_SUCCESS",
+    isFetching: false,
+    response: bag
+  };
+}
 function saveBagToDB(user, description, destination) {
   console.log("made it ");
   var req = {
+    user: user,
     description: description,
     destination: destination
   }; // console.log(user);
@@ -155,10 +166,10 @@ function saveBagToDB(user, description, destination) {
         //return Promise.reject(response.body.message);
       } else {
         // If login was successful, set the token in local storage
-        var userInfo = Object(_utils_auth__WEBPACK_IMPORTED_MODULE_1__["saveUserToken"])(response.body.token); // Dispatch the success action
-        // dispatch(receiveLogin(userInfo));
-
-        console.log("userInfo"); // dispatch(fetchBag(userInfo.username));
+        //const userInfo = saveUserToken(response.body.token);
+        // Dispatch the success action
+        dispatch(receiveAddBag(user, response));
+        console.log("response sent"); // dispatch(fetchBag(userInfo.username));
       }
     }).catch(function (err) {
       return dispatch(loginError(err.message));

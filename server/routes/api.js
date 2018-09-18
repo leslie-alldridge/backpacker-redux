@@ -107,6 +107,10 @@ router.post("/bags", (req, res) => {
   console.log("hit the post bags route");
   console.log(req.user.username);
   console.log(req);
+  bags.addBags(req.user.username).then(data => {
+    console.log(data);
+    console.log("bags should be in db");
+  });
 });
 
 module.exports = router;

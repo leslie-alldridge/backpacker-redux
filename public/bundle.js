@@ -90,7 +90,7 @@
 /*!**********************************!*\
   !*** ./client/actions/addBag.js ***!
   \**********************************/
-/*! exports provided: updateBagAction, addBagReceived, receiveAddBag, saveBagToDB, deleteBagDB, updateBagDB, showItems, saveItemAction */
+/*! exports provided: updateBagAction, addBagReceived, receiveAddBag, saveBagToDB, deleteBagDB, updateBagDB, showItems, saveItemAction, checkItAction */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -103,6 +103,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBagDB", function() { return updateBagDB; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showItems", function() { return showItems; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveItemAction", function() { return saveItemAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkItAction", function() { return checkItAction; });
 /* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/api */ "./client/utils/api.js");
 
 var updateBagAction = function updateBagAction(id, destination, description) {
@@ -283,6 +284,47 @@ function showItem(response) {
   return {
     type: "ITEM_SHOW_DONE",
     isFetching: false,
+    isAuthenticated: true,
+    response: response
+  };
+} //archive an item
+
+
+function checkItAction(id, item) {
+  console.log(id, item);
+  console.log("actions");
+  return function (dispatch) {
+    dispatch(arcReqItem(id, item));
+    Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("post", "/itemarchive", {
+      id: id,
+      item: item
+    }).then(function (response) {
+      console.log(response);
+
+      if (!response.ok) {} else {
+        console.log("hit the else for add item"); //console.log(response);
+
+        console.log(response.body.bagItems);
+        dispatch(arcDoneItem(response.body.bagItems));
+      }
+    });
+  };
+}
+
+function arcReqItem(id, item) {
+  return {
+    type: "ITEM_ARC_REQ",
+    isFetching: true,
+    isAuthenticated: true,
+    id: id,
+    item: item
+  };
+}
+
+function arcDoneItem(response) {
+  return {
+    type: "ITEM_ARC_DONE",
+    isFetching: true,
     isAuthenticated: true,
     response: response
   };
@@ -710,8 +752,9 @@ function (_React$Component) {
   }, {
     key: "checkItem",
     value: function checkItem(id, item) {
-      var checkIt = this.props.checkIt;
-      checkIt(id, item);
+      console.log('hit the func'); //const { checkIt } = this.props;
+
+      this.props.checkIt(id, item);
     }
   }, {
     key: "saveItem",
@@ -749,34 +792,44 @@ function (_React$Component) {
         type: "submit",
         className: "btn btn-success"
       }, "Add Item"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), console.log(this.props.state.bagItems), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.state.bagItems.map(function (item) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, item.bag_item, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        if (item.archived == 1) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, item.bag_item, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           onClick: function onClick() {
-            _this2.checkItem(_this2.props.id, newItem);
+            _this2.checkItem(_this2.props.id, item.bag_item);
           },
           className: "fas fa-check",
           id: "tick"
-        }));
-      } // item.items.map(newItem => {
-      //   if (this.props.id == item.id) {
-      //     return (
-      //       <li key={newItem}>
-      //         {newItem}
-      //         <i
-      //           onClick={() => {
-      //             this.checkItem(this.props.id, newItem);
-      //           }}
-      //           className="fas fa-check"
-      //           id="tick"
-      //         />
-      //       </li>
-      //     );
-      //   }
-      // })
-      )))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        })); // item.items.map(newItem => {
+        //   if (this.props.id == item.id) {
+        //     return (
+        //       <li key={newItem}>
+        //         {newItem}
+        //         <i
+        //           onClick={() => {
+        //             this.checkItem(this.props.id, newItem);
+        //           }}
+        //           className="fas fa-check"
+        //           id="tick"
+        //         />
+        //       </li>
+        //     );
+        //   }
+        // })
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "todolist"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Items Checked")))));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Items Checked"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        id: "done-items",
+        className: "list-unstyled"
+      }, this.props.state.bagItems.map(function (item) {
+        if (item.archived == 0) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, item.bag_item, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          onClick: function onClick() {
+            _this2.delete(_this2.props.id, item.bag_item);
+          },
+          id: "trash",
+          className: "fas fa-trash-alt"
+        }));
+      }))))));
     }
   }]);
 
@@ -793,10 +846,11 @@ function mapDispatchToProps(dispatch) {
   return {
     saveIt: function saveIt(id, input) {
       dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_2__["saveItemAction"])(id, input));
-    } // checkIt: (id, item) => {
-    //   dispatch(checkItAction(id, item));
-    // },
-    // deleteIt: (id, item) => {
+    },
+    checkIt: function checkIt(id, item) {
+      console.log('hit checkit');
+      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_2__["checkItAction"])(id, item));
+    } // deleteIt: (id, item) => {
     //   dispatch(deleteItAction(id, item));
     // }
 
@@ -1873,6 +1927,23 @@ function auth() {
     case "ITEM_SHOW_DONE":
       {
         console.log("hit show bag item");
+        return _objectSpread({}, state, {
+          isFetching: false,
+          isAuthenticated: true,
+          bagItems: action.response
+        });
+      }
+
+    case "ITEM_ARC_REQ":
+      console.log("hit arc item request");
+      return _objectSpread({}, state, {
+        isFetching: true,
+        isAuthenticated: true
+      });
+
+    case "ITEM_ARC_DONE":
+      {
+        console.log("hit done arc bag item");
         return _objectSpread({}, state, {
           isFetching: false,
           isAuthenticated: true,

@@ -60,7 +60,8 @@ function addBagItem(username, id, input, testDb) {
     .insert({
       bag_id: id,
       username: username,
-      bag_item: input
+      bag_item: input,
+      archived: true
     })
     .then(data => {
       return connection("bagitems").where({
@@ -77,11 +78,27 @@ function getBagItem(username, id, testDb) {
     .where({ username: username, bag_id: id });
 }
 
+function archiveBagItem(username, id, item, testDb) {
+  console.log("archiving an item" + username + "bag " + id + item);
+  const connection = testDb || knex;
+  return connection("bagitems")
+    .where({ username: username, bag_id: id, bag_item: item })
+    .update({
+      archived: 0
+    })
+    .then(data => {
+      return connection("bagitems")
+        .select()
+        .where({ username: username, bag_id: id });
+    });
+}
+
 module.exports = {
   getBags,
   addBags,
   deleteBag,
   updateBag,
   addBagItem,
-  getBagItem
+  getBagItem,
+  archiveBagItem
 };

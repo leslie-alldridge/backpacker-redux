@@ -140,6 +140,24 @@ export default function auth(state = initialState, action) {
       };
     }
 
+    case "ITEM_ARC_REQ":
+      console.log("hit arc item request");
+      return {
+        ...state,
+        isFetching: true,
+        isAuthenticated: true
+      };
+
+    case "ITEM_ARC_DONE": {
+      console.log("hit done arc bag item");
+      return {
+        ...state,
+        isFetching: false,
+        isAuthenticated: true,
+        bagItems: action.response
+      };
+    }
+
     default:
       return state;
   }

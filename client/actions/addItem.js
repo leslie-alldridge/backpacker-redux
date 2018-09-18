@@ -5,11 +5,11 @@
 //   quantity: 1
 // });
 
-export const checkItAction = (id, item) => ({
-  type: "CHECK_ITEM",
-  id,
-  inventory: item
-});
+// export const checkItAction = (id, item) => ({
+//   type: "CHECK_ITEM",
+//   id,
+//   inventory: item
+// });
 
 export const deleteItAction = (id, item) => ({
   type: "DEL_ITEM",

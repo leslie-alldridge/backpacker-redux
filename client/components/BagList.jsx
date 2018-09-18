@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import {
-  saveItemAction,
+  saveItemAction, checkItAction
 } from "../actions/addBag";
 class BagList extends React.Component {
   constructor(props) {
@@ -28,8 +28,10 @@ class BagList extends React.Component {
   }
 
   checkItem(id, item) {
-    const { checkIt } = this.props;
-    checkIt(id, item);
+    console.log('hit the func');
+    
+    //const { checkIt } = this.props;
+    this.props.checkIt(id, item);
   }
 
   saveItem(id, input) {
@@ -65,18 +67,24 @@ class BagList extends React.Component {
               {console.log(this.props.state.bagItems)}
               <ul>
 
-                {this.props.state.bagItems.map(item =>
-
+                {this.props.state.bagItems.map(item => {
+                if (item.archived == 1) return (
                     <li>{item.bag_item} 
                     <i
-                            onClick={() => {
-                              this.checkItem(this.props.id, newItem);
-                            }}
-                            className="fas fa-check"
-                            id="tick"
-                          />
-                    
+                      onClick={() => {
+                        this.checkItem(this.props.id, item.bag_item);
+                      }}
+                      className="fas fa-check"
+                      id="tick"
+                    />
                     </li>
+                    )
+               
+                   
+                  
+                  
+                 
+                    
                   // item.items.map(newItem => {
                   //   if (this.props.id == item.id) {
                   //     return (
@@ -93,23 +101,21 @@ class BagList extends React.Component {
                   //     );
                   //   }
                   // })
-                 )}
+                          })}
               </ul>
             </div>
           </div>
           <div className="col-md-6">
             <div className="todolist">
               <h4>Items Checked</h4>
-              {/* <ul id="done-items" className="list-unstyled">
-                {this.props.bags.map(item =>
-                  item.checked.map(newItem => {
-                    if (this.props.id === item.id) {
-                      return (
-                        <li key={newItem}>
-                          {newItem}
+              <ul id="done-items" className="list-unstyled">
+              {this.props.state.bagItems.map(item => {
+                if (item.archived == 0) return (
+                        <li>
+                          {item.bag_item}
                           <i
                             onClick={() => {
-                              this.delete(this.props.id, newItem);
+                              this.delete(this.props.id, item.bag_item);
                             }}
                             id="trash"
                             className="fas fa-trash-alt"
@@ -117,9 +123,8 @@ class BagList extends React.Component {
                         </li>
                       );
                     }
-                  })
                 )}
-              </ul> */}
+              </ul>
             </div>
           </div>
         </div>
@@ -139,9 +144,11 @@ function mapDispatchToProps(dispatch) {
     saveIt: (id, input) => {
       dispatch(saveItemAction(id, input));
     },
-    // checkIt: (id, item) => {
-    //   dispatch(checkItAction(id, item));
-    // },
+    checkIt: (id, item) => {
+      console.log('hit checkit');
+      
+      dispatch(checkItAction(id, item));
+    }
     // deleteIt: (id, item) => {
     //   dispatch(deleteItAction(id, item));
     // }

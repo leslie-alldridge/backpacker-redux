@@ -35,10 +35,7 @@ class BagPage extends React.Component {
   }
 
   deleteItem(id) {
-    //bag id to be deleted
-    console.log(id);
     this.props.deleteBagDB(id);
-    // this.props.deleteBag(id);
   }
 
   render() {
@@ -48,9 +45,6 @@ class BagPage extends React.Component {
           <h3 id="bagHead">
             <i className="fas fa-suitcase" /> Your Current Bags :
           </h3>
-          {console.log(this.props.bagsData.bag)}
-          {/* {console.log(this.state.bagState.bag.id)} */}
-          {/* <p>{this.state.bagState && this.props.state.bag[0].username}</p>  */}
           {this.props.bagsData.bag.map(bag => (
             <div key={bag.id} id="card" className="card">
               <div

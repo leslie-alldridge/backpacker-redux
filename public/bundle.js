@@ -890,6 +890,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _UpdateBag__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./UpdateBag */ "./client/components/UpdateBag.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -927,11 +935,13 @@ function (_React$Component) {
       viewList: false,
       viewListID: null,
       viewBagUpdate: null,
-      bagState: [] || _this.props.bagsData
+      bagState: [] || _this.props.bagsData,
+      pinnedBags: []
     };
     _this.updateBagToggle = _this.updateBagToggle.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.deleteItem = _this.deleteItem.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.addInventory = _this.addInventory.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.pinBag = _this.pinBag.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -943,13 +953,24 @@ function (_React$Component) {
   }, {
     key: "addInventory",
     value: function addInventory(viewListID) {
-      this.setState(function (prevState) {
-        return {
-          viewListID: prevState.viewListID == viewListID ? null : viewListID,
-          viewBagUpdate: null
-        };
-      });
-      this.props.showItems(viewListID);
+      console.log(viewListID);
+      console.log(this.state.pinnedBags);
+
+      if (this.state.pinnedBags.indexOf(viewListID) > -1) {
+        console.log('this bag is pinned');
+      } else {
+        this.setState(function (prevState) {
+          return {
+            viewListID: prevState.viewListID == viewListID ? null : viewListID,
+            viewBagUpdate: null
+          };
+        });
+      } // this.setState(prevState => ({
+      //   viewListID: prevState.viewListID == viewListID ? null : viewListID,
+      //   viewBagUpdate: null
+      // }));
+      // this.props.showItems(viewListID)
+
     }
   }, {
     key: "updateBagToggle",
@@ -965,6 +986,24 @@ function (_React$Component) {
     key: "deleteItem",
     value: function deleteItem(id) {
       this.props.deleteBagDB(id);
+    }
+  }, {
+    key: "pinBag",
+    value: function pinBag(id) {
+      //console.log('pinned' + id);
+      if (this.state.pinnedBags.includes(id)) {
+        var index = this.state.pinnedBags.indexOf(id);
+
+        if (index > -1) {
+          this.state.pinnedBags.splice(index, 1);
+          console.log('removed pinned item');
+        }
+      } else {
+        this.setState({
+          pinnedBags: _toConsumableArray(this.state.pinnedBags).concat([id])
+        });
+        console.log('pinned a bag');
+      }
     }
   }, {
     key: "render",
@@ -997,7 +1036,13 @@ function (_React$Component) {
           className: "card-title"
         }, bag.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "card-text"
-        }, bag.destination), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, bag.destination), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          id: "pin",
+          onClick: function onClick() {
+            _this2.pinBag(bag.id);
+          },
+          className: "fas fa-thumbtack"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           id: "mainBtn",
           onClick: function onClick() {
             _this2.addInventory(bag.id);
@@ -1015,7 +1060,12 @@ function (_React$Component) {
             return _this2.deleteItem(bag.id);
           },
           className: "btn btn-danger"
-        }, "Delete"), _this2.state.viewListID === bag.id && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagList__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        }, "Delete"), _this2.state.pinnedBags.includes(bag.id) ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagList__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          key: bag.id,
+          id: bag.id,
+          description: bag.description,
+          destination: bag.destination
+        }) : _this2.state.viewListID === bag.id && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BagList__WEBPACK_IMPORTED_MODULE_3__["default"], {
           key: bag.id,
           id: bag.id,
           description: bag.description,

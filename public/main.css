@@ -295,3 +295,7 @@ li.ui-state-default:last-child {
   font-weight: 500;
   float: left;
 }
+
+#pin {
+  float: right;
+}

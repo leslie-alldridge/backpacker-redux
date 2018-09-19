@@ -266,6 +266,11 @@ li.ui-state-default:last-child {
   margin-left: 0.5%;
 }
 
+#input1reg {
+  margin-right: 0.5%;
+  margin-left: 0.5%;
+}
+
 #input1btn {
   margin-right: 0.5%;
   margin-left: 0.5%;
@@ -280,4 +285,13 @@ li.ui-state-default:last-child {
   margin-top: 1%;
   padding-left: 0.7%;
   padding-bottom: 0.3%;
+}
+
+#error {
+  font-family: 'Raleway', sans-serif;
+  margin-left: 0.5%;
+  margin-right: 0.5%;
+  color: red;
+  font-weight: 500;
+  float: left;
 }

@@ -9,20 +9,16 @@ export const updateBagAction = (id, destination, description) => ({
 
 //getting bags for a user
 
-// export function getBags(id) {
-//   console.log(id);
-
-//   request("get", "/bags").then(response => {
-//     if (!response.ok) {
-//     } else {
-//       return {
-//         type: "BAG_SUCCESS",
-//         isFetching: false,
-//         response: response.body.bag
-//       };
-//     }
-//   });
-// }
+export function getBags() {
+  return function(dispatch) {
+    request("get", "/bags").then(response => {
+      if (!response.ok) {
+      } else {
+        dispatch(receiveAddBag(null, response.body.bag));
+      }
+    });
+  };
+}
 
 //all func below this line are for adding bags
 

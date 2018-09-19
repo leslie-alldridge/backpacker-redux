@@ -43,7 +43,7 @@ class MainForm extends React.Component {
         data-aos-duration="1000"
         data-aos-easing="ease-in-out"
         data-aos-mirror="true"
-        data-aos-once="false"
+        data-aos-once="true"
         className="col-xl-12"
         id="mainForm"
       >

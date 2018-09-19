@@ -34,7 +34,7 @@ export default function auth(state = initialState, action) {
         ...state,
         isFetching: false,
         isAuthenticated: false,
-        errorMessage: action.message
+        errorMessage: "Invalid Credentials"
       };
     case LOGOUT_SUCCESS:
       return {

@@ -33,7 +33,7 @@ export function registerUser(creds) {
         if (!response.ok) {
           // If there was a problem, we want to
           // dispatch the error condition
-          dispatch(registerError(response.body.message));
+          dispatch(registerError("Invalid Credentials"));
           return Promise.reject(response.body.message);
         } else {
           // If login was successful, set the token in local storage

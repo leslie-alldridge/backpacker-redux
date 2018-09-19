@@ -80,10 +80,7 @@ const mapDispatchToProps = dispatch => {
   return {
     saveBagToDB: (user, description, destination) => {
       return dispatch(saveBagToDB(user, description, destination));
-    },
-    // getBags: (username) => {
-    //   return dispatch(getBags(username))
-    // }
+    }
   };
 };
 

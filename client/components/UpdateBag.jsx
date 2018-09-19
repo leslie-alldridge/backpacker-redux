@@ -54,7 +54,7 @@ class UpdateBag extends React.Component {
         <div id="line" className="row">
           <div className="col-md-6">
             <h4 id="updateTitle">Update Bag</h4>
-            <form class={this.state.validated} noValidate id="theForm" onSubmit={(e) => {
+            <form className={this.state.validated} noValidate id="theForm" onSubmit={(e) => {
                 this.updateBagDB(e,
                   this.props.id,
                   this.state.updateInput,

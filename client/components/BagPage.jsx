@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { deleteBagDB, showItems } from "../actions/addBag";
+import { deleteBagDB, showItems, getBags } from "../actions/addBag";
 import BagList from "./BagList";
 import UpdateBag from "./UpdateBag";
 
@@ -16,6 +16,10 @@ class BagPage extends React.Component {
     this.updateBagToggle = this.updateBagToggle.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.addInventory = this.addInventory.bind(this);
+  }
+
+  componentDidMount(){
+    this.props.getBags()
   }
 
   addInventory(viewListID) {
@@ -117,9 +121,10 @@ function mapDispatchToProps(dispatch) {
       dispatch(deleteBagDB(id));
     },
     showItems: id => {
-      console.log(id);
-      
       dispatch(showItems(id));
+    },
+    getBags: () => {
+      dispatch(getBags());
     }
   };
 }

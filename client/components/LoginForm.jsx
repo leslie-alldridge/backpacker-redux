@@ -9,10 +9,13 @@ class LoginForm extends React.Component {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      errorVisible: true
     };
     this.handleClick = this.handleClick.bind(this);
+
     this.handleChange = this.handleChange.bind(this);
+    this.handleError = this.handleError.bind(this);
   }
 
   handleChange(e) {
@@ -30,6 +33,14 @@ class LoginForm extends React.Component {
       password: password.trim()
     };
     this.props.loginUser(creds);
+  }
+
+  handleError(){
+    console.log('hit err');
+    this.setState({
+      errorVisible: false
+    })
+    
   }
 
   render() {
@@ -53,12 +64,16 @@ class LoginForm extends React.Component {
             onChange={this.handleChange}
           />
         <button id="input1btn" className="btn btn-primary" type="submit">Login</button>
-        </form>
-        <p></p>
-        <a id="regLink" href="#" onClick={this.props.registerToggle}>
+        <button className="btn btn-primary" id="regLink" onClick={() => {
+            this.props.registerToggle()
+            this.handleError()
+        }}>
           Register
-        </a>
-        <ErrorMessage reducer="auth" />
+        </button>
+        </form>
+        
+        
+        {this.state.errorVisible && <ErrorMessage reducer="auth" />}
       </div>
     );
   }

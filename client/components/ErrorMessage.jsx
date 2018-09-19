@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 const ErrorMessage = props => {
-  return <p>{props.message}</p>;
+  return <p id="error">{props.message}</p>;
 };
 
 const mapStateToProps = (state, ownProps) => {

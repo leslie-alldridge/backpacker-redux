@@ -90,12 +90,13 @@
 /*!**********************************!*\
   !*** ./client/actions/addBag.js ***!
   \**********************************/
-/*! exports provided: updateBagAction, addBagReceived, receiveAddBag, saveBagToDB, deleteBagDB, updateBagDB, showItems, saveItemAction, checkItAction, deleteItAction */
+/*! exports provided: updateBagAction, getBags, addBagReceived, receiveAddBag, saveBagToDB, deleteBagDB, updateBagDB, showItems, saveItemAction, checkItAction, deleteItAction */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBagAction", function() { return updateBagAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getBags", function() { return getBags; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addBagReceived", function() { return addBagReceived; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveAddBag", function() { return receiveAddBag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveBagToDB", function() { return saveBagToDB; });
@@ -115,20 +116,16 @@ var updateBagAction = function updateBagAction(id, destination, description) {
     destination: destination
   };
 }; //getting bags for a user
-// export function getBags(id) {
-//   console.log(id);
-//   request("get", "/bags").then(response => {
-//     if (!response.ok) {
-//     } else {
-//       return {
-//         type: "BAG_SUCCESS",
-//         isFetching: false,
-//         response: response.body.bag
-//       };
-//     }
-//   });
-// }
-//all func below this line are for adding bags
+
+function getBags() {
+  return function (dispatch) {
+    Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("get", "/bags").then(function (response) {
+      if (!response.ok) {} else {
+        dispatch(receiveAddBag(null, response.body.bag));
+      }
+    });
+  };
+} //all func below this line are for adding bags
 
 function addBagReceived(bag, user) {
   return {
@@ -554,7 +551,7 @@ function registerUser(creds) {
       if (!response.ok) {
         // If there was a problem, we want to
         // dispatch the error condition
-        dispatch(registerError(response.body.message));
+        dispatch(registerError("Invalid Credentials"));
         return Promise.reject(response.body.message);
       } else {
         // If login was successful, set the token in local storage
@@ -695,10 +692,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     saveBagToDB: function saveBagToDB(user, description, destination) {
       return dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_6__["saveBagToDB"])(user, description, destination));
-    } // getBags: (username) => {
-    //   return dispatch(getBags(username))
-    // }
-
+    }
   };
 };
 
@@ -942,6 +936,11 @@ function (_React$Component) {
   }
 
   _createClass(BagPage, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.getBags();
+    }
+  }, {
     key: "addInventory",
     value: function addInventory(viewListID) {
       this.setState(function (prevState) {
@@ -1046,8 +1045,10 @@ function mapDispatchToProps(dispatch) {
       dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_2__["deleteBagDB"])(id));
     },
     showItems: function showItems(id) {
-      console.log(id);
       dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_2__["showItems"])(id));
+    },
+    getBags: function getBags() {
+      dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_2__["getBags"])());
     }
   };
 }
@@ -1072,7 +1073,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ErrorMessage = function ErrorMessage(props) {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, props.message);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    id: "error"
+  }, props.message);
 };
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
@@ -1214,10 +1217,12 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(LoginForm).call(this, props));
     _this.state = {
       username: "",
-      password: ""
+      password: "",
+      errorVisible: true
     };
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleError = _this.handleError.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -1238,6 +1243,14 @@ function (_React$Component) {
         password: password.trim()
       };
       this.props.loginUser(creds);
+    }
+  }, {
+    key: "handleError",
+    value: function handleError() {
+      console.log('hit err');
+      this.setState({
+        errorVisible: false
+      });
     }
   }, {
     key: "render",
@@ -1271,11 +1284,15 @@ function (_React$Component) {
         id: "input1btn",
         className: "btn btn-primary",
         type: "submit"
-      }, "Login")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      }, "Login"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-primary",
         id: "regLink",
-        href: "#",
-        onClick: this.props.registerToggle
-      }, "Register"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        onClick: function onClick() {
+          _this2.props.registerToggle();
+
+          _this2.handleError();
+        }
+      }, "Register")), this.state.errorVisible && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
         reducer: "auth"
       }));
     }
@@ -1431,7 +1448,7 @@ function (_React$Component) {
         "data-aos-duration": "1000",
         "data-aos-easing": "ease-in-out",
         "data-aos-mirror": "true",
-        "data-aos-once": "false",
+        "data-aos-once": "true",
         className: "col-xl-12",
         id: "mainForm"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -1560,10 +1577,12 @@ function (_React$Component) {
     _this.state = {
       username: "",
       password: "",
-      confirm: ""
+      confirm: "",
+      err: false
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.clearError = _this.clearError.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -1575,6 +1594,9 @@ function (_React$Component) {
   }, {
     key: "handleClick",
     value: function handleClick(e) {
+      this.setState({
+        err: true
+      });
       e.preventDefault();
       var _this$state = this.state,
           username = _this$state.username,
@@ -1593,6 +1615,11 @@ function (_React$Component) {
       this.props.registerUser(creds);
     }
   }, {
+    key: "clearError",
+    value: function clearError() {
+      this.props.errorClear();
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -1605,8 +1632,6 @@ function (_React$Component) {
         className: "form-inline",
         onSubmit: function onSubmit(e) {
           _this2.handleClick(e);
-
-          _this2.props.registerToggle();
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         id: "input1",
@@ -1629,7 +1654,7 @@ function (_React$Component) {
         onChange: this.handleChange,
         value: password
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        id: "input1",
+        id: "input1reg",
         className: "form-control",
         pattern: ".{8,}",
         required: true,
@@ -1648,10 +1673,12 @@ function (_React$Component) {
         className: "btn btn-primary",
         onClick: function onClick() {
           _this2.props.registerToggle();
+
+          _this2.clearError();
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         class: "fas fa-chevron-left"
-      }), " Back"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }), " Back"), this.state.err && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
         reducer: "auth"
       }));
     }
@@ -1667,6 +1694,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     registerError: function registerError(message) {
       dispatch(Object(_actions_register__WEBPACK_IMPORTED_MODULE_2__["registerError"])(message));
+    },
+    errorClear: function errorClear() {
+      dispatch(Object(_actions_register__WEBPACK_IMPORTED_MODULE_2__["registerError"])(''));
     }
   };
 };
@@ -1785,7 +1815,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
         id: "updateTitle"
       }, "Update Bag"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        class: this.state.validated,
+        className: this.state.validated,
         noValidate: true,
         id: "theForm",
         onSubmit: function onSubmit(e) {
@@ -1937,7 +1967,7 @@ function auth() {
       return _objectSpread({}, state, {
         isFetching: false,
         isAuthenticated: false,
-        errorMessage: action.message
+        errorMessage: "Invalid Credentials"
       });
 
     case _actions_logout__WEBPACK_IMPORTED_MODULE_0__["LOGOUT_SUCCESS"]:

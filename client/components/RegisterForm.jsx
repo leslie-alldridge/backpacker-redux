@@ -10,10 +10,13 @@ class RegisterForm extends React.Component {
     this.state = {
       username: "",
       password: "",
-      confirm: ""
+      confirm: "",
+      err: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.clearError = this.clearError.bind(this);
+
   }
 
   handleChange(e) {
@@ -24,6 +27,9 @@ class RegisterForm extends React.Component {
   }
 
   handleClick(e) {
+    this.setState({
+      err: true
+    })
     e.preventDefault()
     const { username, password, confirm } = this.state;
     if (password !== confirm) {
@@ -37,13 +43,16 @@ class RegisterForm extends React.Component {
     this.props.registerUser(creds);
   }
 
+  clearError(){
+    this.props.errorClear()
+  }
+
   render() {
     const { username, password, confirm } = this.state;
     return (
       <div>
       <form className="form-inline" onSubmit={(e) => {
             this.handleClick(e);
-            this.props.registerToggle();
           }}>
 
           <input
@@ -67,7 +76,7 @@ class RegisterForm extends React.Component {
           />
       
           <input
-          id="input1"
+          id="input1reg"
           className="form-control"
             pattern=".{8,}"   required title="8 characters minimum"
             type="password"
@@ -90,12 +99,13 @@ class RegisterForm extends React.Component {
         id="input1btnsub"
         className="btn btn-primary"
           onClick={() => {
-            this.props.registerToggle();
+            this.props.registerToggle()
+            this.clearError()
           }}
         >
           <i class="fas fa-chevron-left"></i> Back
         </button>
-        <ErrorMessage reducer="auth" />
+        {this.state.err && <ErrorMessage reducer="auth" />}
       </div>
     );
   }
@@ -108,6 +118,9 @@ const mapDispatchToProps = dispatch => {
     },
     registerError: message => {
       dispatch(registerError(message));
+    },
+    errorClear: () => {
+      dispatch(registerError(''));
     }
   };
 };

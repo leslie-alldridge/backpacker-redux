@@ -39,7 +39,6 @@ class LoginForm extends React.Component {
     this.setState({
       errorVisible: false
     })
-    
   }
 
   render() {

@@ -3,7 +3,6 @@ const config = require("../../knexfile")[environment];
 const knex = require("knex")(config);
 
 function getBags(username, testDb) {
-  console.log("getting bags for " + username);
   const connection = testDb || knex;
   return connection("bags")
     .select()
@@ -11,7 +10,6 @@ function getBags(username, testDb) {
 }
 
 function addBags(username, description, destination, testDb) {
-  console.log("adding bags for " + username);
   const connection = testDb || knex;
   return connection("bags").insert({
     username: username,
@@ -21,7 +19,6 @@ function addBags(username, description, destination, testDb) {
 }
 
 function deleteBag(id, username, testDb) {
-  console.log("nuking bag" + id);
   const connection = testDb || knex;
   return connection("bags")
     .where("id", id)
@@ -34,9 +31,6 @@ function deleteBag(id, username, testDb) {
 }
 
 function updateBag(id, destination, description, username, testDb) {
-  console.log("updating bag" + id);
-  console.log(destination, description);
-
   const connection = testDb || knex;
   return connection("bags")
     .where("id", id)
@@ -52,9 +46,6 @@ function updateBag(id, destination, description, username, testDb) {
 }
 
 function addBagItem(username, id, input, testDb) {
-  console.log("adding bags item for " + username);
-  console.log(id, input);
-
   const connection = testDb || knex;
   return connection("bagitems")
     .insert({
@@ -71,7 +62,6 @@ function addBagItem(username, id, input, testDb) {
 }
 
 function getBagItem(username, id, testDb) {
-  console.log("getting bag items for " + username + "bag " + id);
   const connection = testDb || knex;
   return connection("bagitems")
     .select()
@@ -79,7 +69,6 @@ function getBagItem(username, id, testDb) {
 }
 
 function archiveBagItem(username, id, item, testDb) {
-  console.log("archiving an item" + username + "bag " + id + item);
   const connection = testDb || knex;
   return connection("bagitems")
     .where({ username: username, bag_id: id, bag_item: item })

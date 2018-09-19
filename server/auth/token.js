@@ -1,7 +1,5 @@
 const verifyJwt = require("express-jwt");
-
 const jwt = require("jsonwebtoken");
-
 const db = require("../db/exampleDbFunctions");
 
 function issue(req, res) {

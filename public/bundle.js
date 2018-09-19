@@ -119,15 +119,11 @@ var updateBagAction = function updateBagAction(id, destination, description) {
 
 function getBags(username) {
   Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("get", "/bags", username).then(function (response) {
-    if (!response.ok) {} else {
-      console.log("made it");
-      console.log(response); //dispatch(receiveAddBag(user, response.body.bag));
-    }
+    if (!response.ok) {} else {}
   });
 } //all func below this line are for adding bags
 
 function addBagReceived(bag, user) {
-  console.log(bag);
   return {
     type: "BAG_ADD_SUCCESS",
     isFetching: false,
@@ -144,7 +140,6 @@ function requestAddBag() {
 }
 
 function receiveAddBag(user, bag) {
-  console.log(bag);
   return {
     type: "BAG_SUCCESS",
     isFetching: false,
@@ -225,10 +220,7 @@ function updateBagDB(id, destination, description) {
       destination: destination,
       description: description
     }).then(function (response) {
-      console.log(response);
-
       if (!response.ok) {} else {
-        console.log("hit the else");
         dispatch(receiveUpdBag(response.body.bag));
       }
     });
@@ -238,34 +230,23 @@ function updateBagDB(id, destination, description) {
 
 function showItems(id) {
   return function (dispatch) {
-    console.log(id);
     Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("get", "/itemshow", {
       bagid: id
     }).then(function (response) {
-      console.log(response);
-
       if (!response.ok) {} else {
-        console.log("hit the else for show item");
         dispatch(showItem(response.body.bagItems));
       }
     });
   };
 }
 function saveItemAction(id, input) {
-  console.log(id, input);
-  console.log("actions");
   return function (dispatch) {
     dispatch(addReqItem(id, input));
     Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("post", "/itemadd", {
       id: id,
       input: input
     }).then(function (response) {
-      console.log(response);
-
       if (!response.ok) {} else {
-        console.log("hit the else for add item");
-        console.log(response);
-        console.log(response.body.bagItems);
         dispatch(receieveItem(response.body.bagItems));
       }
     });
@@ -302,20 +283,13 @@ function showItem(response) {
 
 
 function checkItAction(id, item) {
-  console.log(id, item);
-  console.log("actions");
   return function (dispatch) {
     dispatch(arcReqItem(id, item));
     Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("post", "/itemarchive", {
       id: id,
       item: item
     }).then(function (response) {
-      console.log(response);
-
       if (!response.ok) {} else {
-        console.log("hit the else for add item"); //console.log(response);
-
-        console.log(response.body.bagItems);
         dispatch(arcDoneItem(response.body.bagItems));
       }
     });
@@ -343,8 +317,6 @@ function arcDoneItem(response) {
 
 
 function deleteItAction(id, bagid, item) {
-  console.log(id, bagid, item);
-  console.log("del actions");
   return function (dispatch) {
     dispatch(delReqItem(id, bagid, item));
     Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("post", "/itemdel", {
@@ -352,12 +324,7 @@ function deleteItAction(id, bagid, item) {
       item: item,
       bagid: bagid
     }).then(function (response) {
-      console.log(response);
-
       if (!response.ok) {} else {
-        console.log("hit the else for del item"); //console.log(response);
-
-        console.log(response.body.bagItems);
         dispatch(delDoneItem(response.body.bagItems));
       }
     });
@@ -433,7 +400,6 @@ function receiveBag(bag, user) {
 }
 
 function loginError(message) {
-  console.log(message);
   return {
     type: LOGIN_FAILURE,
     isFetching: false,
@@ -443,11 +409,9 @@ function loginError(message) {
 }
 
 function fetchBag(user) {
-  console.log(user + " this is my action GET BAGS");
   return function (dispatch) {
     dispatch(requestBag());
     Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("get", "/bags").then(function (res) {
-      console.log(res.body.bag);
       dispatch(receiveBag(res.body.bag, user));
     }).catch(function (err) {
       return dispatch(loginError(err.message));
@@ -480,7 +444,6 @@ function loginUser(creds) {
         var userInfo = Object(_utils_auth__WEBPACK_IMPORTED_MODULE_1__["saveUserToken"])(response.body.token); // Dispatch the success action
 
         dispatch(receiveLogin(userInfo));
-        console.log(userInfo);
         dispatch(fetchBag(userInfo.username));
       }
     }).catch(function (err) {
@@ -796,7 +759,6 @@ function (_React$Component) {
   _createClass(BagList, [{
     key: "delete",
     value: function _delete(id, bagid, input) {
-      console.log(id, bagid, input);
       var deleteIt = this.props.deleteIt;
       deleteIt(id, bagid, input);
     }
@@ -814,9 +776,13 @@ function (_React$Component) {
     }
   }, {
     key: "saveItem",
-    value: function saveItem(id, input) {
+    value: function saveItem(e, id, input) {
+      e.preventDefault();
       var saveIt = this.props.saveIt;
       saveIt(id, input);
+      this.setState({
+        formInput: ''
+      });
     }
   }, {
     key: "render",
@@ -834,19 +800,22 @@ function (_React$Component) {
         className: "todolist not-done"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         id: "list"
-      }, "Bag List"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, "Bag List"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        id: "todoForm",
+        onSubmit: function onSubmit(e) {
+          _this2.saveItem(e, _this2.props.id, _this2.state.formInput);
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onChange: this.formChange,
         type: "text",
         className: "form-control add-todo",
-        placeholder: "Item Description"
+        placeholder: "Item Description",
+        value: this.state.formInput || ""
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: function onClick() {
-          _this2.saveItem(_this2.props.id, _this2.state.formInput);
-        },
         id: "checkAll",
         type: "submit",
         className: "btn btn-success"
-      }, "Add Item"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.state.bagItems.map(function (item) {
+      }, "Add Item")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.state.bagItems.map(function (item) {
         if (item.archived == 1) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: item.id
         }, item.bag_item, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -868,8 +837,6 @@ function (_React$Component) {
           key: item.id
         }, item.bag_item, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           onClick: function onClick() {
-            console.log(item.bag_item);
-
             _this2.delete(item.id, item.bag_id, item.bag_item);
           },
           id: "trash",
@@ -969,9 +936,6 @@ function (_React$Component) {
   }
 
   _createClass(BagPage, [{
-    key: "componentDidUpdate",
-    value: function componentDidUpdate() {}
-  }, {
     key: "addInventory",
     value: function addInventory(viewListID) {
       this.setState(function (prevState) {
@@ -1164,12 +1128,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_spinners__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_spinners__WEBPACK_IMPORTED_MODULE_3__);
 
 
- // First way to import
 
 
 var override =
 /*#__PURE__*/
-Object(react_emotion__WEBPACK_IMPORTED_MODULE_2__["css"])("display:block;margin:0 auto;border-color:red;");
+Object(react_emotion__WEBPACK_IMPORTED_MODULE_2__["css"])("display:block;margin:5px auto;border-color:red;");
 
 var Loading = function Loading(props) {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, props.isFetching && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spinners__WEBPACK_IMPORTED_MODULE_3__["ClipLoader"], {
@@ -1325,9 +1288,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Logout = function Logout(props) {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Welcome back: ", props.user), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    id: "welcome"
+  }, "Currently logged in as ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    id: "userlgdin"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, props.user))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    id: "logoutBtn",
+    type: "button",
+    class: "btn btn-default btn-sm",
     onClick: props.logoutUser
-  }, "Logout"));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    class: "fas fa-sign-out-alt"
+  }), " Log out"));
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -1437,6 +1409,9 @@ function (_React$Component) {
         className: "col-xl-12",
         id: "mainForm"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: function onSubmit(e) {
+          return _this2.props.handleClick(e, _this2.state.description, _this2.state.destination);
+        },
         name: "addBagForm",
         noValidate: "",
         id: "myForm"
@@ -1477,9 +1452,6 @@ function (_React$Component) {
       }, "Sorry, you missed this one.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit",
         id: "btnSubmit",
-        onClick: function onClick(e) {
-          return _this2.props.handleClick(e, _this2.state.description, _this2.state.destination);
-        },
         className: "btn btn-primary"
       }, "Save Bag"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "info",
@@ -1577,7 +1549,6 @@ function (_React$Component) {
   }, {
     key: "handleClick",
     value: function handleClick(event) {
-      console.log("handleclick");
       var _this$state = this.state,
           username = _this$state.username,
           password = _this$state.password,
@@ -1669,8 +1640,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_addBag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/addBag */ "./client/actions/addBag.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1704,7 +1673,8 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(UpdateBag).call(this, props));
     _this.state = {
       updateInput: "",
-      desInput: ""
+      desInput: "",
+      validated: ""
     };
     _this.destinationChange = _this.destinationChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.desChange = _this.desChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -1727,38 +1697,82 @@ function (_React$Component) {
     }
   }, {
     key: "updateBagDB",
-    value: function updateBagDB(id, destination, description) {
-      this.props.updateBagDB(id, destination, description); // const { updateIt } = this.props;
-      // updateIt(id, destination, description);
+    value: function updateBagDB(e, id, destination, description) {
+      var _this2 = this;
+
+      $("#checkAll").click(function (event) {
+        var form = $("#theForm");
+
+        if (form[0].checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+
+        _this2.setState({
+          validated: "was-validated"
+        });
+      });
+      e.preventDefault();
+      this.props.updateBagDB(id, destination, description);
+      this.setState({
+        updateInput: '',
+        desInput: '',
+        validated: ""
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "line",
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-6"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Update Bag"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", _defineProperty({
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+        id: "updateTitle"
+      }, "Update Bag"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        class: this.state.validated,
+        noValidate: true,
+        id: "theForm",
+        onSubmit: function onSubmit(e) {
+          _this3.updateBagDB(e, _this3.props.id, _this3.state.updateInput, _this3.state.desInput);
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        required: true,
         onChange: this.desChange,
         type: "text",
         className: "form-control add-todo",
-        placeholder: "Bag Description"
-      }, "placeholder", this.props.description)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        placeholder: "New bag description",
+        value: this.state.desInput || ""
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "valid-feedback"
+      }, "Saved!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "invalid-feedback"
+      }, "Sorry, you missed this one.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        required: true,
         onChange: this.destinationChange,
         type: "text",
         className: "form-control add-todo",
-        placeholder: this.props.destination
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: function onClick() {
-          _this2.updateBagDB(_this2.props.id, _this2.state.updateInput, _this2.state.desInput);
-        },
+        placeholder: "New bag destination",
+        id: "bottomInput",
+        value: this.state.updateInput || ""
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "valid-feedback"
+      }, "Saved!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "invalid-feedback"
+      }, "Sorry, you missed this one.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit",
         id: "checkAll",
         className: "btn btn-success"
-      }, "Save Changes"))));
+      }, "Save Changes")))));
     }
   }]);
 
@@ -1802,7 +1816,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
 /* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./reducers */ "./client/reducers/index.js");
 /* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/App */ "./client/components/App.jsx");
-//ross code
 
 
 

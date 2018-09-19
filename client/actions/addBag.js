@@ -13,10 +13,6 @@ export function getBags(username) {
   request("get", "/bags", username).then(response => {
     if (!response.ok) {
     } else {
-      console.log("made it");
-      console.log(response);
-
-      //dispatch(receiveAddBag(user, response.body.bag));
     }
   });
 }
@@ -24,8 +20,6 @@ export function getBags(username) {
 //all func below this line are for adding bags
 
 export function addBagReceived(bag, user) {
-  console.log(bag);
-
   return {
     type: "BAG_ADD_SUCCESS",
     isFetching: false,
@@ -42,7 +36,6 @@ function requestAddBag() {
 }
 
 export function receiveAddBag(user, bag) {
-  console.log(bag);
   return {
     type: "BAG_SUCCESS",
     isFetching: false,
@@ -129,12 +122,8 @@ export function updateBagDB(id, destination, description) {
       destination: destination,
       description: description
     }).then(response => {
-      console.log(response);
-
       if (!response.ok) {
       } else {
-        console.log("hit the else");
-
         dispatch(receiveUpdBag(response.body.bag));
       }
     });
@@ -147,16 +136,11 @@ export function updateBagDB(id, destination, description) {
 
 export function showItems(id) {
   return function(dispatch) {
-    console.log(id);
-
     request("get", "/itemshow", {
       bagid: id
     }).then(response => {
-      console.log(response);
-
       if (!response.ok) {
       } else {
-        console.log("hit the else for show item");
         dispatch(showItem(response.body.bagItems));
       }
     });
@@ -164,23 +148,14 @@ export function showItems(id) {
 }
 
 export function saveItemAction(id, input) {
-  console.log(id, input);
-  console.log("actions");
-
   return function(dispatch) {
     dispatch(addReqItem(id, input));
     request("post", "/itemadd", {
       id: id,
       input: input
     }).then(response => {
-      console.log(response);
-
       if (!response.ok) {
       } else {
-        console.log("hit the else for add item");
-        console.log(response);
-        console.log(response.body.bagItems);
-
         dispatch(receieveItem(response.body.bagItems));
       }
     });
@@ -218,23 +193,14 @@ function showItem(response) {
 //archive an item
 
 export function checkItAction(id, item) {
-  console.log(id, item);
-  console.log("actions");
-
   return function(dispatch) {
     dispatch(arcReqItem(id, item));
     request("post", "/itemarchive", {
       id: id,
       item: item
     }).then(response => {
-      console.log(response);
-
       if (!response.ok) {
       } else {
-        console.log("hit the else for add item");
-        //console.log(response);
-        console.log(response.body.bagItems);
-
         dispatch(arcDoneItem(response.body.bagItems));
       }
     });
@@ -263,9 +229,6 @@ function arcDoneItem(response) {
 //delete the archived item from db
 
 export function deleteItAction(id, bagid, item) {
-  console.log(id, bagid, item);
-  console.log("del actions");
-
   return function(dispatch) {
     dispatch(delReqItem(id, bagid, item));
     request("post", "/itemdel", {
@@ -273,14 +236,8 @@ export function deleteItAction(id, bagid, item) {
       item: item,
       bagid: bagid
     }).then(response => {
-      console.log(response);
-
       if (!response.ok) {
       } else {
-        console.log("hit the else for del item");
-        //console.log(response);
-        console.log(response.body.bagItems);
-
         dispatch(delDoneItem(response.body.bagItems));
       }
     });

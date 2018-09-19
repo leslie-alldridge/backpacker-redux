@@ -1,12 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { css } from "react-emotion";
-// First way to import
 import { ClipLoader } from "react-spinners";
 
 const override = css`
   display: block;
-  margin: 0 auto;
+  margin: 5px auto;
   border-color: red;
 `;
 

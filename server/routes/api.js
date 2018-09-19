@@ -120,8 +120,6 @@ router.post("/bagsdel", (req, res) => {
 });
 
 router.post("/bagsupdate", (req, res) => {
-  console.log("hit the update route");
-  console.log(req.body);
   bags
     .updateBag(
       req.body.id,
@@ -150,11 +148,7 @@ router.post("/itemadd", (req, res) => {
 });
 
 router.get("/itemshow", (req, res) => {
-  console.log(req.query.bagid);
-
   bags.getBagItem(req.user.username, req.query.bagid).then(data => {
-    console.log(data);
-
     res.json({
       message: "These are your bag items.",
       bagItems: data
@@ -178,17 +172,9 @@ router.post("/itemarchive", (req, res) => {
 //delete
 
 router.post("/itemdel", (req, res) => {
-  console.log(req.body);
-
-  console.log("hit the route g");
-  console.log(req.body.id);
-  console.log(req.body.bagid);
-  console.log(req.body.item);
   bags
     .deleteBagItem(req.user.username, req.body.bagid, req.body.item)
     .then(data => {
-      console.log(data);
-
       res.json({
         message: "These are your new bag items.",
         bagItems: data

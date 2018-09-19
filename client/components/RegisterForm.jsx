@@ -23,8 +23,8 @@ class RegisterForm extends React.Component {
     });
   }
 
-  handleClick(event) {
-
+  handleClick(e) {
+    e.preventDefault()
     const { username, password, confirm } = this.state;
     if (password !== confirm) {
       this.props.registerError("Passwords do not match!");
@@ -41,49 +41,59 @@ class RegisterForm extends React.Component {
     const { username, password, confirm } = this.state;
     return (
       <div>
-        <p>
+      <form className="form-inline" onSubmit={(e) => {
+            this.handleClick(e);
+            this.props.registerToggle();
+          }}>
+
           <input
+          id="input1"
+          className="form-control"
+            pattern=".{4,}"   required title="4 characters minimum"
             name="username"
             placeholder="Username"
             onChange={this.handleChange}
             value={username}
           />
-        </p>
-
-        <p>
+        
           <input
+          className="form-control"
+            pattern=".{8,}"   required title="8 characters minimum"
             type="password"
             name="password"
             placeholder="Password"
             onChange={this.handleChange}
             value={password}
           />
-        </p>
-
-        <p>
+      
           <input
+          id="input1"
+          className="form-control"
+            pattern=".{8,}"   required title="8 characters minimum"
             type="password"
             name="confirm"
             placeholder="Confirm Password"
             onChange={this.handleChange}
             value={confirm}
           />
-        </p>
+      
 
         <button
-          onClick={() => {
-            this.handleClick();
-            this.props.registerToggle();
-          }}
+        id="input1btn"
+         className="btn btn-primary"
+         type="submit"
         >
           Register
         </button>
+        </form>
         <button
+        id="input1btnsub"
+        className="btn btn-primary"
           onClick={() => {
             this.props.registerToggle();
           }}
         >
-          Back
+          <i class="fas fa-chevron-left"></i> Back
         </button>
         <ErrorMessage reducer="auth" />
       </div>

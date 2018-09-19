@@ -41,7 +41,7 @@ function register(req, res, next) {
     .exists(req.body.username)
     .then(exists => {
       if (exists) {
-        return res.status(400).send({ message: "User exists" });
+        return res.status(400).send({ message: "User already exists" });
       }
       users.create(req.body.username, req.body.password).then(() => next());
     })
@@ -62,22 +62,6 @@ function getSecret(req, payload, done) {
   done(null, process.env.JWT_SECRET);
 }
 
-// This route will set the req.user object if it exists, but is still public
-router.get(
-  "/quote",
-  verifyJwt({
-    credentialsRequired: false,
-    secret: getSecret
-  }),
-  (req, res) => {
-    const response = { message: "This is a PUBLIC quote." };
-    if (req.user) {
-      response.user = `Your user ID is: ${req.user.id}`;
-    }
-    res.json(response);
-  }
-);
-
 // Protect all routes beneath this point
 router.use(
   verifyJwt({
@@ -88,7 +72,6 @@ router.use(
 
 // These routes are protected
 router.get("/bags", (req, res) => {
-  console.log(req.user.username);
   bags.getBags(req.user.username).then(data => {
     res.json({
       message: "This is your bag.",

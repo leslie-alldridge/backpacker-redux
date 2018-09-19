@@ -644,7 +644,7 @@ function (_Component) {
     key: "handleClick",
     value: function handleClick(e, description, destination) {
       e.preventDefault();
-      this.props.saveBagToDB(this.props.auth.user.username, description, destination); //this.props.getBags(this.props.auth.user.username)
+      this.props.saveBagToDB(this.props.auth.user.username, description, destination);
     }
   }, {
     key: "registerToggle",
@@ -695,10 +695,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     saveBagToDB: function saveBagToDB(user, description, destination) {
       return dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_6__["saveBagToDB"])(user, description, destination));
-    },
-    getBags: function getBags(username) {
-      return dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_6__["getBags"])(username));
-    }
+    } // getBags: (username) => {
+    //   return dispatch(getBags(username))
+    // }
+
   };
 };
 
@@ -1228,7 +1228,8 @@ function (_React$Component) {
     }
   }, {
     key: "handleClick",
-    value: function handleClick() {
+    value: function handleClick(e) {
+      e.preventDefault();
       var _this$state = this.state,
           username = _this$state.username,
           password = _this$state.password;
@@ -1241,18 +1242,37 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      var _this2 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "form-inline",
+        onSubmit: function onSubmit(e) {
+          _this2.handleClick(e);
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        pattern: ".{4,}",
+        required: true,
+        title: "4 characters minimum",
+        id: "input1",
+        className: "form-control",
         name: "username",
         placeholder: "Username",
         onChange: this.handleChange
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        pattern: ".{8,}",
+        required: true,
+        title: "8 characters minimum",
+        className: "form-control",
         type: "password",
         name: "password",
         placeholder: "Password",
         onChange: this.handleChange
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.handleClick
-      }, "Login"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "input1btn",
+        className: "btn btn-primary",
+        type: "submit"
+      }, "Login")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        id: "regLink",
         href: "#",
         onClick: this.props.registerToggle
       }, "Register"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -1301,7 +1321,7 @@ var Logout = function Logout(props) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, props.user))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     id: "logoutBtn",
     type: "button",
-    className: "btn btn-default btn-sm",
+    className: "btn btn-primary",
     onClick: props.logoutUser
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fas fa-sign-out-alt"
@@ -1554,7 +1574,8 @@ function (_React$Component) {
     }
   }, {
     key: "handleClick",
-    value: function handleClick(event) {
+    value: function handleClick(e) {
+      e.preventDefault();
       var _this$state = this.state,
           username = _this$state.username,
           password = _this$state.password,
@@ -1580,34 +1601,57 @@ function (_React$Component) {
           username = _this$state2.username,
           password = _this$state2.password,
           confirm = _this$state2.confirm;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "form-inline",
+        onSubmit: function onSubmit(e) {
+          _this2.handleClick(e);
+
+          _this2.props.registerToggle();
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "input1",
+        className: "form-control",
+        pattern: ".{4,}",
+        required: true,
+        title: "4 characters minimum",
         name: "username",
         placeholder: "Username",
         onChange: this.handleChange,
         value: username
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-control",
+        pattern: ".{8,}",
+        required: true,
+        title: "8 characters minimum",
         type: "password",
         name: "password",
         placeholder: "Password",
         onChange: this.handleChange,
         value: password
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "input1",
+        className: "form-control",
+        pattern: ".{8,}",
+        required: true,
+        title: "8 characters minimum",
         type: "password",
         name: "confirm",
         placeholder: "Confirm Password",
         onChange: this.handleChange,
         value: confirm
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "input1btn",
+        className: "btn btn-primary",
+        type: "submit"
+      }, "Register")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "input1btnsub",
+        className: "btn btn-primary",
         onClick: function onClick() {
-          _this2.handleClick();
-
           _this2.props.registerToggle();
         }
-      }, "Register"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: function onClick() {
-          _this2.props.registerToggle();
-        }
-      }, "Back"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        class: "fas fa-chevron-left"
+      }), " Back"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
         reducer: "auth"
       }));
     }

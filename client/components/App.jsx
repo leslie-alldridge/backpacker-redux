@@ -4,7 +4,7 @@ import MainForm from "./MainForm";
 import BagPage from "./BagPage";
 import LoginForm from "./LoginForm";
 import Footer from "./Footer";
-import { saveBagToDB, getBags } from "../actions/addBag";
+import { saveBagToDB } from "../actions/addBag";
 import RegisterForm from "./RegisterForm";
 import Logout from "./Logout";
 import Loading from "./Loading";
@@ -28,7 +28,6 @@ class App extends Component {
       description,
       destination
     );
-    //this.props.getBags(this.props.auth.user.username)
   }
 
   registerToggle() {
@@ -82,9 +81,9 @@ const mapDispatchToProps = dispatch => {
     saveBagToDB: (user, description, destination) => {
       return dispatch(saveBagToDB(user, description, destination));
     },
-    getBags: (username) => {
-      return dispatch(getBags(username))
-    }
+    // getBags: (username) => {
+    //   return dispatch(getBags(username))
+    // }
   };
 };
 

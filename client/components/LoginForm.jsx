@@ -22,7 +22,8 @@ class LoginForm extends React.Component {
     });
   }
 
-  handleClick() {
+  handleClick(e) {
+    e.preventDefault();
     const { username, password } = this.state;
     const creds = {
       username: username.trim(),
@@ -34,23 +35,27 @@ class LoginForm extends React.Component {
   render() {
     return (
       <div>
-        <p>
+        <form className="form-inline" onSubmit={(e) => {this.handleClick(e)}}>
           <input
+          pattern=".{4,}"   required title="4 characters minimum"
+          id="input1"
+          className="form-control"
             name="username"
             placeholder="Username"
             onChange={this.handleChange}
           />
-        </p>
-        <p>
           <input
+          pattern=".{8,}"   required title="8 characters minimum"
+          className="form-control"
             type="password"
             name="password"
             placeholder="Password"
             onChange={this.handleChange}
           />
-        </p>
-        <button onClick={this.handleClick}>Login</button>
-        <a href="#" onClick={this.props.registerToggle}>
+        <button id="input1btn" className="btn btn-primary" type="submit">Login</button>
+        </form>
+        <p></p>
+        <a id="regLink" href="#" onClick={this.props.registerToggle}>
           Register
         </a>
         <ErrorMessage reducer="auth" />

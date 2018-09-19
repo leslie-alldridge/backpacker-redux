@@ -17,8 +17,7 @@ class BagList extends React.Component {
   }
 
   delete(id, bagid, input) {
-    console.log(id, bagid, input);
-    
+   
     const { deleteIt } = this.props;
     deleteIt(id, bagid, input);
   }
@@ -33,9 +32,13 @@ class BagList extends React.Component {
     this.props.checkIt(id, item);
   }
 
-  saveItem(id, input) {
+  saveItem(e, id, input) {
+    e.preventDefault();
     const { saveIt } = this.props;
     saveIt(id, input);
+    this.setState({
+      formInput: ''
+    })
   }
 
   render() {
@@ -45,22 +48,24 @@ class BagList extends React.Component {
           <div className="col-md-6">
             <div className="todolist not-done">
               <h3 id="list">Bag List</h3>
+              <form id="todoForm" onSubmit={(e) => {
+                  this.saveItem(e, this.props.id, this.state.formInput);
+                }}>
               <input
                 onChange={this.formChange}
                 type="text"
                 className="form-control add-todo"
                 placeholder="Item Description"
+                value={this.state.formInput || ""}
               />
               <button
-                onClick={() => {
-                  this.saveItem(this.props.id, this.state.formInput);
-                }}
                 id="checkAll"
                 type="submit"
                 className="btn btn-success"
               >
                 Add Item
               </button>
+              </form>
               <hr />
               <ul>
                 {this.props.state.bagItems.map(item => {
@@ -92,8 +97,6 @@ class BagList extends React.Component {
                         {item.bag_item}
                         <i
                           onClick={() => {
-                            console.log(item.bag_item)
-
                             this.delete(item.id, item.bag_id, item.bag_item);
                           }}
                           id="trash"

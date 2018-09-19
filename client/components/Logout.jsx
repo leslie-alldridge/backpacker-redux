@@ -6,8 +6,8 @@ import { logoutUser } from "../actions/logout";
 const Logout = props => {
   return (
     <div>
-      <p>Welcome back: {props.user}</p>
-      <button onClick={props.logoutUser}>Logout</button>
+      <p id="welcome">Currently logged in as <span id="userlgdin"><b>{props.user}</b></span></p>
+      <button id="logoutBtn" type="button" class="btn btn-default btn-sm" onClick={props.logoutUser}><i class="fas fa-sign-out-alt"></i> Log out</button>
     </div>
   );
 };

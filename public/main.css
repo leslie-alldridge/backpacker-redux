@@ -74,6 +74,7 @@ li.ui-state-default:last-child {
 #header {
   background-image: url('/head.jpg');
   background-size: cover;
+
 }
 .container {
   width: 100%;
@@ -230,4 +231,30 @@ li.ui-state-default:last-child {
     max-width: 99%;
     margin-right: 2%;
   }
+}
+
+#welcome {
+  font-family: 'Raleway', sans-serif;
+  margin-left: 0.5%;
+  float: left;
+}
+
+#userlgdin {
+  text-transform: capitalize;
+}
+
+#logoutBtn {
+  float: right;
+}
+
+.jumbotron {
+  margin-bottom: 1em !important
+}
+
+#updateTitle {
+  padding-top: 1em
+}
+
+#bottomInput {
+  margin-top: 0.5em;
 }

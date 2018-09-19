@@ -24,7 +24,6 @@ class RegisterForm extends React.Component {
   }
 
   handleClick(event) {
-    console.log("handleclick");
 
     const { username, password, confirm } = this.state;
     if (password !== confirm) {

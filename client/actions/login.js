@@ -31,8 +31,6 @@ export function receiveBag(bag, user) {
 }
 
 function loginError(message) {
-  console.log(message);
-
   return {
     type: LOGIN_FAILURE,
     isFetching: false,
@@ -42,13 +40,10 @@ function loginError(message) {
 }
 
 function fetchBag(user) {
-  console.log(user + " this is my action GET BAGS");
   return function(dispatch) {
     dispatch(requestBag());
     request("get", "/bags")
       .then(res => {
-        console.log(res.body.bag);
-
         dispatch(receiveBag(res.body.bag, user));
       })
       .catch(err => dispatch(loginError(err.message)));
@@ -82,7 +77,7 @@ export function loginUser(creds) {
           const userInfo = saveUserToken(response.body.token);
           // Dispatch the success action
           dispatch(receiveLogin(userInfo));
-          console.log(userInfo);
+
           dispatch(fetchBag(userInfo.username));
         }
       })

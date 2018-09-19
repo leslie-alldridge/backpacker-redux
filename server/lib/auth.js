@@ -25,19 +25,14 @@ function handleError(err, req, res, next) {
 }
 
 function issueJwt(req, res, next) {
-  console.log("issueJwt");
   users
     .getByName(req.body.username)
     .then(user => {
-      console.log(user);
-
       const token = createToken(user, process.env.JWT_SECRET);
       res.json({
         message: "Authentication successful.",
         token
       });
-
-      //let username = user.username;
     })
     .catch(err => {
       return res.status(403).json({

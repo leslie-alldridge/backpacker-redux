@@ -18,8 +18,6 @@ class BagPage extends React.Component {
     this.addInventory = this.addInventory.bind(this);
   }
 
-  componentDidUpdate() {}
-
   addInventory(viewListID) {
     this.setState(prevState => ({
       viewListID: prevState.viewListID == viewListID ? null : viewListID,

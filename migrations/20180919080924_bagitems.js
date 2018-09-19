@@ -1,9 +1,9 @@
 exports.up = knex =>
   knex.schema.createTable("bagitems", table => {
     table.increments("id").primary();
-    table.string("bag_id");
-    table.integer("username");
-    table.string("bag_item");
+    table.string("bagid");
+    table.string("username");
+    table.string("bagitem");
     table.boolean("archived").defaultTo(false);
   });
 

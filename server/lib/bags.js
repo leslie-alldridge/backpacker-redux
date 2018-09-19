@@ -49,14 +49,14 @@ function addBagItem(username, id, input, testDb) {
   const connection = testDb || knex;
   return connection("bagitems")
     .insert({
-      bag_id: id,
+      bagid: id,
       username: username,
-      bag_item: input,
+      bagitem: input,
       archived: true
     })
     .then(data => {
       return connection("bagitems").where({
-        bag_id: id
+        bagid: id
       });
     });
 }
@@ -65,20 +65,20 @@ function getBagItem(username, id, testDb) {
   const connection = testDb || knex;
   return connection("bagitems")
     .select()
-    .where({ username: username, bag_id: id });
+    .where({ username: username, bagid: id });
 }
 
 function archiveBagItem(username, id, item, testDb) {
   const connection = testDb || knex;
   return connection("bagitems")
-    .where({ username: username, bag_id: id, bag_item: item })
+    .where({ username: username, bagid: id, bagitem: item })
     .update({
       archived: 0
     })
     .then(data => {
       return connection("bagitems")
         .select()
-        .where({ username: username, bag_id: id });
+        .where({ username: username, bagid: id });
     });
 }
 
@@ -90,7 +90,7 @@ function deleteBagItem(username, bagid, item, testDb) {
     .then(data => {
       return connection("bagitems")
         .select()
-        .where({ username: username, bag_id: bagid });
+        .where({ username: username, bagid: bagid });
     });
 }
 
@@ -104,3 +104,4 @@ module.exports = {
   archiveBagItem,
   deleteBagItem
 };
+

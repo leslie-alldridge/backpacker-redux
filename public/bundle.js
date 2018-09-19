@@ -90,12 +90,13 @@
 /*!**********************************!*\
   !*** ./client/actions/addBag.js ***!
   \**********************************/
-/*! exports provided: updateBagAction, addBagReceived, receiveAddBag, saveBagToDB, deleteBagDB, updateBagDB, showItems, saveItemAction, checkItAction, deleteItAction */
+/*! exports provided: updateBagAction, getBags, addBagReceived, receiveAddBag, saveBagToDB, deleteBagDB, updateBagDB, showItems, saveItemAction, checkItAction, deleteItAction */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBagAction", function() { return updateBagAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getBags", function() { return getBags; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addBagReceived", function() { return addBagReceived; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveAddBag", function() { return receiveAddBag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveBagToDB", function() { return saveBagToDB; });
@@ -114,7 +115,16 @@ var updateBagAction = function updateBagAction(id, destination, description) {
     description: description,
     destination: destination
   };
-}; //all func below this line are for adding bags
+}; //getting bags for a user
+
+function getBags(username) {
+  Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("get", "/bags", username).then(function (response) {
+    if (!response.ok) {} else {
+      console.log("made it");
+      console.log(response); //dispatch(receiveAddBag(user, response.body.bag));
+    }
+  });
+} //all func below this line are for adding bags
 
 function addBagReceived(bag, user) {
   console.log(bag);
@@ -665,6 +675,7 @@ function (_Component) {
     value: function handleClick(e, description, destination) {
       e.preventDefault();
       this.props.saveBagToDB(this.props.auth.user.username, description, destination);
+      this.props.getBags();
     }
   }, {
     key: "registerToggle",
@@ -715,6 +726,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     saveBagToDB: function saveBagToDB(user, description, destination) {
       return dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_6__["saveBagToDB"])(user, description, destination));
+    },
+    getBags: function getBags(username) {
+      return dispatch(Object(_actions_addBag__WEBPACK_IMPORTED_MODULE_6__["getBags"])(username));
     }
   };
 };
@@ -1864,7 +1878,7 @@ function auth() {
       });
 
     case _actions_logout__WEBPACK_IMPORTED_MODULE_0__["LOGOUT_SUCCESS"]:
-      return _objectSpread({}, state, {
+      return _objectSpread({}, initialState, {
         isFetching: false,
         isAuthenticated: false,
         user: null
@@ -1996,111 +2010,6 @@ function auth() {
 
 /***/ }),
 
-/***/ "./client/reducers/bags.js":
-/*!*********************************!*\
-  !*** ./client/reducers/bags.js ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-/* harmony default export */ __webpack_exports__["default"] = (function () {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  var action = arguments.length > 1 ? arguments[1] : undefined;
-
-  switch (action.type) {
-    // BAGS
-    case "BAG_ADD_REQUEST":
-      return _objectSpread({}, state, {
-        isFetching: true,
-        isAuthenticated: true
-      });
-
-    case "DELETE_BAGS":
-      return state.filter(function (item) {
-        return item.id !== action.id;
-      });
-
-    case "UPDATE_BAG":
-      var index3 = state.findIndex(function (item) {
-        return item.id === action.id;
-      });
-
-      if (index3 > -1) {
-        return state.map(function (item) {
-          if (item.id === action.id) {
-            item.description = action.description;
-            item.destination = action.destination;
-            return item;
-          }
-
-          return item;
-        });
-      }
-
-    //ITEMS
-
-    case "ADD_ITEM":
-      var index = state.findIndex(function (item) {
-        return item.id === action.id;
-      });
-
-      if (index > -1) {
-        return state.map(function (item) {
-          if (item.id === action.id) item.items.push(action.inventory);
-          return item;
-        });
-      }
-
-    case "CHECK_ITEM":
-      var index2 = state.findIndex(function (item) {
-        return item.id === action.id;
-      });
-
-      if (index2 > -1) {
-        return state.map(function (item) {
-          if (item.id === action.id) {
-            item.checked.push(action.inventory);
-            item.items = item.items.filter(function (x) {
-              return x !== action.inventory;
-            });
-            return item;
-          }
-
-          return item;
-        });
-      }
-
-    case "DEL_ITEM":
-      var index4 = state.findIndex(function (item) {
-        return item.id === action.id;
-      });
-
-      if (index4 > -1) {
-        return state.map(function (item) {
-          if (item.id === action.id) {
-            item.checked = item.checked.filter(function (x) {
-              return x !== action.inventory;
-            });
-            return item;
-          }
-
-          return item;
-        });
-      }
-
-    default:
-      return state;
-  }
-});
-
-/***/ }),
-
 /***/ "./client/reducers/index.js":
 /*!**********************************!*\
   !*** ./client/reducers/index.js ***!
@@ -2111,14 +2020,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
-/* harmony import */ var _bags__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./bags */ "./client/reducers/bags.js");
-/* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth */ "./client/reducers/auth.js");
-
+/* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth */ "./client/reducers/auth.js");
 
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
-  bags: _bags__WEBPACK_IMPORTED_MODULE_1__["default"],
-  auth: _auth__WEBPACK_IMPORTED_MODULE_2__["default"]
+  auth: _auth__WEBPACK_IMPORTED_MODULE_1__["default"]
 }));
 
 /***/ }),

@@ -9,13 +9,20 @@ export const updateBagAction = (id, destination, description) => ({
 
 //getting bags for a user
 
-export function getBags(username) {
-  request("get", "/bags", username).then(response => {
-    if (!response.ok) {
-    } else {
-    }
-  });
-}
+// export function getBags(id) {
+//   console.log(id);
+
+//   request("get", "/bags").then(response => {
+//     if (!response.ok) {
+//     } else {
+//       return {
+//         type: "BAG_SUCCESS",
+//         isFetching: false,
+//         response: response.body.bag
+//       };
+//     }
+//   });
+// }
 
 //all func below this line are for adding bags
 
@@ -45,8 +52,8 @@ export function receiveAddBag(user, bag) {
 
 export function saveBagToDB(user, description, destination) {
   let req = {
-    description,
-    destination
+    description: description,
+    destination: destination
   };
 
   return function(dispatch) {

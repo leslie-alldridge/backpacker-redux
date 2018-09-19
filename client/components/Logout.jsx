@@ -7,7 +7,7 @@ const Logout = props => {
   return (
     <div>
       <p id="welcome">Currently logged in as <span id="userlgdin"><b>{props.user}</b></span></p>
-      <button id="logoutBtn" type="button" class="btn btn-default btn-sm" onClick={props.logoutUser}><i class="fas fa-sign-out-alt"></i> Log out</button>
+      <button id="logoutBtn" type="button" className="btn btn-default btn-sm" onClick={props.logoutUser}><i className="fas fa-sign-out-alt"></i> Log out</button>
     </div>
   );
 };

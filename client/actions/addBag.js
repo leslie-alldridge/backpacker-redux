@@ -7,6 +7,20 @@ export const updateBagAction = (id, destination, description) => ({
   destination
 });
 
+//getting bags for a user
+
+export function getBags(username) {
+  request("get", "/bags", username).then(response => {
+    if (!response.ok) {
+    } else {
+      console.log("made it");
+      console.log(response);
+
+      //dispatch(receiveAddBag(user, response.body.bag));
+    }
+  });
+}
+
 //all func below this line are for adding bags
 
 export function addBagReceived(bag, user) {

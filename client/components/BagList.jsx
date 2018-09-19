@@ -72,10 +72,10 @@ class BagList extends React.Component {
                   if (item.archived == 1)
                     return (
                       <li key={item.id}>
-                        {item.bag_item}
+                        {item.bagitem}
                         <i
                           onClick={() => {
-                            this.checkItem(this.props.id, item.bag_item);
+                            this.checkItem(this.props.id, item.bagitem);
                           }}
                           className="fas fa-check"
                           id="tick"
@@ -94,10 +94,10 @@ class BagList extends React.Component {
                   if (item.archived == 0)
                     return (
                       <li key={item.id}>
-                        {item.bag_item}
+                        {item.bagitem}
                         <i
                           onClick={() => {
-                            this.delete(item.id, item.bag_id, item.bag_item);
+                            this.delete(item.id, item.bagid, item.bagitem);
                           }}
                           id="trash"
                           className="fas fa-trash-alt"

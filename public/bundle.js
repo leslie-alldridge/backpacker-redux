@@ -824,9 +824,9 @@ function (_React$Component) {
       }, "Add Item")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.state.bagItems.map(function (item) {
         if (item.archived == 1) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: item.id
-        }, item.bag_item, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        }, item.bagitem, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           onClick: function onClick() {
-            _this2.checkItem(_this2.props.id, item.bag_item);
+            _this2.checkItem(_this2.props.id, item.bagitem);
           },
           className: "fas fa-check",
           id: "tick"
@@ -841,9 +841,9 @@ function (_React$Component) {
       }, this.props.state.bagItems.map(function (item) {
         if (item.archived == 0) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: item.id
-        }, item.bag_item, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        }, item.bagitem, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           onClick: function onClick() {
-            _this2.delete(item.id, item.bag_id, item.bag_item);
+            _this2.delete(item.id, item.bagid, item.bagitem);
           },
           id: "trash",
           className: "fas fa-trash-alt"

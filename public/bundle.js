@@ -90,13 +90,12 @@
 /*!**********************************!*\
   !*** ./client/actions/addBag.js ***!
   \**********************************/
-/*! exports provided: updateBagAction, getBags, addBagReceived, receiveAddBag, saveBagToDB, deleteBagDB, updateBagDB, showItems, saveItemAction, checkItAction, deleteItAction */
+/*! exports provided: updateBagAction, addBagReceived, receiveAddBag, saveBagToDB, deleteBagDB, updateBagDB, showItems, saveItemAction, checkItAction, deleteItAction */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBagAction", function() { return updateBagAction; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getBags", function() { return getBags; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addBagReceived", function() { return addBagReceived; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveAddBag", function() { return receiveAddBag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveBagToDB", function() { return saveBagToDB; });
@@ -116,12 +115,20 @@ var updateBagAction = function updateBagAction(id, destination, description) {
     destination: destination
   };
 }; //getting bags for a user
-
-function getBags(username) {
-  Object(_utils_api__WEBPACK_IMPORTED_MODULE_0__["default"])("get", "/bags", username).then(function (response) {
-    if (!response.ok) {} else {}
-  });
-} //all func below this line are for adding bags
+// export function getBags(id) {
+//   console.log(id);
+//   request("get", "/bags").then(response => {
+//     if (!response.ok) {
+//     } else {
+//       return {
+//         type: "BAG_SUCCESS",
+//         isFetching: false,
+//         response: response.body.bag
+//       };
+//     }
+//   });
+// }
+//all func below this line are for adding bags
 
 function addBagReceived(bag, user) {
   return {
@@ -637,8 +644,7 @@ function (_Component) {
     key: "handleClick",
     value: function handleClick(e, description, destination) {
       e.preventDefault();
-      this.props.saveBagToDB(this.props.auth.user.username, description, destination);
-      this.props.getBags();
+      this.props.saveBagToDB(this.props.auth.user.username, description, destination); //this.props.getBags(this.props.auth.user.username)
     }
   }, {
     key: "registerToggle",
@@ -1295,10 +1301,10 @@ var Logout = function Logout(props) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, props.user))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     id: "logoutBtn",
     type: "button",
-    class: "btn btn-default btn-sm",
+    className: "btn btn-default btn-sm",
     onClick: props.logoutUser
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    class: "fas fa-sign-out-alt"
+    className: "fas fa-sign-out-alt"
   }), " Log out"));
 };
 

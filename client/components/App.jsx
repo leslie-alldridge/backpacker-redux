@@ -28,7 +28,7 @@ class App extends Component {
       description,
       destination
     );
-    this.props.getBags()
+    //this.props.getBags(this.props.auth.user.username)
   }
 
   registerToggle() {

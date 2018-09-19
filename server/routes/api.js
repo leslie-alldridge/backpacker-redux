@@ -88,6 +88,7 @@ router.use(
 
 // These routes are protected
 router.get("/bags", (req, res) => {
+  console.log(req.user.username);
   bags.getBags(req.user.username).then(data => {
     res.json({
       message: "This is your bag.",

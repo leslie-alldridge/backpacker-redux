@@ -85,7 +85,7 @@ function archiveBagItem(username, id, item, testDb) {
 function deleteBagItem(username, bagid, item, testDb) {
   const connection = testDb || knex;
   return connection("bagitems")
-    .where("bag_item", item)
+    .where("bagitem", item)
     .del()
     .then(data => {
       return connection("bagitems")

@@ -36,7 +36,6 @@ class LoginForm extends React.Component {
   }
 
   handleError(){
-    console.log('hit err');
     this.setState({
       errorVisible: false
     })

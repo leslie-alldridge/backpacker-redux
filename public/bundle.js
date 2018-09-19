@@ -1247,7 +1247,6 @@ function (_React$Component) {
   }, {
     key: "handleError",
     value: function handleError() {
-      console.log('hit err');
       this.setState({
         errorVisible: false
       });
@@ -1677,7 +1676,7 @@ function (_React$Component) {
           _this2.clearError();
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        class: "fas fa-chevron-left"
+        className: "fas fa-chevron-left"
       }), " Back"), this.state.err && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
         reducer: "auth"
       }));

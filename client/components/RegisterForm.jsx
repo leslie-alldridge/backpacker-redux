@@ -103,7 +103,7 @@ class RegisterForm extends React.Component {
             this.clearError()
           }}
         >
-          <i class="fas fa-chevron-left"></i> Back
+          <i className="fas fa-chevron-left"></i> Back
         </button>
         {this.state.err && <ErrorMessage reducer="auth" />}
       </div>

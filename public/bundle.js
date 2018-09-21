@@ -1752,8 +1752,8 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(UpdateBag).call(this, props));
     _this.state = {
       updateInput: "",
-      desInput: "",
-      validated: ""
+      desInput: "" // validated: ""
+
     };
     _this.destinationChange = _this.destinationChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.desChange = _this.desChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -1761,6 +1761,20 @@ function (_React$Component) {
   }
 
   _createClass(UpdateBag, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      $("#btnSubmit").click(function (event) {
+        var form = $("#myForm");
+
+        if (form[0].checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+
+        form.addClass("was-validated");
+      });
+    }
+  }, {
     key: "destinationChange",
     value: function destinationChange(e) {
       this.setState({
@@ -1777,32 +1791,29 @@ function (_React$Component) {
   }, {
     key: "updateBagDB",
     value: function updateBagDB(e, id, destination, description) {
-      var _this2 = this;
-
-      $("#checkAll").click(function (event) {
-        var form = $("#theForm");
-
-        if (form[0].checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-
-        _this2.setState({
-          validated: "was-validated"
-        });
-      });
+      // $("#checkAll").click(event => {
+      //   const form = $("#theForm");
+      //   if (form[0].checkValidity() === false) {
+      //     event.preventDefault();
+      //     event.stopPropagation();
+      //   }      
+      //   form.addClass("was-validated");
+      // this.setState({
+      //   validated: "was-validated"
+      // })
+      //);
       e.preventDefault();
       this.props.updateBagDB(id, destination, description);
       this.setState({
         updateInput: '',
-        desInput: '',
-        validated: ""
+        desInput: '' // validated: ""
+
       });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "container"
@@ -1814,11 +1825,10 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
         id: "updateTitle"
       }, "Update Bag"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        className: this.state.validated,
-        noValidate: true,
+        noValidate: "",
         id: "theForm",
         onSubmit: function onSubmit(e) {
-          _this3.updateBagDB(e, _this3.props.id, _this3.state.updateInput, _this3.state.desInput);
+          _this2.updateBagDB(e, _this2.props.id, _this2.state.updateInput, _this2.state.desInput);
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
@@ -1829,11 +1839,7 @@ function (_React$Component) {
         className: "form-control add-todo",
         placeholder: "New bag description",
         value: this.state.desInput || ""
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "valid-feedback"
-      }, "Saved!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "invalid-feedback"
-      }, "Sorry, you missed this one.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         required: true,
@@ -1843,11 +1849,7 @@ function (_React$Component) {
         placeholder: "New bag destination",
         id: "bottomInput",
         value: this.state.updateInput || ""
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "valid-feedback"
-      }, "Saved!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "invalid-feedback"
-      }, "Sorry, you missed this one.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit",
         id: "checkAll",
         className: "btn btn-success"
@@ -1903,7 +1905,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var store = Object(redux__WEBPACK_IMPORTED_MODULE_3__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_6__["default"], Object(redux__WEBPACK_IMPORTED_MODULE_3__["compose"])(Object(redux__WEBPACK_IMPORTED_MODULE_3__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_5__["default"]), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
+var store = Object(redux__WEBPACK_IMPORTED_MODULE_3__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_6__["default"], Object(redux__WEBPACK_IMPORTED_MODULE_3__["compose"])(Object(redux__WEBPACK_IMPORTED_MODULE_3__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_5__["default"]) // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+));
 document.addEventListener("DOMContentLoaded", function () {
   Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__["Provider"], {
     store: store

@@ -8,10 +8,22 @@ class UpdateBag extends React.Component {
     this.state = {
       updateInput: "",
       desInput: "",
-      validated: ""
+      // validated: ""
     };
     this.destinationChange = this.destinationChange.bind(this);
     this.desChange = this.desChange.bind(this);
+  }
+
+
+  componentDidMount() {
+    $("#btnSubmit").click(event => {
+      const form = $("#myForm");
+      if (form[0].checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.addClass("was-validated");
+    });
   }
 
   destinationChange(e) {
@@ -27,16 +39,19 @@ class UpdateBag extends React.Component {
   }
 
   updateBagDB(e, id, destination, description) {
-    $("#checkAll").click(event => {
-      const form = $("#theForm");
-      if (form[0].checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
-      }      
-      this.setState({
-        validated: "was-validated"
-      })
-    });
+    // $("#checkAll").click(event => {
+    //   const form = $("#theForm");
+    //   if (form[0].checkValidity() === false) {
+    //     event.preventDefault();
+    //     event.stopPropagation();
+    //   }      
+    //   form.addClass("was-validated");
+      // this.setState({
+      //   validated: "was-validated"
+      // })
+    
+    //);
+  
 
 
     e.preventDefault();
@@ -44,7 +59,7 @@ class UpdateBag extends React.Component {
     this.setState({
       updateInput: '',
       desInput: '',
-      validated: ""
+      // validated: ""
     })
   }
 
@@ -54,7 +69,7 @@ class UpdateBag extends React.Component {
         <div id="line" className="row">
           <div className="col-md-6">
             <h4 id="updateTitle">Update Bag</h4>
-            <form className={this.state.validated} noValidate id="theForm" onSubmit={(e) => {
+            <form  noValidate="" id="theForm" onSubmit={(e) => {
                 this.updateBagDB(e,
                   this.props.id,
                   this.state.updateInput,
@@ -63,17 +78,14 @@ class UpdateBag extends React.Component {
               }}>
               <div className="form-group">
             <input required
+           
               onChange={this.desChange}
               type="text"
               className="form-control add-todo"
               placeholder="New bag description"
               value={this.state.desInput || ""}
             />
-            <div className="valid-feedback">Saved!</div>
-              <div className="invalid-feedback">
-                Sorry, you missed this one.
-              </div>
-              </div>
+           </div>
               <div className="form-group">
 
             <input required
@@ -84,12 +96,7 @@ class UpdateBag extends React.Component {
               id="bottomInput"
               value={this.state.updateInput || ""}
             />
-            <div className="valid-feedback">Saved!</div>
-              <div className="invalid-feedback">
-                Sorry, you missed this one.
-              </div>
-              </div>
-
+            </div>
             <button
               type="submit"
               id="checkAll"
@@ -97,6 +104,7 @@ class UpdateBag extends React.Component {
             >
               Save Changes
             </button>
+           
             </form>
           </div>
         </div>

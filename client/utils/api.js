@@ -18,7 +18,7 @@ export default function consume(method = "get", endpoint, data = {}) {
 
   return request[method](baseUrl + endpoint)
     .set(headers)
-    [dataMethod](data)
+  [dataMethod](data)
     .then(res => {
       return res;
     })

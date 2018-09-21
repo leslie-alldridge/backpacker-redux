@@ -13,7 +13,6 @@ class LoginForm extends React.Component {
       errorVisible: true
     };
     this.handleClick = this.handleClick.bind(this);
-
     this.handleChange = this.handleChange.bind(this);
     this.handleError = this.handleError.bind(this);
   }
@@ -43,7 +42,7 @@ class LoginForm extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="wrapperForm">
         <form className="form-inline" onSubmit={(e) => {this.handleClick(e)}}>
           <input
           pattern=".{4,}"   required title="4 characters minimum"
@@ -56,6 +55,7 @@ class LoginForm extends React.Component {
           <input
           pattern=".{8,}"   required title="8 characters minimum"
           className="form-control"
+          id="input1"
             type="password"
             name="password"
             placeholder="Password"

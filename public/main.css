@@ -231,6 +231,40 @@ li.ui-state-default:last-child {
     max-width: 99%;
     margin-right: 2%;
   }
+  #welcome {
+    margin-left: 3%;
+    margin-right: 3%;
+  }
+  #wrapperlogin{
+    padding-left: 3%;
+    padding-right: 3%;
+  }
+  #wrapperForm{
+    justify-content: center;
+    max-width: 80%;
+    margin-left: 10%;
+    display: flex;
+    flex-direction: column;
+
+    
+  }
+  #input1{
+    margin-bottom: 1%
+  }
+
+  #wrapperForm2{
+    justify-content: center;
+    max-width: 80%;
+    margin-left: 10%;
+    display: flex;
+    flex-direction: column;
+  }
+  #input1reg{
+    margin-bottom: 2%;
+  }
+  #input1btnsub{
+
+  }
 }
 
 #welcome {
@@ -278,13 +312,6 @@ li.ui-state-default:last-child {
 
 #regLink {
   margin-left: 0.5%;
-}
-
-#input1btnsub {
-  margin-left: 0.5%;
-  margin-top: 1%;
-  padding-left: 0.7%;
-  padding-bottom: 0.3%;
 }
 
 #error {

@@ -50,7 +50,7 @@ class RegisterForm extends React.Component {
   render() {
     const { username, password, confirm } = this.state;
     return (
-      <div>
+      <div id="wrapperForm2">
       <form className="form-inline" onSubmit={(e) => {
             this.handleClick(e);
           }}>
@@ -66,6 +66,7 @@ class RegisterForm extends React.Component {
           />
         
           <input
+           id="input1"
           className="form-control"
             pattern=".{8,}"   required title="8 characters minimum"
             type="password"
@@ -94,7 +95,6 @@ class RegisterForm extends React.Component {
         >
           Register
         </button>
-        </form>
         <button
         id="input1btnsub"
         className="btn btn-primary"
@@ -105,6 +105,8 @@ class RegisterForm extends React.Component {
         >
           <i className="fas fa-chevron-left"></i> Back
         </button>
+        </form>
+        
         {this.state.err && <ErrorMessage reducer="auth" />}
       </div>
     );

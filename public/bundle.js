@@ -1257,7 +1257,9 @@ function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "wrapperForm"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "form-inline",
         onSubmit: function onSubmit(e) {
           _this2.handleClick(e);
@@ -1276,6 +1278,7 @@ function (_React$Component) {
         required: true,
         title: "8 characters minimum",
         className: "form-control",
+        id: "input1",
         type: "password",
         name: "password",
         placeholder: "Password",
@@ -1331,7 +1334,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Logout = function Logout(props) {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    id: "wrapperlogin"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     id: "welcome"
   }, "Currently logged in as ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     id: "userlgdin"
@@ -1628,7 +1633,9 @@ function (_React$Component) {
           username = _this$state2.username,
           password = _this$state2.password,
           confirm = _this$state2.confirm;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "wrapperForm2"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "form-inline",
         onSubmit: function onSubmit(e) {
           _this2.handleClick(e);
@@ -1644,6 +1651,7 @@ function (_React$Component) {
         onChange: this.handleChange,
         value: username
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "input1",
         className: "form-control",
         pattern: ".{8,}",
         required: true,
@@ -1668,7 +1676,7 @@ function (_React$Component) {
         id: "input1btn",
         className: "btn btn-primary",
         type: "submit"
-      }, "Register")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "Register"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         id: "input1btnsub",
         className: "btn btn-primary",
         onClick: function onClick() {
@@ -1678,7 +1686,7 @@ function (_React$Component) {
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-chevron-left"
-      }), " Back"), this.state.err && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }), " Back")), this.state.err && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
         reducer: "auth"
       }));
     }

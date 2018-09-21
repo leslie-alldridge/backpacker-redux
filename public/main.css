@@ -1,19 +1,23 @@
 body {
   background-color: #FEFBF7;
 }
+
 .todolist {
   background-color: #fff;
   padding: 20px 20px 10px 20px;
   margin-top: 10px;
 }
+
 .todolist h1 {
   margin: 0;
   padding-bottom: 20px;
   text-align: center;
 }
+
 .form-control {
   border-radius: 0;
 }
+
 li.ui-state-default {
   background: #fff;
   border: none;
@@ -29,14 +33,17 @@ li.ui-state-default:last-child {
   margin: 0 -20px -10px -20px;
   padding: 10px 20px;
 }
+
 #done-items li {
   padding: 10px 0;
   border-top: 1px solid #ddd;
   text-decoration: line-through;
 }
+
 #done-items li:last-child {
   border-bottom: none;
 }
+
 #checkAll {
   margin-top: 10px;
 }
@@ -59,6 +66,7 @@ li.ui-state-default:last-child {
   color: #28a745;
   float: right;
 }
+
 #tick:hover {
   cursor: pointer;
 }
@@ -67,6 +75,7 @@ li.ui-state-default:last-child {
   color: red;
   float: right;
 }
+
 #trash:hover {
   cursor: pointer;
 }
@@ -74,8 +83,8 @@ li.ui-state-default:last-child {
 #header {
   background-image: url('/head.jpg');
   background-size: cover;
-
 }
+
 .container {
   width: 100%;
   min-width: 100%;
@@ -136,8 +145,6 @@ li.ui-state-default:last-child {
   font-size: 1.8em;
   letter-spacing: 1px;
 }
-/* 179, 229, 252
-#00838F */
 
 #mainForm {
   display: flex;
@@ -190,81 +197,10 @@ li.ui-state-default:last-child {
   border: 1px solid #00838F;
   border-radius: 3px;
 }
+
 #line {
   border-top: 1px dotted black;
   margin-top: 3%;
-} 
-
-@media only screen and (max-width: 850px) {
-  #mainForm {
-      margin: 0;
-      display: flex;
-      flex-direction: column-reverse;
-  }
-  #myForm {
-    margin-left: 0px;
-    margin-top: 3%;
-  }
-  #info {
-    width: 100% !important;
-    margin-left: 0px;
-  }
-  #card{
-    max-width: 95vw;
-    margin-left: 1%;
-    padding: 0px;
-    margin-right: 2%;
-  }
-  .container{
-    padding: 0px;
-  }
-  #containerBags {
-    margin-left: 0px;
-    margin-top: 1%;
-    padding-left: 1%;
-    margin-right: 1%;
-  }
-  #bagHead {
-    margin-left: 1%;
-  }
-  #cont {
-    max-width: 99%;
-    margin-right: 2%;
-  }
-  #welcome {
-    margin-left: 3%;
-    margin-right: 3%;
-  }
-  #wrapperlogin{
-    padding-left: 3%;
-    padding-right: 3%;
-  }
-  #wrapperForm{
-    justify-content: center;
-    max-width: 80%;
-    margin-left: 10%;
-    display: flex;
-    flex-direction: column;
-
-    
-  }
-  #input1{
-    margin-bottom: 1%
-  }
-
-  #wrapperForm2{
-    justify-content: center;
-    max-width: 80%;
-    margin-left: 10%;
-    display: flex;
-    flex-direction: column;
-  }
-  #input1reg{
-    margin-bottom: 2%;
-  }
-  #input1btnsub{
-
-  }
 }
 
 #welcome {
@@ -321,4 +257,85 @@ li.ui-state-default:last-child {
   color: red;
   font-weight: 500;
   float: left;
+}
+
+@media only screen and (max-width: 850px) {
+
+  #mainForm {
+    margin: 0;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  #myForm {
+    margin-left: 0px;
+    margin-top: 3%;
+  }
+
+  #info {
+    width: 100% !important;
+    margin-left: 0px;
+  }
+
+  #card {
+    max-width: 95vw;
+    margin-left: 1%;
+    padding: 0px;
+    margin-right: 2%;
+  }
+
+  .container {
+    padding: 0px;
+  }
+
+  #containerBags {
+    margin-left: 0px;
+    margin-top: 1%;
+    padding-left: 1%;
+    margin-right: 1%;
+  }
+
+  #bagHead {
+    margin-left: 1%;
+  }
+
+  #cont {
+    max-width: 99%;
+    margin-right: 2%;
+  }
+
+  #welcome {
+    margin-left: 3%;
+    margin-right: 3%;
+  }
+
+  #wrapperlogin{
+    padding-left: 3%;
+    padding-right: 3%;
+  }
+
+  #wrapperForm {
+    justify-content: center;
+    max-width: 80%;
+    margin-left: 10%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #input1 {
+    margin-bottom: 1%
+  }
+
+  #wrapperForm2 {
+    justify-content: center;
+    max-width: 80%;
+    margin-left: 10%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #input1reg {
+    margin-bottom: 2%;
+  }
+
 }

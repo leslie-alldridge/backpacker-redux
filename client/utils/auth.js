@@ -10,7 +10,7 @@ export function isAuthenticated() {
     const expiry = payload.exp;
 
     if (expiry < new Date().getTime() / 1000) {
-      removeUser(); // Our token has expired, so lets remove it from storage
+      removeUser();
       return false;
     }
     return true;

@@ -82,7 +82,6 @@ export default function auth(state = initialState, action) {
         bag: action.response
       };
 
-    //in this request they are authenticated already and we're fetching bags
     case "BAG_REQUEST": {
       return {
         ...state,
@@ -90,7 +89,7 @@ export default function auth(state = initialState, action) {
         isAuthenticated: true
       };
     }
-    //update cases
+
     case "BAG_UPD_REQ": {
       return {
         ...state,

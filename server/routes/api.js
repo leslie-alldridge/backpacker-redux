@@ -56,13 +56,10 @@ function invalidCredentials(res) {
   });
 }
 
-// express-jwt middleware lets us use a function as the secret,
-// so we can grab from wherever...
 function getSecret(req, payload, done) {
   done(null, process.env.JWT_SECRET);
 }
 
-// Protect all routes beneath this point
 router.use(
   verifyJwt({
     secret: getSecret
@@ -70,7 +67,6 @@ router.use(
   auth.handleError
 );
 
-// These routes are protected
 router.get("/bags", (req, res) => {
   bags.getBags(req.user.username).then(data => {
     res.json({
@@ -119,9 +115,6 @@ router.post("/bagsupdate", (req, res) => {
     });
 });
 
-//routes for updating items within a specific bag
-
-//add
 router.post("/itemadd", (req, res) => {
   bags.addBagItem(req.user.username, req.body.id, req.body.input).then(data => {
     res.json({
@@ -140,8 +133,6 @@ router.get("/itemshow", (req, res) => {
   });
 });
 
-//archive
-
 router.post("/itemarchive", (req, res) => {
   bags
     .archiveBagItem(req.user.username, req.body.id, req.body.item)
@@ -152,8 +143,6 @@ router.post("/itemarchive", (req, res) => {
       });
     });
 });
-
-//delete
 
 router.post("/itemdel", (req, res) => {
   bags

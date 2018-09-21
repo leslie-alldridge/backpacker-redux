@@ -52,6 +52,7 @@ class BagList extends React.Component {
                   this.saveItem(e, this.props.id, this.state.formInput);
                 }}>
               <input
+                required
                 onChange={this.formChange}
                 type="text"
                 className="form-control add-todo"

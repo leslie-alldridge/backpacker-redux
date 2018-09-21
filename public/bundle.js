@@ -806,6 +806,7 @@ function (_React$Component) {
           _this2.saveItem(e, _this2.props.id, _this2.state.formInput);
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        required: true,
         onChange: this.formChange,
         type: "text",
         className: "form-control add-todo",
@@ -1752,8 +1753,7 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(UpdateBag).call(this, props));
     _this.state = {
       updateInput: "",
-      desInput: "" // validated: ""
-
+      desInput: ""
     };
     _this.destinationChange = _this.destinationChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.desChange = _this.desChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -1761,20 +1761,6 @@ function (_React$Component) {
   }
 
   _createClass(UpdateBag, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      $("#btnSubmit").click(function (event) {
-        var form = $("#myForm");
-
-        if (form[0].checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-
-        form.addClass("was-validated");
-      });
-    }
-  }, {
     key: "destinationChange",
     value: function destinationChange(e) {
       this.setState({
@@ -1791,23 +1777,21 @@ function (_React$Component) {
   }, {
     key: "updateBagDB",
     value: function updateBagDB(e, id, destination, description) {
-      // $("#checkAll").click(event => {
-      //   const form = $("#theForm");
-      //   if (form[0].checkValidity() === false) {
-      //     event.preventDefault();
-      //     event.stopPropagation();
-      //   }      
-      //   form.addClass("was-validated");
-      // this.setState({
-      //   validated: "was-validated"
-      // })
-      //);
+      $("#checkAll").click(function (event) {
+        var form = $("#theForm");
+
+        if (form[0].checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+
+        form.addClass("was-validated");
+      });
       e.preventDefault();
       this.props.updateBagDB(id, destination, description);
       this.setState({
         updateInput: '',
-        desInput: '' // validated: ""
-
+        desInput: ''
       });
     }
   }, {
@@ -1905,8 +1889,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var store = Object(redux__WEBPACK_IMPORTED_MODULE_3__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_6__["default"], Object(redux__WEBPACK_IMPORTED_MODULE_3__["compose"])(Object(redux__WEBPACK_IMPORTED_MODULE_3__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_5__["default"]) // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-));
+var store = Object(redux__WEBPACK_IMPORTED_MODULE_3__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_6__["default"], Object(redux__WEBPACK_IMPORTED_MODULE_3__["compose"])(Object(redux__WEBPACK_IMPORTED_MODULE_3__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_5__["default"])));
 document.addEventListener("DOMContentLoaded", function () {
   Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__["Provider"], {
     store: store
@@ -2014,7 +1997,6 @@ function auth() {
         errorMessage: "",
         bag: action.response
       });
-    //in this request they are authenticated already and we're fetching bags
 
     case "BAG_REQUEST":
       {
@@ -2023,7 +2005,6 @@ function auth() {
           isAuthenticated: true
         });
       }
-    //update cases
 
     case "BAG_UPD_REQ":
       {
@@ -2191,8 +2172,7 @@ function isAuthenticated() {
     var expiry = payload.exp;
 
     if (expiry < new Date().getTime() / 1000) {
-      removeUser(); // Our token has expired, so lets remove it from storage
-
+      removeUser();
       return false;
     }
 

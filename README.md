@@ -31,3 +31,7 @@ We later learned authentication and that was the last piece of our full stack pu
 ## Intentions
 
 To put my new learnings to a test as part of my personal revision of Week 6 at Enspiral Dev Academy.
+
+## Future Goals 
+
+Create and complete the same project using TypeScript 

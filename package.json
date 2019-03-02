@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server/index.js",
   "scripts": {
-    "postinstall": "webpack",
+    "postinstall": "webpack --mode development",
     "dev": "nodemon --watch server & webpack --watch --mode development",
     "start": "node server/index",
     "test": "jest",
